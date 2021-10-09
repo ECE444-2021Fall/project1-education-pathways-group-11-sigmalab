@@ -129,14 +129,14 @@ The project is fully dockerized, meaning you won't need to install any prerequis
    git clone git@github.com:ECE444-2021Fall/project1-education-pathways-group-11-sigmalab.git
    ```
 2. Navigate to the project's folder and run
-  ```sh
-  cd project1-education-pathways-group-11-sigmalab
-  docker-compose up
-  ```
+   ```sh
+   cd project1-education-pathways-group-11-sigmalab
+   docker-compose up
+   ```
 3. To shutdown the app, run the following in the project's folder
-  ```sh
-  docker-compose down
-  ```
+   ```sh
+   docker-compose down
+   ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
