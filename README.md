@@ -94,6 +94,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 * [Flask](https://palletsprojects.com/p/flask/)
 * [Docker](https://www.docker.com)
+* [React.js](https://reactjs.org/)
+* [PosgreSQL](https://www.postgresql.org/)
+* [Notion](https://www.notion.so/)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -108,27 +111,31 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+
+* Check if Docker and Docker-Compose exist in your system
   ```sh
-  npm install npm@latest -g
+  docker version
+  docker-compose --version
   ```
+
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+The project is fully dockerized, meaning you won't need to install any prerequisite languages or frameworks.
+
+1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone git@github.com:ECE444-2021Fall/project1-education-pathways-group-11-sigmalab.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+2. Navigate to the project's folder and run
+  ```sh
+  cd project1-education-pathways-group-11-sigmalab
+  docker-compose up
+  ```
+3. To shutdown the app, run the following in the project's folder
+  ```sh
+  docker-compose down
+  ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -189,7 +196,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Adel Aswad - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Adel Aswad - adel.aswad@mail.utoronto.ca
 
 Sam Weninger - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
 
