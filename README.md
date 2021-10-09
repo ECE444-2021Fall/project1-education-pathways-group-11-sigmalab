@@ -201,7 +201,7 @@ Adel Aswad - adel.aswad@mail.utoronto.ca
 
 Sam Weninger - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
 
-Alex Senn - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Alex Senn - alex.senn@mail.utoronto.ca
 
 Youssef Chmait - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
 
