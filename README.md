@@ -33,19 +33,19 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Education Pathways Project</h3>
 
   <p align="center">
     project_description
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/ECE444-2021Fall/project1-education-pathways-group-11-sigmalab/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://github.com/ECE444-2021Fall/project1-education-pathways-group-11-sigmalab/">View Demo</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/ECE444-2021Fall/project1-education-pathways-group-11-sigmalab/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/ECE444-2021Fall/project1-education-pathways-group-11-sigmalab/issues">Request Feature</a>
   </p>
 </div>
 
@@ -92,14 +92,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [Flask](https://palletsprojects.com/p/flask/)
+* [Docker](https://www.docker.com)
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -158,7 +153,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [] Feature 3
     - [] Nested Feature
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/ECE444-2021Fall/project1-education-pathways-group-11-sigmalab/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -194,9 +189,18 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Adel Aswad - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Sam Weninger - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+
+Alex Senn - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+
+Youssef Chmait - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+
+Jay Bihola - [@twitter_handle](https://twitter.com/twitter_handle) - jaybih@outlook.com
+
+
+Project Link: [https://github.com/ECE444-2021Fall/project1-education-pathways-group-11-sigmalab](https://github.com/ECE444-2021Fall/project1-education-pathways-group-11-sigmalab)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
