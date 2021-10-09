@@ -111,6 +111,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
+To run the project, you will need Docker, please refer to this documentation on [how to install Docker](https://docs.docker.com/get-docker/)
 
 * Check if Docker and Docker-Compose exist in your system
   ```sh
