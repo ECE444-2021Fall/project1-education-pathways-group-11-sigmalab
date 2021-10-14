@@ -8,7 +8,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./education_pathways:/usr/app
+      - .:/usr/app:cached
   frontend:
     container_name: frontend
     build:
@@ -17,8 +17,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /app/node_modules
-      - ./frontend:/app
+      - /app/frontend/node_modules
+      - .:/app:cached
     environment:
       - CHOKIDAR_USEPOLLING=true
   database:
