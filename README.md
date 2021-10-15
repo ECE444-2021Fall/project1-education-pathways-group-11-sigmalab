@@ -114,6 +114,8 @@ To get a local copy up and running follow these simple example steps.
 
 To run the project, you will need Docker, please refer to this documentation on [how to install Docker](https://docs.docker.com/get-docker/)
 
+* WINDOWS USERS: You need to install [WSL2 Ubuntu](https://docs.microsoft.com/en-us/windows/wsl/install)
+
 * Check if Docker and Docker-Compose exist in your system
   ```sh
   docker version
