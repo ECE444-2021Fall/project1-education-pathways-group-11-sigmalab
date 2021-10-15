@@ -1,7 +1,7 @@
 {
 	"name": "Backend",
 	"dockerComposeFile": ["../docker-compose.yml"],
-	"service": "education_pathways",
+	"service": "edu_pathways",
 	"shutdownAction": "none",
 	"workspaceFolder": "/usr/app/education_pathways",
 	"forwardPorts": [5000, 5000]

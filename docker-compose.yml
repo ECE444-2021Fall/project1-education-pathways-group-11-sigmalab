@@ -1,6 +1,6 @@
 version: "3"
 services:
-  education_pathways:
+  edu_pathways:
     container_name: edu_pathways
     build:
       context: ./education_pathways
@@ -8,6 +8,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
+      - /usr/app/__pycache__
       - .:/usr/app:cached
   frontend:
     container_name: frontend
