@@ -22,6 +22,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
   database:
+    container_name: database
     image: postgres:14.0
     environment:
       - POSTGRES_USER=postgres
@@ -29,6 +30,7 @@ services:
     ports:
       - "4000:5432"
   adminer:
+    container_name: adminer
     image: adminer
     ports:
       - "4500:8080"
