@@ -96,6 +96,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 * [Docker](https://www.docker.com)
 * [React.js](https://reactjs.org/)
 * [PosgreSQL](https://www.postgresql.org/)
+* [Adminer](https://www.adminer.org/)
 * [Notion](https://www.notion.so/)
 
 
@@ -150,6 +151,19 @@ The project is fully dockerized, meaning you won't need to install any prerequis
    ```sh
    docker-compose down
    ```
+### Tools and Ports
+
+* React Frontend: `http://localhost:3000/`
+  * React should auto-reload the page whenever you save a file
+* PostgreSQL: `http://localhost:4000/`
+* Adminer: `http://localhost:4500/`
+  * Adminer is used to view the database tables and records
+  * System: PostgreSQL
+  * Server: database
+  * Username: postgres
+  * Password: postgres
+* Flask Backend: `http://localhost:5000/`
+  * Whenever you want to rebuild, run `docker-compose restart edu_pathways`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
