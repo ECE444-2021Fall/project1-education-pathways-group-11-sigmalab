@@ -118,6 +118,11 @@ To run the project, you will need Docker, please refer to this documentation on 
   docker version
   docker-compose --version
   ```
+* You also need to download VS Code to run the dev environment, you also need the following VSC extensions:
+  * [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+  * [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+  * [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+  * FOR WINDOWS: [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
 
 
 ### Installation
@@ -131,9 +136,17 @@ The project is fully dockerized, meaning you won't need to install any prerequis
 2. Navigate to the project's folder and run
    ```sh
    cd project1-education-pathways-group-11-sigmalab
-   docker-compose up
+   docker-compose up --build
    ```
-3. To shutdown the app, run the following in the project's folder
+3. Open `frontend` or `education_pathways` folders in VS Code:
+   ```sh
+   code {folder_name}
+   ```
+4. VS Code will notify you to re-open the folder in a dev container; if it doesn't, do the following:
+   * Open the Command Pallete `Cntl+Shift+P`
+   * Run `Remote-Containers: Reopen In Container`
+
+* To shutdown the app, run the following in the project's folder
    ```sh
    docker-compose down
    ```
