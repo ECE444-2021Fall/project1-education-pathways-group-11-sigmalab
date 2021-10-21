@@ -23,7 +23,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'off',
     'no-console': [1, { allow: ['warn', 'error'] }],
-    'no-unused-vars': [
+    '@typescript-eslint/no-unused-vars': [
       'error',
       {
         vars: 'all',
