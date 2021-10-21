@@ -5,5 +5,10 @@
   "shutdownAction": "none",
   "workspaceFolder": "/app/frontend",
   "forwardPorts": [3000, 3000],
-  "extensions": ["esbenp.prettier-vscode"]
+  "extensions": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "VisualStudioExptTeam.vscodeintellicode",
+    "lightyen.tailwindcss-intellisense-twin"
+  ]
 }

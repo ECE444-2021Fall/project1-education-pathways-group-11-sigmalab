@@ -16,6 +16,8 @@
     "prefix": "tsrace",
     "body": [
       "import React from 'react'",
+      "import tw from 'twin.macro'",
+      "import * as types from 'styled-components/cssprop';",
       "",
       "interface ${1:App}Props {",
       "}",

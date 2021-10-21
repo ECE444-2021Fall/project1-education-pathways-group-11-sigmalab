@@ -8,6 +8,9 @@ module.exports = {
       jsx: true,
     },
   },
+  env: {
+    node: true,
+  },
   plugins: ['react', '@typescript-eslint', 'react-hooks'],
   extends: [
     'eslint:recommended',
@@ -20,6 +23,15 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'off',
     'no-console': [1, { allow: ['warn', 'error'] }],
+    'no-unused-vars': [
+      'error',
+      {
+        vars: 'all',
+        args: 'after-used',
+        ignoreRestSiblings: true,
+        varsIgnorePattern: 'types',
+      },
+    ],
   },
   settings: {
     react: {
