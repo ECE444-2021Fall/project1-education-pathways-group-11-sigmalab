@@ -12,12 +12,11 @@
   // 	],
   // 	"description": "Log output to console"
   // }
-  "TypeScript React Fucntional Component Default Export": {
-    "prefix": "tsrace",
+  "TypeScript React Fucntional Component Default Export With TwinMacro": {
+    "prefix": "tsrftw",
     "body": [
-      "import React from 'react'",
-      "import tw from 'twin.macro'",
-      "import * as types from 'styled-components/cssprop';",
+      "import React from 'react';",
+      "import tw from 'twin.macro';",
       "",
       "interface ${1:App}Props {",
       "}",
@@ -30,7 +29,7 @@
       "  )",
       "}",
       "",
-      "export default ${1:App}"
+      "export default ${1:App};"
     ]
   },
   "Tailwind Classes using Twin Macro": {

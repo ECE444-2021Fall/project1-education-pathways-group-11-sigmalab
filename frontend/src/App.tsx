@@ -1,12 +1,24 @@
 import React from 'react';
 import tw from 'twin.macro';
-import * as types from 'styled-components/cssprop';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Course, Home, Profiles } from './pages';
 
 function App(): JSX.Element {
   return (
-    <div tw='bg-black flex justify-center items-center h-screen w-screen'>
-      <h1 css={[tw`text-5xl text-white`]}>Hello World</h1>
-    </div>
+    <Router>
+      <Switch>
+        <Route path='/profiles'>
+          <Profiles />
+        </Route>
+        {/* TODO: add dynamic path */}
+        <Route path='/course'>
+          <Course />
+        </Route>
+        <Route path='/'>
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

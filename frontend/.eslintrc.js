@@ -19,6 +19,7 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
+    'prettier/prettier': 'warn',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'off',

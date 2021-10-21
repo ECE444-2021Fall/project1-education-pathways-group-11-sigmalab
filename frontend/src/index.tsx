@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import * as types from 'styled-components/cssprop';
 import App from './App';
 import { GlobalStyles } from 'twin.macro';
 
