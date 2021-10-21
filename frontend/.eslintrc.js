@@ -23,13 +23,14 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'off',
     'no-console': [1, { allow: ['warn', 'error'] }],
+    'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': [
-      'error',
+      'warn',
       {
         vars: 'all',
         args: 'after-used',
         ignoreRestSiblings: true,
-        varsIgnorePattern: 'types',
+        varsIgnorePattern: '(types)|(tw)',
       },
     ],
   },
