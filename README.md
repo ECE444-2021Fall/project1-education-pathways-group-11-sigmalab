@@ -170,6 +170,7 @@ The project is fully dockerized, meaning you won't need to install any prerequis
 ### Useful Script
 * To run a single service: `docker-compose run --service-ports {service_name; ex: frontend} {command; ex: npm start}`
 * To restart a service: `docker-compose restart {service_name; ex: edu_pathways}`
+* To get into the container `docker exec -it frontend bash`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
