@@ -1,5 +1,5 @@
 import Home from './Home';
 import Profiles from './Profiles';
-import Course from './Course';
+import Courses from './Courses';
 
-export { Home, Profiles, Course };
+export { Home, Profiles, Courses };
