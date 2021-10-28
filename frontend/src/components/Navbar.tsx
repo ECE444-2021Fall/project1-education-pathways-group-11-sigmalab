@@ -8,24 +8,30 @@ interface NavbarProps {
   width?: TwStyle;
 }
 
-const StyledLink = tw(NavLink)`my-2 h-12`;
-const iconStyles = tw`fill-current h-5 w-full text-gray-200`;
+const StyledLink = tw(
+  NavLink
+)`my-2 h-12 flex justify-center items-center w-full text-gray-light`;
+const iconStyles = tw`fill-current h-5 w-full`;
+const activeLinkStyles = tw`bg-gray-light text-blue-uoft`;
 
 function Navbar({ width: navbarWidth }: NavbarProps): JSX.Element {
   return (
     <div
       css={[
-        tw`flex flex-col justify-start items-center h-screen bg-blue-800 pt-12`,
+        tw`flex flex-col justify-start items-center h-screen bg-blue-uoft pt-12`,
         navbarWidth,
       ]}
     >
-      <StyledLink to={ROUTES.home} tw='mb-10'>
+      <StyledLink
+        to={ROUTES.home}
+        tw='flex justify-center items-center mb-10 w-full text-gray-light'
+      >
         <LogoIcon css={[iconStyles, tw`h-7`]} />
       </StyledLink>
-      <StyledLink to={ROUTES.courses}>
+      <StyledLink to={ROUTES.courses} activeStyle={activeLinkStyles}>
         <SearchIcon css={iconStyles} />
       </StyledLink>
-      <StyledLink to={ROUTES.profiles}>
+      <StyledLink to={ROUTES.profiles} activeStyle={activeLinkStyles}>
         <ProfilesIcon css={iconStyles} />
       </StyledLink>
     </div>
