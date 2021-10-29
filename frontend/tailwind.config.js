@@ -6,10 +6,15 @@ module.exports = {
     //   // lobster: "lobster",
     //   // kalam: "kalam",
     // },
-    extend: {},
+    extend: {
+      colors: {
+        'blue-uoft': '#002A5C',
+        'gray-light': '#ECECEC',
+      },
+    },
   },
   variants: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/aspect-ratio')],
+  plugins: [],
 };
