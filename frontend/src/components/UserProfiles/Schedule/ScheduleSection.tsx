@@ -9,7 +9,7 @@ interface ScheduleSectionProps {
   [rest: string]: any;
 }
 
-const SessionName = tw.p`text-gray-600 text-lg capitalize`;
+const SessionName = tw.p`text-gray-500 text-lg capitalize mt-0.5`;
 const Pill = tw.span`rounded-full cursor-pointer select-none text-sm text-center
 text-blue-uoft bg-white shadow-sm py-2 px-4`;
 

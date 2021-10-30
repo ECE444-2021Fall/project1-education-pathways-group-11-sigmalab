@@ -6,7 +6,7 @@ function Card({
   ...props
 }: React.ComponentPropsWithoutRef<'article'>): JSX.Element {
   return (
-    <article tw='rounded-3xl shadow-lg bg-white' {...props}>
+    <article tw='rounded-3xl shadow-lg bg-white px-10 py-6' {...props}>
       {children}
     </article>
   );

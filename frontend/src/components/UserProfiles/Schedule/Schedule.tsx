@@ -8,7 +8,7 @@ import schedule from '../../../datafillers/schedules';
 function Schedule(): JSX.Element {
   return (
     <>
-      <h2 tw='mb-10'>Current Schedule</h2>
+      <h2 tw='mb-10 text-3xl text-gray-700'>Current Schedule</h2>
       {schedule.map((section, sectionIdx) => (
         <ScheduleSection
           key={sectionIdx}
