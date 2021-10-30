@@ -4,8 +4,6 @@ import Profile from './Profile';
 import EmptyProfile from './EmptyProfile';
 import profiles from '../../../datafillers/profiles';
 
-// interface ProfilesProps {}
-
 function Profiles(): JSX.Element {
   return (
     <>
@@ -24,15 +22,6 @@ function Profiles(): JSX.Element {
         />
       ))}
       <EmptyProfile />
-      {/* <Card tw='w-full h-56 flex flex-col justify-start'>
-        <h3 tw='text-2xl mb-3.5'>My Main Profile </h3>
-        <Details>Courses: ECE423, ECE423, ECE423</Details>
-        <Details tw='mb-auto'>12 courses over 4 semesters</Details>
-        <div tw='mb-1 flex justify-end items-end'>
-          <Button variant='light'>Set Default</Button>
-          <Button>Edit</Button>
-        </div>
-      </Card> */}
     </>
   );
 }

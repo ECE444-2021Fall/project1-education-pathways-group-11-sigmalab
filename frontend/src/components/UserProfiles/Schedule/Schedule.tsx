@@ -3,8 +3,6 @@ import tw from 'twin.macro';
 import ScheduleSection from './ScheduleSection';
 import schedule from '../../../datafillers/schedules';
 
-// interface ScheduleProps {}
-
 function Schedule(): JSX.Element {
   return (
     <>
