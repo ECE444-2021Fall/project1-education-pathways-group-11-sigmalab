@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'twin.macro';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Courses, Home, Profiles } from './pages';
+import { Courses, Home, ProfilesPage } from './pages';
 import Navbar from './components/Navbar';
 import ROUTES from './config/routes';
 
@@ -13,7 +13,7 @@ function App(): JSX.Element {
         <div tw='w-full'>
           <Switch>
             <Route path={ROUTES.profiles}>
-              <Profiles />
+              <ProfilesPage />
             </Route>
             {/* TODO: add dynamic path */}
             <Route path={ROUTES.courses}>

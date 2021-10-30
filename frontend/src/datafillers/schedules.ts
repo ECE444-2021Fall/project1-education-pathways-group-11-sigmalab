@@ -1,7 +1,7 @@
 const schedule = [
   {
     year: 2021,
-    isUnassigned: false,
+    unLabeled: false,
     semesters: [
       {
         name: 'fall',
@@ -33,7 +33,7 @@ const schedule = [
   },
   {
     year: 2022,
-    isUnassigned: false,
+    unLabeled: false,
     semesters: [
       {
         name: 'fall',
@@ -55,9 +55,22 @@ const schedule = [
     ],
   },
   {
-    year: 0,
-    isUnassigned: true,
-    semesters: [],
+    year: null,
+    unLabeled: true,
+    semesters: [
+      {
+        name: '',
+        courses: [
+          { id: 5, name: 'ECE543' },
+          { id: 5, name: 'ECE543' },
+          { id: 5, name: 'ECE543' },
+          { id: 5, name: 'ECE543' },
+          { id: 5, name: 'ECE543' },
+          { id: 5, name: 'ECE543' },
+          { id: 5, name: 'ECE543' },
+        ],
+      },
+    ],
   },
 ];
 
