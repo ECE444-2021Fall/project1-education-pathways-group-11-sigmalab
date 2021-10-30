@@ -1,6 +1,6 @@
 import React from 'react';
 import tw from 'twin.macro';
-import Divider from './Divider';
+import { Divider, Pill } from '../../shared';
 
 interface ScheduleSectionProps {
   name: string | number;
@@ -10,9 +10,6 @@ interface ScheduleSectionProps {
 }
 
 const SessionName = tw.p`text-gray-500 text-lg capitalize mt-0.5`;
-const Pill = tw.span`rounded-full cursor-pointer select-none text-sm text-center
-text-blue-uoft bg-white shadow-sm py-2 px-4`;
-
 const SessionCourses = tw.div`col-span-2 grid gap-2 grid-cols-3 mb-2`;
 
 function ScheduleSection({
