@@ -21,7 +21,7 @@ const buttonVariants: Record<ButtonVariant, TwStyle> = {
 };
 
 const Button = styled.button<ButtonProps>(() => [
-  tw`w-24 h-10 z-10 text-sm relative`,
+  tw`w-24 h-10 z-10 text-sm relative select-none`,
   ({ variant = 'primary' }) => buttonVariants[variant],
 ]);
 

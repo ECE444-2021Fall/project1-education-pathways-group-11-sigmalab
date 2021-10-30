@@ -9,7 +9,7 @@ const profiles = [
     numOfCourses: 12,
     numOfSemesters: 4,
     isDefault: true,
-    isEditing: true,
+    isEditing: false,
   },
   {
     name: 'Second Profile',
@@ -20,7 +20,7 @@ const profiles = [
     numOfCourses: 16,
     numOfSemesters: 4,
     isDefault: false,
-    isEditing: false,
+    isEditing: true,
   },
 ];
 
