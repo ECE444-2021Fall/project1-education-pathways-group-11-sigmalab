@@ -11,7 +11,7 @@ interface ScheduleSectionProps {
 
 const SessionName = tw.p`text-gray-600 text-lg capitalize`;
 const Pill = tw.span`rounded-full cursor-pointer select-none text-sm text-center
-text-blue-uoft bg-white py-2 px-4`;
+text-blue-uoft bg-white shadow-sm py-2 px-4`;
 
 const SessionCourses = tw.div`col-span-2 grid gap-2 grid-cols-3 mb-2`;
 
