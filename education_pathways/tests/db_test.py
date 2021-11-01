@@ -19,3 +19,20 @@ def test_db_populated():
 
     cursor.close()
     conn.close()
+
+def test_db_select_from_where():
+    conn = psycopg2.connect(
+        host="database", 
+        database="postgres", 
+        user="postgres", 
+        password="postgres"
+    )
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT division FROM course_data WHERE division='University of Toronto Scarborough'")
+    num_elems = 0
+    for elem in cursor:
+        assert elem[0] == 'University of Toronto Scarborough'
+
+    cursor.close()
+    conn.close()
