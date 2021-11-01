@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import './../login.css';
 import { LogoIcon } from '../components/Icons';
 const iconStyles = tw`fill-current h-5 w-full`;
-import {Link} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 function SignUp(): JSX.Element {
   return (
@@ -34,6 +34,8 @@ function LoginPage(props: {
   const [username, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { push } = useHistory();
+
 
   const handleSubmit = (evt: { preventDefault: () => void }) => {
     evt.preventDefault();
@@ -53,7 +55,10 @@ function LoginPage(props: {
       } else if (password != confirmPassword) {
         alert('Passwords do not match');
       } else {
-        alert(`SIGNING UP WITH Name ${username} and Password ${password}`);
+        alert(
+          `SIGNING UP AND LOGGING IN WITH Name ${username} and Password ${password}`
+        );
+        push('/profiles');
       }
     }
   };

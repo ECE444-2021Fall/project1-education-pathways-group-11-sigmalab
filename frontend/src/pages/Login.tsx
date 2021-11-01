@@ -34,17 +34,17 @@ function LoginPage(props: {
 
   const [username, setName] = useState('');
   const [password, setPassword] = useState('');
-
+  const { push } = useHistory();
   const handleSubmit = (evt: { preventDefault: () => void }) => {
     evt.preventDefault();
     {
-      if (username == 'test' && password == 'test')
+      if (username == 'test' && password == 'test'){
         alert(`LOGGING IN WITH Name ${username} and Password ${password}`);
-      else alert(`Invalid Username or Password`);
+        push('/profiles');
+      } else alert(`Invalid Username or Password`);
     }
     // alert(`Submitting Name ${username} and Password ${password}`);
   };
-  const { push } = useHistory()
   const handleSignupClick = () => {
     push('/signup');
   }
