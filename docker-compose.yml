@@ -2,6 +2,7 @@ version: "3"
 services:
   edu_pathways:
     container_name: edu_pathways
+    platform: linux/amd64
     build:
       context: ./education_pathways
       dockerfile: Dockerfile
