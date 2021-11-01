@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import tw, { TwStyle } from 'twin.macro';
 import styled, { css } from 'styled-components';
 import './../login.css';
 import { LogoIcon } from '../components/Icons';
 const iconStyles = tw`fill-current h-5 w-full`;
+
 function Login(): JSX.Element {
   return (
     <LoginPage
@@ -29,12 +30,23 @@ function LoginPage(props: {
 }) {
   const {
     title,
-    username,
-    password,
     sigmaLogo1Props,
     loginBtnProps,
     loginBtnProps2,
   } = props;
+
+  const [username, setName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (evt: { preventDefault: () => void }) => {
+    evt.preventDefault();
+    {
+      if (username == 'test' && password == 'test')
+        alert(`LOGGING IN WITH Name ${username} and Password ${password}`);
+      else alert(`Invalid Username or Password`);
+    }
+   // alert(`Submitting Name ${username} and Password ${password}`);
+  };
 
   return (
     <div className='container-center-horizontal'>
@@ -45,7 +57,7 @@ function LoginPage(props: {
             <Title>{title}</Title>
           </FlexRow>
           <Form>
-            <form>
+            <form onSubmit={handleSubmit}>
               <OverlapGroup>
                 <User src='UserLogo.png' />
                 <Username>
@@ -54,6 +66,7 @@ function LoginPage(props: {
                     type='text'
                     name='username'
                     placeholder='Username'
+                    onChange={(e) => setName(e.target.value)}
                   />{' '}
                 </Username>
               </OverlapGroup>
@@ -65,6 +78,7 @@ function LoginPage(props: {
                     type='password'
                     name='password'
                     placeholder='Password'
+                    onChange={(e) => setPassword(e.target.value)}
                   />{' '}
                 </Password>
               </OverlapGroup1>
@@ -126,7 +140,7 @@ const loginPageData = {
 
 const DashboardLogin = styled.div`
   width: 1280px;
-  height: 1080px;
+  height: 880px;
   position: relative;
   margin-top: 0px;
   display: flex;
