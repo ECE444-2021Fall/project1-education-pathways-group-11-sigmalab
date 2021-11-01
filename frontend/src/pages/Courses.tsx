@@ -1,6 +1,7 @@
 import React from 'react';
 import tw from 'twin.macro';
-import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
+import { Button, Card } from '../components/shared';
 
 function Courses(): JSX.Element {
   const wideCol = [
@@ -18,6 +19,13 @@ function Courses(): JSX.Element {
   ];
   return (
     <Box tw='h-screen bg-gray-light'>
+      <Box>
+        <div tw='px-20 pt-12'>
+          <h1 tw='text-5xl font-bold text-gray-800 mb-10'>
+            Software Engineering
+          </h1>
+        </div>
+      </Box>
       <Grid
         container
         direction='row'
@@ -26,18 +34,11 @@ function Courses(): JSX.Element {
         rowSpacing={0}
         columnSpacing={0}
       >
-        <Grid item xs={12}>
-          <div tw='flex justify-center items-center h-full w-full'>
-            <Typography gutterBottom variant='h2' mt={4} color='black'>
-              ECE444: Software Engineering
-            </Typography>
-          </div>
+        <Grid item xs={4}>
+          {customColumn(narrowCol)}
         </Grid>
         <Grid item xs={8}>
           {customColumn(wideCol)}
-        </Grid>
-        <Grid item xs={4}>
-          {customColumn(narrowCol)}
         </Grid>
       </Grid>
     </Box>
@@ -60,20 +61,18 @@ function card(title: string, content: string[]): JSX.Element {
   const cardContent = [];
   for (const text of content) {
     cardContent.push(
-      <Typography variant='body1' tw='padding-left[1rem]'>
+      <Typography tw='text-lg text-gray-600 padding-left[1rem]'>
         {text}
       </Typography>
     );
   }
   return (
     <div tw='padding[1rem]'>
-      <Card sx={{ minWidth: 275 }} raised={true}>
-        <CardContent tw='bg-blue-300'>
-          <Typography variant='h6' gutterBottom>
-            {title}
-          </Typography>
-          {cardContent}
-        </CardContent>
+      <Card tw=''>
+        <Typography variant='h6' gutterBottom>
+          {title}
+        </Typography>
+        {cardContent}
       </Card>
     </div>
   );
