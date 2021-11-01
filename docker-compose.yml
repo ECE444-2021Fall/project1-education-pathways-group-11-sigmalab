@@ -10,6 +10,8 @@ services:
     volumes:
       - /usr/app/__pycache__
       - .:/usr/app:cached
+    depends_on:
+      - database
   frontend:
     container_name: frontend
     build:
