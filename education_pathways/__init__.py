@@ -180,6 +180,9 @@ for course_code, course_attributes in df.iterrows():
 
 cursor.execute("commit")
 
+# close connection
+cursor.close()
+conn.close()
 
 """Build the search form, including dropdown menus at the top of the page, from the main datafile."""
 class CourseSearchForm(Form):
