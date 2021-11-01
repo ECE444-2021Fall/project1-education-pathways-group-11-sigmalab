@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'twin.macro';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Courses, Home, ProfilesPage, Login } from './pages';
+import { Courses, Home, ProfilesPage, Login, SignUp } from './pages';
 import Navbar from './components/Navbar';
 import ROUTES from './config/routes';
 
@@ -24,6 +24,9 @@ function App(): JSX.Element {
             </Route>
             <Route path={ROUTES.login}>
               <Login />
+            </Route>
+            <Route path={ROUTES.signup}>
+              <SignUp />
             </Route>
           </Switch>
         </div>

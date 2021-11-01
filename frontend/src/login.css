@@ -53,3 +53,14 @@ rgba(255, 255, 255, 1);
 input {
   background-color: transparent;
 }
+.block {
+  width:100%;
+  margin-left:0;
+  margin-right:0;
+  padding-left:0;
+  padding-right:0;
+  display:block;
+  text-align:center;
+  cursor: pointer;
+ 
+}

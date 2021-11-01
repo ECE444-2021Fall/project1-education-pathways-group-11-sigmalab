@@ -4,10 +4,9 @@ import styled, { css } from 'styled-components';
 import './../login.css';
 import { LogoIcon } from '../components/Icons';
 const iconStyles = tw`fill-current h-5 w-full`;
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import {Link} from "react-router-dom";
 
-function Login(): JSX.Element {
+function SignUp(): JSX.Element {
   return (
     <LoginPage
       title='SIGMA EDUCATE'
@@ -20,7 +19,7 @@ function Login(): JSX.Element {
   );
 }
 
-export default Login;
+export default SignUp;
 
 function LoginPage(props: {
   title: any;
@@ -34,21 +33,30 @@ function LoginPage(props: {
 
   const [username, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSubmit = (evt: { preventDefault: () => void }) => {
     evt.preventDefault();
     {
-      if (username == 'test' && password == 'test')
-        alert(`LOGGING IN WITH Name ${username} and Password ${password}`);
-      else alert(`Invalid Username or Password`);
+      if (
+        username === null ||
+        username.match(/^ *$/) !== null ||
+        username.indexOf(' ') >= 0
+      ) {
+        alert(`Invalid Username`);
+      } else if (
+        password === null ||
+        password.match(/^ *$/) !== null ||
+        password.indexOf(' ') >= 0
+      ) {
+        alert(`Invalid Password`);
+      } else if (password != confirmPassword) {
+        alert('Passwords do not match');
+      } else {
+        alert(`SIGNING UP WITH Name ${username} and Password ${password}`);
+      }
     }
-    // alert(`Submitting Name ${username} and Password ${password}`);
   };
-  const { push } = useHistory()
-  const handleSignupClick = () => {
-    push('/signup');
-  }
-
 
   return (
     <div className='container-center-horizontal'>
@@ -84,20 +92,27 @@ function LoginPage(props: {
                   />{' '}
                 </Password>
               </OverlapGroup1>
+              <OverlapGroup1>
+                <User src='LockLogo.png' />
+                <Password>
+                  {' '}
+                  <input
+                    type='password'
+                    name='password'
+                    placeholder='Confirm Password'
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />{' '}
+                </Password>
+              </OverlapGroup1>
               <LoginBtn>
-                {<input type='submit' className='block' value='LOG IN' />}
-              </LoginBtn>
-
-              <LoginBtn2>
                 {
                   <input
-                    type='button'
+                    type='submit'
                     className='block'
-                    value='SIGN UP'
-                    onClick={handleSignupClick}
+                    value='CREATE ACCOUNT'
                   />
                 }
-              </LoginBtn2>
+              </LoginBtn>
             </form>
           </Form>
         </DashboardLogin>
@@ -153,7 +168,7 @@ const loginPageData = {
 
 const DashboardLogin = styled.div`
   width: 1280px;
-  height: 1000px;
+  height: 980px;
   position: relative;
   margin-top: 0px;
   display: flex;
@@ -197,6 +212,17 @@ const Form = styled.div`
 const OverlapGroup = styled.div`
   ${Border1pxWhite}
   height: 45px;
+  display: flex;
+  padding: 12px 11px;
+  align-items: flex-start;
+  min-width: 300px;
+  border-radius: 4px;
+`;
+
+const OverlapGroup2 = styled.div`
+  ${Border1pxWhite}
+  height: 45px;
+  margin-top: 20px;
   display: flex;
   padding: 12px 11px;
   align-items: flex-start;
@@ -303,7 +329,7 @@ const LoginBtndiv = styled.div`
   display: flex;
   padding: 12px 115px;
   align-items: flex-end;
-  padding: 12px 115px;
+  min-width: 300px;
   background-color: var(--white);
   border-radius: 4px;
   box-shadow: 0px 4px 4px #0000004c;
@@ -318,3 +344,17 @@ const SIGNUP = styled.div`
   line-height: 20px;
   white-space: nowrap;
 `;
+
+const CreateAccount = styled.div`
+  ${MontserratSemiBoldNewCar16px}
+  min-height: 20px;
+  min-width: 120px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+`;
+
+const signUpPageData = {
+  sigmaLogo1Props: sigmaLogo1Data,
+};
