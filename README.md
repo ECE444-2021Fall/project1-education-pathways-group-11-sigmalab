@@ -153,6 +153,12 @@ The project is fully dockerized, meaning you won't need to install any prerequis
    ```sh
    docker-compose down
    ```
+### VS Code Settings
+#### Ensuring Prettier Works
+In Visual studio code, ensure that the following settings are configured as follows: 
+1. Editor: Default Formatter - Set this to "Prettier - Code Formatter"
+2. Editor: Format on Save - Enable this
+   
 ### Tools and Ports
 
 * React Frontend: `http://localhost:3000/`
