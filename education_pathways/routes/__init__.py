@@ -1,2 +1,2 @@
-from .. import app
-from . import course_routes
+from .. import app,db
+from . import course_routes, user_routes

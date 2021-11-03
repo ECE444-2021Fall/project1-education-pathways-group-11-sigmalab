@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-# NOTE: Uncomment this to populate db
+# NOTE: Uncomment this to re-populate db
 # from . import db_init
 
 # ----------------------------->  db system    username:passwd   host     db-name
