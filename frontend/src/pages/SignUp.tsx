@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import './../login.css';
 import { LogoIcon } from '../components/Icons';
 const iconStyles = tw`fill-current h-5 w-full`;
-import {useHistory} from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 function SignUp(): JSX.Element {
   return (
