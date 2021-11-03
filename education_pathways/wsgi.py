@@ -1,11 +1,10 @@
-from __init__ import create_app
+from . import app
 import pickle
 import networkx as nx
 import pandas as pd
 from scipy.sparse import load_npz
 
 if __name__=="__main__":
-    app = create_app()
     with open('resources/course_vectorizer.pickle4','rb') as f:
         vectorizer = pickle.load(f)
     with open('resources/wordvecs.npz','rb') as f:
