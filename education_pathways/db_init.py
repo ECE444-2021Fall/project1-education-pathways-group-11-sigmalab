@@ -25,7 +25,8 @@ cursor.execute(drop_table)
 
 create_table = """
 CREATE TABLE IF NOT EXISTS course_data(
-    code                          TEXT PRIMARY KEY,
+    id                            SERIAL PRIMARY KEY,
+    code                          VARCHAR(20) NOT NULL UNIQUE,
     name                          TEXT,
     division                      TEXT,
     course_description            TEXT,

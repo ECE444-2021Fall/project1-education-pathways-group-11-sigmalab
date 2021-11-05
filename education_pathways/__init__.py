@@ -1,14 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-
-
 app = Flask(__name__)
 
 # NOTE: Uncomment this to re-populate db
 # from . import db_init
 
-# ----------------------------->  db system    username:passwd   host     db-name
+# ------------------------------------>  db system    username:passwd   host     db-name
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@database/postgres'
 
 db = SQLAlchemy(app)
