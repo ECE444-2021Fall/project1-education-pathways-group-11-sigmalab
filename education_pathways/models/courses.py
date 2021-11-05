@@ -1,5 +1,4 @@
 from .. import db
-from .profiles import Profile
 
 class Course(db.Model):
   id = db.Column(db.Integer, primary_key=True)
