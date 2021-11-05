@@ -20,11 +20,11 @@ conn = psycopg2.connect(
 cursor = conn.cursor()
 
 # Re-Initialize database upon application stop and start 
-drop_table = "DROP TABLE IF EXISTS course_data"
+drop_table = "DROP TABLE IF EXISTS course CASCADE"
 cursor.execute(drop_table)
 
 create_table = """
-CREATE TABLE IF NOT EXISTS course_data(
+CREATE TABLE IF NOT EXISTS course(
     id                            SERIAL PRIMARY KEY,
     code                          VARCHAR(20) NOT NULL UNIQUE,
     name                          TEXT,
@@ -109,7 +109,7 @@ for course_code, course_attributes in df.iterrows():
     # print(current_row)
 
     insert = """
-    INSERT INTO course_data (
+    INSERT INTO course (
         code,
         name,
         division,
