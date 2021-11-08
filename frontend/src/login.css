@@ -1,8 +1,6 @@
 :root {
   --new-car: 
 rgba(33, 72, 192, 1);
-  --biloba-flower: 
-rgba(165, 166, 246, 1);
   --white: 
 rgba(255, 255, 255, 1);
 
@@ -14,24 +12,13 @@ rgba(255, 255, 255, 1);
 }
 
 
-.login-page {
-  align-items: flex-start;
-  background-color: var(--biloba-flower);
-  display: flex;
-  height: 1024px;
-  padding: 0 80px;
-  width: 1440px;
-}
 
 
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,700,500,600");
 
-.screen a {
-  display: contents;
-  text-decoration: none;
-}
+
 
 .container-center-horizontal {
   display: flex;
@@ -52,6 +39,7 @@ rgba(255, 255, 255, 1);
 
 input {
   background-color: transparent;
+  width:100%;
 }
 .block {
   width:100%;
@@ -64,3 +52,5 @@ input {
   cursor: pointer;
  
 }
+
+
