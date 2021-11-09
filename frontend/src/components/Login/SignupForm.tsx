@@ -60,7 +60,7 @@ function SignupForm(): JSX.Element {
           name: 'confirmPassword',
         }}
       />
-      <Button type='submit'>Log In</Button>
+      <Button type='submit'>Sign Up</Button>
       <Link to={ROUTES.login} tw='text-blue-200 text-sm hover:underline'>
         Already have an account? Log In
       </Link>
