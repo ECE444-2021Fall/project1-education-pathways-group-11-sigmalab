@@ -13,7 +13,6 @@ function Input({ icon, control, ...props }: InputProps): JSX.Element {
     field,
     fieldState: { error },
   } = useController(control);
-  console.log(error);
   return (
     <>
       <div tw='relative flex flex-col justify-center w-64'>
@@ -28,7 +27,9 @@ function Input({ icon, control, ...props }: InputProps): JSX.Element {
           {...field}
         />
       </div>
-      {error && <p tw='text-center text-red-600 text-xs'>{error.message}</p>}
+      {error && (
+        <p tw='text-center -mt-2 text-red-600 text-xs'>{error.message}</p>
+      )}
     </>
   );
 }
