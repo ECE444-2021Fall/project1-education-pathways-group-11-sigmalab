@@ -14,13 +14,13 @@ export type FormValues = {
   password: string;
 };
 
-const schema = yup
+const schema: yup.SchemaOf<FormValues> = yup
   .object()
   .shape({
-    username: yup.string().min(8).required(),
-    password: yup.string().required(),
+    username: yup.string().min(8).defined(),
+    password: yup.string().defined(),
   })
-  .required();
+  .defined();
 
 function LoginForm(): JSX.Element {
   const { handleSubmit, control } = useForm<FormValues>({

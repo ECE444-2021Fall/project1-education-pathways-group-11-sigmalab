@@ -9,7 +9,7 @@ function App(): JSX.Element {
   return (
     <Router>
       <Switch>
-        <Route path={ROUTES.login}>
+        <Route path={[ROUTES.login, ROUTES.signup]}>
           <Login />
         </Route>
         <Route>

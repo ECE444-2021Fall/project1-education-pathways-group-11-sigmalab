@@ -1,7 +1,9 @@
 import React from 'react';
+import { Route, Switch } from 'react-router';
 import tw from 'twin.macro';
 import { LogoIcon } from '../components/Icons';
-import { LoginForm } from '../components/Login';
+import { LoginForm, SignupForm } from '../components/Login';
+import ROUTES from '../config/routes';
 
 function Login(): JSX.Element {
   return (
@@ -10,7 +12,14 @@ function Login(): JSX.Element {
         <LogoIcon tw='text-black h-16 mr-4' />
         <h1 tw='text-white text-5xl'>Sigma Educate</h1>
       </div>
-      <LoginForm />
+      <Switch>
+        <Route path={ROUTES.login}>
+          <LoginForm />
+        </Route>
+        <Route path={ROUTES.signup}>
+          <SignupForm />
+        </Route>
+      </Switch>
     </div>
   );
 }

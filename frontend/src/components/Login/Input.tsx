@@ -1,11 +1,12 @@
 import React from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import tw from 'twin.macro';
-import { FormValues } from './LoginForm';
+import { FormValues as LoginVals } from './LoginForm';
+import { FormValues as SignupVals } from './SignupForm';
 
 interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
   icon?: JSX.Element;
-  control: UseControllerProps<FormValues>;
+  control: UseControllerProps<LoginVals | SignupVals>;
 }
 
 function Input({ icon, control, ...props }: InputProps): JSX.Element {
