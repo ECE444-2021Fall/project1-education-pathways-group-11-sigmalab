@@ -42,19 +42,19 @@ function SignupForm(): JSX.Element {
       <Input
         placeholder='Username'
         type='text'
-        icon={<BsFillPersonFill tw='h-5 w-max' />}
+        icon={<BsFillPersonFill tw='h-5 w-5' />}
         control={{ control, name: 'username' }}
       />
       <Input
         placeholder='Password'
         type='password'
-        icon={<BsFillLockFill tw='h-5 w-max' />}
+        icon={<BsFillLockFill tw='h-5 w-5' />}
         control={{ control, name: 'password' }}
       />
       <Input
         placeholder='Confirm Password'
         type='password'
-        icon={<BsFillLockFill tw='h-5 w-max' />}
+        icon={<BsFillLockFill tw='h-5 w-5' />}
         control={{
           control,
           name: 'confirmPassword',
