@@ -1,3 +1,4 @@
+# from .profiles import ProfileSchema
 from .. import db
 
 class User(db.Model):

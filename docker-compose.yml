@@ -13,6 +13,7 @@ services:
       - .:/usr/app:cached
     environment:
       - FLASK_ENV=development
+      - FLASK_APP=__init__
     depends_on:
       - database
   frontend:
