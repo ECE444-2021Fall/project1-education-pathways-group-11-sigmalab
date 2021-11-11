@@ -1,7 +1,7 @@
-from flask.wrappers import Request
 from . import app, db
 from flask import jsonify, request
 from ..models.users import User
+from ..models.profiles import Profile
 
 # EXAMPLE: import the model used to create new rows in a table
 @app.route('/addUser', methods=['POST'])
