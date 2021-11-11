@@ -11,6 +11,8 @@ services:
     volumes:
       - /usr/app/__pycache__
       - .:/usr/app:cached
+    environment:
+      - FLASK_ENV=development
     depends_on:
       - database
   frontend:
@@ -31,6 +33,8 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./database:/var/lib/postgresql/data
     ports:
       - "4000:5432"
   adminer:

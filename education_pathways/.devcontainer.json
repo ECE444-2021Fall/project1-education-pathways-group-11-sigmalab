@@ -4,5 +4,6 @@
 	"service": "edu_pathways",
 	"shutdownAction": "none",
 	"workspaceFolder": "/usr/app/education_pathways",
-	"forwardPorts": [5000, 5000]
+	"forwardPorts": [5000, 5000],
+	"extensions": ["ms-python.python"]
 }

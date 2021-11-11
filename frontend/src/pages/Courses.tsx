@@ -1,11 +1,22 @@
 import React from 'react';
-import tw from 'twin.macro';
+import Course from '../components/Courses';
+import course from '../datafillers/course';
 
 function Courses(): JSX.Element {
   return (
-    <div tw='bg-black flex justify-center items-center h-full w-full'>
-      <h1 css={[tw`text-5xl text-white`]}>Courses Page</h1>
-    </div>
+    <Course
+      code={course.code}
+      name={course.name}
+      division={course.division}
+      department={course.department}
+      campus={course.campus}
+      description={course.description}
+      lastUpdated={course.lastUpdated}
+      offered={course.offered}
+      prerequisites={course.prerequisites}
+      corequisites={course.corequisites}
+      exclusions={course.exclusions}
+    />
   );
 }
 
