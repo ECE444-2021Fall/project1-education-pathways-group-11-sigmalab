@@ -3,7 +3,6 @@ from .. import db
 from .courses import Course
 
 # association table between courses and profiles
-# Course_Profile_A = db.Table('course_profile_a',
 class Course_Profile_A(db.Model):
   __tablename__ = 'course_profile_a'
   profile_id = db.Column(db.Integer, \

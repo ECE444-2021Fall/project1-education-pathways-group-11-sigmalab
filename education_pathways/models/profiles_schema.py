@@ -13,6 +13,7 @@ from marshmallow import validates_schema, validate
 #   class Meta:
 #     ordered = True
 
+<<<<<<< HEAD
 class CourseSchema(ma.Schema):
   id = ma.Int()
   code= ma.Str()
@@ -28,6 +29,14 @@ class YearSchema(ma.Schema):
 
 year_schema = YearSchema()
 years_schema = YearSchema(many=True)
+=======
+# class CourseSchema(ma.Schema):
+#   id = ma.Pluck(UnformattedCourseSchema, 'course')
+#   session = ma.Str(validate=validate. \
+#     OneOf(['fall', 'winter', 'summer', 'unassigned']))
+#   class Meta:
+#     ordered = True
+>>>>>>> 69b6faf (add endpoint validation)
 
 def not_blank_validator(data):
   if not data:

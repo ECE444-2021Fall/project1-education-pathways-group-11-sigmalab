@@ -1,6 +1,6 @@
 from . import app, db
 from flask import jsonify, request
-from ..models.profiles import Course_Profile_A, Profile
+from ..models.profiles import Profile
 from ..models.users import User
 from ..models.courses import Course
 from ..models.profiles_schema import years_schema, profile_schema, profiles_schema
