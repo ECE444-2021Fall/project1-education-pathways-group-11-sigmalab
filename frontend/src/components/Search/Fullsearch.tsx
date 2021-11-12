@@ -10,12 +10,19 @@ interface SearchProps {
 function Fullsearch({ defaultSearchTerm }: SearchProps): JSX.Element {
   const [searchTerm, setSearchTerm] = useState('Search for courses...');
   const onLoad = () => setSearchTerm(defaultSearchTerm);
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
+
   const onClick = () => {
     if (searchTerm === defaultSearchTerm) {
       setSearchTerm('');
+    }
+  };
+
+  const onBlur = () => {
+    if (searchTerm === '') {
+      setSearchTerm(defaultSearchTerm);
     }
   };
 
@@ -26,11 +33,12 @@ function Fullsearch({ defaultSearchTerm }: SearchProps): JSX.Element {
           <input
             type='text'
             name='search'
-            tw='w-full h-1/2 mb-5 text-gray-700 rounded-lg border-2 border-b-blue-uoft border-dotted drop-shadow-none'
+            tw='w-full h-1/2 mb-5 text-gray-700 text-xl rounded-lg border-2 border-b-blue-uoft border-dotted drop-shadow-none'
             value={searchTerm}
             onLoad={onLoad}
             onChange={onChange}
             onClick={onClick}
+            onBlur={onBlur}
           ></input>
           <Pill> Filters </Pill>
           <StyledDropdown name='years' id='years' tw='h-1/3'>
@@ -50,7 +58,10 @@ function Fullsearch({ defaultSearchTerm }: SearchProps): JSX.Element {
             <option value='Any'>Select Campus</option>
           </StyledDropdown>
         </form>
-        <Button variant='primary' tw='flex-auto h-1/2 justify-center ml-1'>
+        <Button
+          variant='primary'
+          tw='flex-auto w-1/4 h-1/2 justify-center ml-1'
+        >
           Search
         </Button>
       </Card>

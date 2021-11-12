@@ -9,12 +9,17 @@ interface QuicksearchProps {
 function Quicksearch({ defaultSearchTerm }: QuicksearchProps): JSX.Element {
   const [searchTerm, setSearchTerm] = useState('Search for courses...');
   const onLoad = () => setSearchTerm(defaultSearchTerm);
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
   const onClick = () => {
     if (searchTerm === defaultSearchTerm) {
       setSearchTerm('');
+    }
+  };
+  const onBlur = () => {
+    if (searchTerm === '') {
+      setSearchTerm(defaultSearchTerm);
     }
   };
 
@@ -25,11 +30,12 @@ function Quicksearch({ defaultSearchTerm }: QuicksearchProps): JSX.Element {
           <input
             type='text'
             name='search'
-            tw='w-full h-full text-gray-700 rounded-lg border-b-blue-uoft'
+            tw='w-full h-full text-gray-700 text-xl rounded-lg border-b-blue-uoft'
             value={searchTerm}
             onLoad={onLoad}
             onChange={onChange}
             onClick={onClick}
+            onBlur={onBlur}
           ></input>
         </form>
         <Button variant='primary' tw='flex-auto h-full justify-center ml-1'>
