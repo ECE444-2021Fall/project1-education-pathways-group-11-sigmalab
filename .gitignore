@@ -1,2 +1,3 @@
-database
 msearch
+*/**/__pycache__
+database

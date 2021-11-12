@@ -45,7 +45,6 @@ def searchTest():
     print(i, flush=True)
     result_schema = resultSchema().dump(i)
     result_schemas.append(result_schema)
-
   return jsonify(success=True, query=sQuery, results = result_schemas), 200
 
 def unique_entries(results):
