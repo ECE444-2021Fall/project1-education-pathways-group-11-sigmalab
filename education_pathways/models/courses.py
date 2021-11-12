@@ -1,6 +1,9 @@
 from .. import db
 
+
 class Course(db.Model):
+  __tablename__ = 'course'
+  __searchable__= ['code', 'name', 'division', 'course_description', 'department', 'campus', 'term']
   id = db.Column(db.Integer, primary_key=True)
   code = db.Column(db.String(20), unique=True)
   name = db.Column(db.Text())

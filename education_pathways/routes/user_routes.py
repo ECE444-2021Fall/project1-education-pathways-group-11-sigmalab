@@ -9,6 +9,7 @@ def addUser():
   data = request.json
   newUser = User(username=data['username'])
   db.session.add(newUser)
+  print('adding user')
   try:
     db.session.commit()
   except:
