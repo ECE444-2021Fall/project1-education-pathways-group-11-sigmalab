@@ -1,6 +1,8 @@
-from . import app
-from flask import render_template, request, redirect
+from . import app, db
+from flask import render_template, request, redirect, jsonify
 from wtforms import Form, StringField, SelectField
+from ..models.courses import Course
+from ..models.course_schema import CourseSchema
 import pickle
 import numpy as np
 import pandas as pd
@@ -198,3 +200,16 @@ def course(code):
         activities=activities,
         zip=zip
         )
+
+@app.route('/getCourse', methods=['GET'])
+def getCourse():
+    data = request.json
+    if (data == None):
+        return jsonify(543)
+    print(data, flush=True)
+    try:
+        courseData = Course.query.filter(Course.code==data['code']).one()
+    except Exception as err:
+        return {"message":str(err)}, 400
+
+    return jsonify(CourseSchema.dump(courseData), 200)
