@@ -36,21 +36,17 @@ class resultSchema(Schema):
 class resultsSchema(Schema):
     results = fields.Nested(resultSchema)
 
-# EXAMPLE: import the model used to create new rows in a table
 @app.route('/searchTest', methods=['POST'])
 def searchTest():
   data = request.json
   sQuery = data['query']
-  
-  # db.session.add(newUser)
-  results = search.msearch(Course, query=sQuery, fields=['code', 'name', 'division', 'course_description', 'department', 'campus', 'term'], limit=10)
-  #results = Course.query.msearch('ece444', fields=['code'], limit=2)
-  # for attr in dir(results[0]):
-  #   print("obj.%s = %r" % (attr, getattr(results, attr)), flush=True)
+  sFilters = data['filters']
 
-  # print(len(results), flush=False)
-  # for i in results:
-  #   print(i, flush=True)
+
+  results = search.msearch(Course, query=sQuery, fields=['code', 'name', 'division', 'course_description', 'department', 'campus', 'term'], limit=10)
+
+  if len(results) == 0:
+    return jsonify(success=False, query=sQuery), 200
 
   results = unique_entries(results)
   result_schemas = []
@@ -58,11 +54,7 @@ def searchTest():
     print(i, flush=True)
     result_schema = resultSchema().dump(i)
     result_schemas.append(result_schema)
-  # try:
-  #   pass
-  #   #db.session.commit()
-  # except:
-  #   return jsonify(success=False), 400
+
   return jsonify(success=True, query=sQuery, results = result_schemas), 200
 
 def unique_entries(results):
