@@ -28,7 +28,7 @@ function Navbar({ width: navbarWidth }: NavbarProps): JSX.Element {
       >
         <LogoIcon css={[iconStyles, tw`h-7`]} />
       </StyledLink>
-      <StyledLink to={ROUTES.courses} activeStyle={activeLinkStyles}>
+      <StyledLink to={ROUTES.search} activeStyle={activeLinkStyles}>
         <SearchIcon css={iconStyles} />
       </StyledLink>
       <StyledLink to={ROUTES.profiles} activeStyle={activeLinkStyles}>
