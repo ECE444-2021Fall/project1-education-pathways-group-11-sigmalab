@@ -97,4 +97,4 @@ function card(title: string, content: string[]): JSX.Element {
   );
 }
 
-export default Course;
+export { Course, CourseProps };

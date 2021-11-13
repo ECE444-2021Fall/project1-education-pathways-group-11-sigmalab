@@ -2,7 +2,7 @@ from . import app, db
 from flask import render_template, request, redirect, jsonify
 from wtforms import Form, StringField, SelectField
 from ..models.courses import Course
-from ..models.course_schema import CourseSchema
+from ..models.course_schema import courseSchema
 import pickle
 import numpy as np
 import pandas as pd
@@ -203,7 +203,7 @@ def course(code):
 
 @app.route('/getCourse', methods=['GET'])
 def getCourse():
-    data = request.json
+    data = request.args
     if (data == None):
         return jsonify(543)
     print(data, flush=True)
@@ -212,4 +212,4 @@ def getCourse():
     except Exception as err:
         return {"message":str(err)}, 400
 
-    return jsonify(CourseSchema.dump(courseData), 200)
+    return jsonify(courseSchema.dump(courseData), 200)

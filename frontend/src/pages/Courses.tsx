@@ -1,8 +1,17 @@
-import React from 'react';
-import Course from '../components/Courses';
-import course from '../datafillers/course';
+import React, { useState } from 'react';
+import { Course, CourseProps } from '../components/Courses';
+//import course from '../datafillers/course';
 
 function Courses(): JSX.Element {
+  const [courseInfo, setCourseInfo] = useState(CourseProps);
+  fetch('http://localhost:5000/getCourse?code=ECE444H1')
+    .then((res) => res.json())
+    .then((json) => {
+      course = json;
+    });
+
+  return <p>{course}</p>;
+
   return (
     <Course
       code={course.code}

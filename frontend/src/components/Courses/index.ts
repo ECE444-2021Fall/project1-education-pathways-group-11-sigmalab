@@ -1,3 +1,3 @@
-import Course from './Course';
+import Course, CourseProps from './Course';
 
-export default Course;
+export { Course, CourseProps };
