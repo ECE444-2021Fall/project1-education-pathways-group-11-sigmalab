@@ -5,6 +5,7 @@ from ..models.users import User
 from ..models.courses import Course
 from flask_msearch import Search
 from marshmallow import Schema, fields
+# from ..models.searches_schema import resultSchema
 
 # https://programmerall.com/article/8033330201/
 # https://tutorial101.blogspot# .com/2021/04/python-flask-blog-with-admin-using.html
@@ -38,10 +39,10 @@ class resultsSchema(Schema):
 
 @app.route('/searchTest', methods=['POST'])
 def searchTest():
+  print('------------search----------', flush=True)
   data = request.json
   sQuery = data['query']
   sFilters = data['filters']
-
 
   results = search.msearch(Course, query=sQuery, fields=['code', 'name', 'division', 'course_description', 'department', 'campus', 'term'], limit=10)
 
@@ -49,12 +50,15 @@ def searchTest():
     return jsonify(success=False, query=sQuery), 200
 
   results = unique_entries(results)
+  results = filter_results(results, sFilters)
+
   result_schemas = []
   for i in results:
     print(i, flush=True)
     result_schema = resultSchema().dump(i)
     result_schemas.append(result_schema)
 
+  print('------------end----------', flush=True)
   return jsonify(success=True, query=sQuery, results = result_schemas), 200
 
 def unique_entries(results):
@@ -65,3 +69,25 @@ def unique_entries(results):
       clean_results.append(i)
       seen.add(i['code'])
   return clean_results
+
+def filter_results(courses, filters, n_return=10):
+  filtered_results = []
+  
+  # number of courses to return
+  n_return = int(n_return) + 1
+
+  for course in courses:
+    course_filtered = True
+    for course_selector in filters.keys():
+      if course_selector == "term":
+        year, semester = filters["term"].split(" ")[:2]
+        if year not in course[course_selector] and semester not in course[course_selector]:
+          course_filtered = False
+          break
+      elif course[course_selector] != filters[course_selector]:
+        course_filtered = False
+        break
+    if course_filtered:
+      filtered_results.append(course)
+  
+  return filtered_results[:n_return]
