@@ -49,7 +49,9 @@ def searchTest():
     return jsonify(success=False, query=sQuery), 200
 
   results = unique_entries(results)
-  results = filter_results(results, sFilters)
+
+  if len(sFilters) > 0:
+    results = filter_results(results, sFilters)
 
   result_schemas = []
   for i in results:
