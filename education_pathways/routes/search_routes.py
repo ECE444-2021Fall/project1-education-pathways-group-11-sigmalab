@@ -71,6 +71,17 @@ def filter_results(courses, filters, n_return=10):
         if year not in course[course_selector] and semester not in course[course_selector]:
           course_filtered = False
           break
+      elif course_selector == "year":
+        course_year = -1
+        for i, char in enumerate(course["code"]):
+          if char.isdigit():
+            course_year = int(char)
+            break
+        if course_year != -1:
+          if course_year == int(filters['year']):
+            course_filtered = True
+          else:
+            course_filtered= False
       elif course[course_selector] != filters[course_selector]:
         course_filtered = False
         break
