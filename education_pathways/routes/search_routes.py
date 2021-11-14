@@ -39,7 +39,6 @@ class resultsSchema(Schema):
 
 @app.route('/searchTest', methods=['POST'])
 def searchTest():
-  print('------------search----------', flush=True)
   data = request.json
   sQuery = data['query']
   sFilters = data['filters']
@@ -58,7 +57,6 @@ def searchTest():
     result_schema = resultSchema().dump(i)
     result_schemas.append(result_schema)
 
-  print('------------end----------', flush=True)
   return jsonify(success=True, query=sQuery, results = result_schemas), 200
 
 def unique_entries(results):
@@ -74,7 +72,7 @@ def filter_results(courses, filters, n_return=10):
   filtered_results = []
   
   # number of courses to return
-  n_return = int(n_return) + 1
+  n_return = int(n_return)
 
   for course in courses:
     course_filtered = True
@@ -90,4 +88,4 @@ def filter_results(courses, filters, n_return=10):
     if course_filtered:
       filtered_results.append(course)
   
-  return filtered_results[:n_return]
+  return filtered_results[:n_return+1]
