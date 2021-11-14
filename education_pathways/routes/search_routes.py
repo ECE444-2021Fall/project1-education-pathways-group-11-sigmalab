@@ -24,7 +24,7 @@ search.init_app(app)
 # search.update_index()
 # search.update_index(Course)
 
-@app.route('/searchTest', methods=['POST'])
+@app.route('/search', methods=['GET'])
 def searchTest():
   data = request.json
   sQuery = data['query']
