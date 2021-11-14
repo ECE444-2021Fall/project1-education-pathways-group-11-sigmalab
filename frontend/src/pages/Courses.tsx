@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
-import { Course, CourseProps } from '../components/Courses';
+import React, { useEffect, useState } from 'react';
+import tw from 'twin.macro';
+import Course, { CourseProps } from '../components/Courses/Course';
+import ROUTES from '../config/routes';
+import axios from 'axios';
+
 //import course from '../datafillers/course';
 
 function Courses(): JSX.Element {
-  const [courseInfo, setCourseInfo] = useState(CourseProps);
-  fetch('http://localhost:5000/getCourse?code=ECE444H1')
-    .then((res) => res.json())
-    .then((json) => {
-      course = json;
-    });
+  const [course, setCourse] = useState<CourseProps>(Object);
+  const [error, setError] = useState(0);
+  const getCourseInfo = () => {
+    axios
+      .get(ROUTES.backend + 'getCourse', {
+        params: { code: 'ECE444H1' },
+        headers: {},
+      })
+      .then((response) => setCourse(response.data))
+      .catch((error) => {
+        setError(1);
+      });
+  };
 
-  return <p>{course}</p>;
+  useEffect(() => {
+    getCourseInfo();
+  }, []);
 
+  if (error) {
+    return (
+      <div tw='flex justify-center items-center h-full w-full'>
+        <h1 tw='text-3xl'> Could not find page: {error} </h1>
+      </div>
+    );
+  }
   return (
     <Course
       code={course.code}

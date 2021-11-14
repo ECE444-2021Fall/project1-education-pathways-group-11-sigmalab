@@ -5,7 +5,7 @@ import { Card } from '../shared';
 import InfoCard from './InfoCard';
 import RequirementsCard from './RequirementsCard';
 
-interface CourseProps {
+export interface CourseProps {
   code: string;
   name: string;
   division: string;
@@ -97,4 +97,4 @@ function card(title: string, content: string[]): JSX.Element {
   );
 }
 
-export { Course, CourseProps };
+export default Course;
