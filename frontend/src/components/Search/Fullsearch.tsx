@@ -28,7 +28,7 @@ function Fullsearch({ defaultSearchTerm }: SearchProps): JSX.Element {
 
   return (
     <Fragment>
-      <Card tw='w-2/3 flex-row justify-center h-auto mb-1 p-12'>
+      <Card tw='w-2/3 flex-row justify-center h-auto mb-1 px-12 pt-12 pb-10'>
         <form action='' tw=''>
           <div tw='flex w-full'>
             <input
@@ -48,20 +48,20 @@ function Fullsearch({ defaultSearchTerm }: SearchProps): JSX.Element {
 
           <div tw='flex-row w-full'>
             <Pill tw='text-gray-800 border-black mr-5'> Optional Filters </Pill>
-            <StyledDropdown name='years' id='years' tw='h-16'>
+            <StyledDropdown name='years' id='years' tw='h-16 mb-2'>
               <option value='Any'>Select Year</option>
               <option value='First Year'>First Year</option>
               <option value='Second Year'>Second Year</option>
               <option value='Third Year'>Third Year</option>
               <option value='Foruth Year'>Fourth Year</option>
             </StyledDropdown>
-            <StyledDropdown name='Division' id='Division' tw='h-16'>
+            <StyledDropdown name='Division' id='Division' tw='h-16 mb-2'>
               <option value='Any'>Select Division</option>
             </StyledDropdown>
-            <StyledDropdown name='Dept' id='Dept' tw='h-16'>
+            <StyledDropdown name='Dept' id='Dept' tw='h-16 mb-2'>
               <option value='Any'>Select Department</option>
             </StyledDropdown>
-            <StyledDropdown name='Campus' id='Dept' tw='h-16'>
+            <StyledDropdown name='Campus' id='Dept' tw='h-16 mb-2'>
               <option value='Any'>Select Campus</option>
             </StyledDropdown>
           </div>
