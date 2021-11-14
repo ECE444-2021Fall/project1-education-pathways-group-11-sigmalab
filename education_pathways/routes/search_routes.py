@@ -5,7 +5,7 @@ from ..models.users import User
 from ..models.courses import Course
 from flask_msearch import Search
 from marshmallow import Schema, fields
-# from ..models.searches_schema import resultSchema
+from ..models.resultSchema import resultSchema
 
 # https://programmerall.com/article/8033330201/
 # https://tutorial101.blogspot# .com/2021/04/python-flask-blog-with-admin-using.html
@@ -23,19 +23,6 @@ search.init_app(app)
 # Uncomment to update
 # search.update_index()
 # search.update_index(Course)
-
-class resultSchema(Schema):
-    name = fields.String()
-    code = fields.String()
-    department = fields.String()
-    division = fields.String()
-    campus = fields.String()
-    term = fields.String()
-    id = fields.Int()
-    course_description = fields.String()
-
-class resultsSchema(Schema):
-    results = fields.Nested(resultSchema)
 
 @app.route('/searchTest', methods=['POST'])
 def searchTest():
