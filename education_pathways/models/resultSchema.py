@@ -10,6 +10,3 @@ class resultSchema(Schema):
     term = fields.String()
     id = fields.Int()
     course_description = fields.String()
-
-class resultsSchema(Schema):
-    results = fields.Nested(resultSchema)

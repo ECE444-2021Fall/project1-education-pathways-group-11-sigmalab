@@ -14,12 +14,13 @@ app.config['MSEARCH_ENABLE'] = True
 app.config['WHOOSH_BASE'] = 'whoosh_index'
 app.config['WHOOSH_ENABLE'] = True
 
-db = SQLAlchemy(app)
 
+db = SQLAlchemy(app)
 
 
 from . import routes
 from . import models
+
 
 # NOTE: Uncomment this to re-populate db
 # db.drop_all()
