@@ -10,6 +10,8 @@ import App from './App';
 import tw, { GlobalStyles } from 'twin.macro';
 import { createGlobalStyle } from 'styled-components';
 import { CookiesProvider } from 'react-cookie';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 const CustomGlobalStyles = createGlobalStyle`
   body {
@@ -18,12 +20,13 @@ const CustomGlobalStyles = createGlobalStyle`
 `;
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <GlobalStyles />
     <CustomGlobalStyles />
     <CookiesProvider>
       <App />
     </CookiesProvider>
-  </React.StrictMode>,
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
