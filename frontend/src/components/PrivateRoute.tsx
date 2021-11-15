@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Redirect, useLocation } from 'react-router-dom';
-import { isPropertySignature, JsxElement } from 'typescript';
+import { Route, Redirect } from 'react-router-dom';
 import ROUTES from './../config/routes';
 
 function isAuthenticated() {

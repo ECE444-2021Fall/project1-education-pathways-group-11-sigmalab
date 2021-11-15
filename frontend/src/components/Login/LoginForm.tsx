@@ -38,7 +38,7 @@ function LoginForm(): JSX.Element {
       body: JSON.stringify(data),
     })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         if (!(response.status === 201)) {
           throw new Error(response.statusText);
         } else {
@@ -55,13 +55,13 @@ function LoginForm(): JSX.Element {
       <Input
         placeholder='Username'
         type='text'
-        icon={<BsFillPersonFill tw='h-5 w-max' />}
+        icon={<BsFillPersonFill tw='h-5 w-5' />}
         control={{ control, name: 'username' }}
       />
       <Input
         placeholder='Password'
         type='password'
-        icon={<BsFillLockFill tw='h-5 w-max' />}
+        icon={<BsFillLockFill tw='h-5 w-5' />}
         control={{ control, name: 'password' }}
       />
       <Button type='submit'>Log In</Button>

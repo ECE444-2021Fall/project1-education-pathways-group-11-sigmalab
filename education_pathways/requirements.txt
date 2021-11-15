@@ -1,8 +1,10 @@
 attrs==21.2.0
+blinker==1.4
 certifi==2021.5.30
 click==8.0.1
 decorator==4.4.2
 Flask==1.1.2
+flask-msearch==0.2.9.2
 flask-marshmallow==0.14.0
 Flask-SQLAlchemy==2.5.1
 greenlet==1.1.2
@@ -35,5 +37,6 @@ tbb==2021.2.0
 threadpoolctl==2.1.0
 toml==0.10.2
 Werkzeug==1.0.1
+Whoosh==2.7.4
 WTForms==2.3.3
 zipp==3.5.0

@@ -13,12 +13,21 @@ from marshmallow import validates_schema, validate
 #   class Meta:
 #     ordered = True
 
-# class CourseSchema(ma.Schema):
-#   id = ma.Pluck(UnformattedCourseSchema, 'course')
-#   session = ma.Str(validate=validate. \
-#     OneOf(['fall', 'winter', 'summer', 'unassigned']))
-#   class Meta:
-#     ordered = True
+class CourseSchema(ma.Schema):
+  id = ma.Int()
+  code= ma.Str()
+class SessionSchema(ma.Schema):
+  name = ma.Str(validate=validate. \
+    OneOf(['fall', 'winter', 'summer', 'unassigned']))
+  courses = ma.List(ma.Nested(CourseSchema))
+class YearSchema(ma.Schema):
+  year = ma.Int()
+  sessions = ma.List(ma.Nested(SessionSchema))
+# class ScheduleSchema(ma.Schema):
+
+
+year_schema = YearSchema()
+years_schema = YearSchema(many=True)
 
 def not_blank_validator(data):
   if not data:
