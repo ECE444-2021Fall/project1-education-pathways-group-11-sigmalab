@@ -25,7 +25,7 @@ function requirementsCard(
         <Typography tw='text-lg font-bold'>{element[0]}</Typography>
         <Typography tw='text-lg padding-left[1rem]'>
           {' '}
-          {element[1].forEach((course, id) => (
+          {element[1].map((course, id) => (
             <>
               <StyledLink key={id} to={'/courses/' + course}>
                 {course}

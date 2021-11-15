@@ -67,7 +67,7 @@ function Course({
           {customColumn(wideCol)}
         </Grid>
       </Grid>
-      <p tw='position[absolute] bottom-1 text-gray-300'>
+      <p tw='position[absolute] bottom-1 ml-2 text-gray-300'>
         Last updated: {last_updated}
       </p>
     </Box>
