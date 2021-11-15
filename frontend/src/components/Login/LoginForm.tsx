@@ -29,7 +29,25 @@ function LoginForm(): JSX.Element {
   });
 
   const onSubmit = handleSubmit((data) => {
-    // TODO: login handler goes here
+    fetch('http://localhost:5000/validateLogin', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        console.log(response);
+        if (!(response.status === 201)) {
+          throw new Error(response.statusText);
+        } else {
+          return 'Valid login';
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   return (

@@ -7,7 +7,7 @@ from ..models.users_schema import user_schema
 from marshmallow.exceptions import ValidationError
 
 # EXAMPLE: import the model used to create new rows in a table
-@app.route('/createUser', methods=['GET'])
+@app.route('/createUser', methods=['POST'])
 def createUser():
   json_data = request.get_json()
   if not json_data:
@@ -46,6 +46,6 @@ def validateLogin():
 
   user = User.query.filter_by(username=data['username'],password=data['password']).all()
   if user:
-    return jsonify(success=True), 200
+    return jsonify(success=True), 201
   else:
     return {"message":"Invalid login details"}, 500

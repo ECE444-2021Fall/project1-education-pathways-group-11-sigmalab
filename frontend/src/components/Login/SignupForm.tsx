@@ -34,7 +34,25 @@ function SignupForm(): JSX.Element {
   });
 
   const onSubmit = handleSubmit((data) => {
-    // TODO: signup handler goes here
+    const { username, password } = data;
+    fetch('http://localhost:5000/createUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    })
+      .then((response) => {
+        console.log(response);
+        if (!(response.status === 200)) {
+          throw new Error(response.statusText);
+        } else {
+          return 'Valid, creating user';
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   return (
