@@ -47,7 +47,7 @@ const schema: yup.SchemaOf<Response> = yup
 
 async function SearchQuery(
   query: string,
-  filters: Filters
+  filters: Filters | string
 ): Promise<Response | null> {
   let res: Response | null = null;
 

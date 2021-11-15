@@ -7,7 +7,6 @@ import { useHistory } from 'react-router';
 interface ResultsProps {
   courseName: string;
   courseCode: string;
-  courseYear: string;
   courseDivision: string;
   courseDepartment: string;
   courseDescription: string;
@@ -16,7 +15,6 @@ interface ResultsProps {
 function Results({
   courseName,
   courseCode,
-  courseYear,
   courseDivision,
   courseDepartment,
   courseDescription,
@@ -25,21 +23,24 @@ function Results({
 
   return (
     <Fragment>
-      <Card tw='w-2/3 flex flex-row mb-2'>
-        <ResultCard tw='mx-2 w-20 my-auto h-auto text-center'>
+      <Card tw='w-5/6 flex flex-row flex-wrap mb-2 px-2 py-4 transition-duration[0.50s]'>
+        <ResultCard tw='mx-2 w-1/12 flex-auto flex-col min-height[fit-content] text-center p-2'>
           {courseName}
         </ResultCard>
-        <ResultCard tw='mx-2 w-28 my-auto h-auto text-center'>
+        <ResultCard tw='mx-2 w-1/12 flex-auto min-height[fit-content] text-center p-2'>
           {courseCode}
         </ResultCard>
-        <ResultCard tw='mx-2 w-16 my-auto h-auto'>{courseYear}</ResultCard>
-        <ResultCard tw='mx-2 w-28 my-auto h-auto'>{courseDivision}</ResultCard>
-        <ResultCard tw='mx-2 w-auto my-auto h-auto'>
+        <ResultCard tw='mx-2 w-1/12 flex-auto min-height[fit-content] p-2'>
+          {courseDivision}
+        </ResultCard>
+        <ResultCard tw='mx-2 w-1/12 flex-auto min-height[fit-content] p-2'>
           {courseDepartment}
         </ResultCard>
-        <ResultCard tw='mx-2 w-auto h-auto'>{courseDescription}</ResultCard>
+        <ResultCard tw='mx-2 flex-auto w-1/2 min-height[fit-content]'>
+          {courseDescription}
+        </ResultCard>
         <Button
-          tw='mx-2 h-24 my-auto w-auto px-4 rounded-3xl'
+          tw='mx-2 h-auto flex-auto w-1/12 min-w-min px-4 py-4 rounded-3xl'
           onClick={() => {
             history.push('/courses/' + courseCode);
           }}

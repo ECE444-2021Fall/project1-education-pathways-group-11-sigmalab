@@ -14,7 +14,6 @@ function Search(): JSX.Element {
   return (
     <div tw='flex flex-col justify-center items-center h-full w-full '>
       <Fullsearch
-        defaultSearchTerm='Search for courses...'
         setSearchState={setSearchState}
         setResults={setResults}
         tw='position[absolute] flex'
@@ -30,7 +29,6 @@ function Search(): JSX.Element {
               tw='position[absolute] flex mb-2'
               courseName={result.name}
               courseCode={result.code}
-              courseYear={result.code}
               courseDivision={result.division}
               courseDepartment={result.department}
               courseDescription={

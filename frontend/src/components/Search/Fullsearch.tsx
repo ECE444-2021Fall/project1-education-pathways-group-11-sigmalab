@@ -9,9 +9,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import SearchQuery, { CourseResults } from '../../lib/searchQuery';
 import Department from './Department';
+import Filters from './Filters';
 
 interface SearchProps {
-  defaultSearchTerm: string;
   setSearchState: React.Dispatch<React.SetStateAction<boolean>>;
   setResults: React.Dispatch<React.SetStateAction<CourseResults[] | null>>;
 }
@@ -36,12 +36,10 @@ const schema: yup.SchemaOf<FormValues> = yup
   .defined();
 
 function Fullsearch({
-  defaultSearchTerm,
   setSearchState,
   // eslint-disable-next-line
   setResults,
 }: SearchProps): JSX.Element {
-  const [searchTerm, setSearchTerm] = useState('Search for courses...');
   const { handleSubmit, register, control } = useForm<FormValues>({
     resolver: yupResolver(schema),
     //defaultValues: { searchQuery: '' },
@@ -66,19 +64,19 @@ function Fullsearch({
 
   return (
     <Fragment>
-      <Card tw='w-2/3 flex-row justify-center h-auto mb-1 px-12 pt-12 pb-10'>
+      <Card tw='w-5/6 flex-row justify-center h-auto mb-2 px-12 pt-12 pb-10'>
         <form action='' tw='' onSubmit={onSubmit}>
           <div tw='flex w-full'>
             <input
               type='text'
-              tw='w-4/5 h-24 mb-5 text-gray-700 text-xl justify-center rounded-lg border-2 border-b-blue-uoft drop-shadow-none'
+              tw='w-11/12 h-24 mb-5 text-gray-700 text-xl justify-center rounded-lg border-2 border-b-blue-uoft drop-shadow-none p-2'
               placeholder='Search for courses...'
               {...register('searchQuery')}
             ></input>
             <Button
               variant='primary'
               type='submit'
-              tw='w-1/5 ml-4 h-24 justify-center'
+              tw='w-1/12 ml-4 h-24 justify-center'
             >
               Search
             </Button>
