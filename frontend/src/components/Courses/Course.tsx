@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import tw from 'twin.macro';
 import { Box, Grid, Typography } from '@mui/material';
-import { Card } from '../shared';
+import { Card, Button } from '../shared';
 import InfoCard from './InfoCard';
 import RequirementsCard from './RequirementsCard';
+import ROUTES from '../../config/routes';
+import axios from 'axios';
 
 export interface CourseProps {
   code: string;
@@ -31,6 +33,22 @@ function Course({
   corequisite,
   exclusion,
 }: CourseProps): JSX.Element {
+  const [inProfile, setInProfile] = useState(false);
+
+  async function addToProfile() {
+    axios
+      .get(ROUTES.backend + '/edpoint', {
+        params: { code: code },
+        headers: {},
+      })
+      .then((response) => {
+        setInProfile(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   const wideCol = [
     card('Description', [course_description]),
     RequirementsCard(pre_requisites, corequisite, exclusion),
@@ -48,8 +66,27 @@ function Course({
   return (
     <Box tw='h-screen bg-gray-light'>
       <Box>
-        <div tw='px-20 pt-12'>
-          <h1 tw='text-5xl font-bold text-gray-800 mb-10'>{name}</h1>
+        <div tw='pl-20 pr-5 pt-12'>
+          <Grid
+            container
+            direction='row-reverse'
+            justifyContent='flex-start'
+            alignItems='flex-start'
+            rowSpacing={0}
+            columnSpacing={0}
+          >
+            <Grid item xs={1.5}>
+              <Button
+                tw='padding[1rem] h-auto w-auto'
+                onClick={() => addToProfile()}
+              >
+                {inProfile ? 'In profile' : 'Add to profile'}
+              </Button>
+            </Grid>
+            <Grid item xs={10.5}>
+              <h1 tw='text-5xl font-bold text-gray-800 mb-10'>{name}</h1>
+            </Grid>
+          </Grid>
         </div>
       </Box>
       <Grid
