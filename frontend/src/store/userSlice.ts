@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { add, cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { getProfileIndex } from '../lib/storeHelpers';
 
 export interface ICourse {
@@ -27,14 +27,14 @@ export interface IProfile {
 }
 
 export interface UserState {
-  username: string | null;
-  defaultProfile: string | null;
+  username?: string;
+  defaultProfile?: string;
   profiles: IProfile[];
 }
 
 const initialState: UserState = {
-  username: null,
-  defaultProfile: null,
+  username: undefined,
+  defaultProfile: undefined,
   profiles: [],
 };
 
@@ -42,8 +42,17 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    logUser: (state, action: PayloadAction<string>) => {
-      state.username = action.payload;
+    logUser: (
+      state,
+      action: PayloadAction<{
+        username: string;
+        profiles: IProfile[];
+        defaultProfile?: string;
+      }>
+    ) => {
+      state.username = action.payload.username;
+      state.profiles = cloneDeep(action.payload.profiles);
+      state.defaultProfile = action.payload.defaultProfile;
     },
     updateProfiles: (state, action: PayloadAction<IProfile[]>) => {
       state.profiles = cloneDeep(action.payload);
