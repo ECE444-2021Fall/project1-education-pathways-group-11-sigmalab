@@ -19,12 +19,12 @@ def getProfile():
 def createProfile():
   print('------------begin----------', flush=True)
   data = request.json
-
-  # profile = db.session.query(Profile).join(Profile, User.profiles).\
-  #   filter(User.username==data['username']).\
-  #   filter(Profile.name==data['name']).one()
   
   user = User.query.filter_by(username=data['creator_username']).one()
+  if next((True for prof in user.profiles if prof.name == data['name']), False):
+    return {"message": "Profile already exists"}, 422
+  for profile in user.profiles:
+    print(profile, flush=True)
   new_profile = Profile(name=data['name'], creator=user)
 
   db.session.add(new_profile)

@@ -66,4 +66,4 @@ class Profile(db.Model):
     self.course_associations.append(course_association)
   
   def __repr__(self):
-    return '<Profile {}: {}>'.format(self.id, self.courses)
+    return '<Profile {}: {}, courses={}>'.format(self.id, self.name, self.courses)
