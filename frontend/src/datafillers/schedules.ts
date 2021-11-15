@@ -1,8 +1,8 @@
-const schedule = [
+import type { TSchedule } from '../store/userSlice';
+const schedule: TSchedule = [
   {
     year: 2021,
-    unLabeled: false,
-    semesters: [
+    sessions: [
       {
         name: 'fall',
         courses: [
@@ -33,8 +33,7 @@ const schedule = [
   },
   {
     year: 2022,
-    unLabeled: false,
-    semesters: [
+    sessions: [
       {
         name: 'fall',
         courses: [
@@ -55,11 +54,10 @@ const schedule = [
     ],
   },
   {
-    year: null,
-    unLabeled: true,
-    semesters: [
+    year: -1,
+    sessions: [
       {
-        name: '',
+        name: 'unassigned',
         courses: [
           { id: 5, name: 'ECE543' },
           { id: 5, name: 'ECE543' },

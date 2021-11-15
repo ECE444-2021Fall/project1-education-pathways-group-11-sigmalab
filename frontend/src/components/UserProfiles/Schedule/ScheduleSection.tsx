@@ -1,43 +1,33 @@
 import React from 'react';
 import tw from 'twin.macro';
-import { Divider, Pill } from '../../shared';
+import { TSchedule } from '../../../store/userSlice';
+import { Divider } from '../../shared';
+import Session from './Session';
 
 interface ScheduleSectionProps {
-  name: string | number;
-  unLabeled: boolean;
-  sessions: { name: string; courses: { id: number; name: string }[] }[];
-  [rest: string]: any;
+  schedule: TSchedule;
 }
 
-const SessionName = tw.p`text-gray-500 text-lg capitalize mt-0.5`;
-const SessionCourses = tw.div`col-span-2 grid gap-2 grid-cols-3 mb-2`;
+const yearFormatter = (year: number) => (year < 1 ? 'unassigned' : year);
 
-function ScheduleSection({
-  name,
-  sessions,
-  unLabeled,
-}: ScheduleSectionProps): JSX.Element {
+function ScheduleSection({ schedule }: ScheduleSectionProps): JSX.Element {
   return (
-    <article tw='w-2/3 my-5'>
-      <Divider>{name}</Divider>
-      <div tw='grid grid-cols-3 gap-y-4'>
-        {sessions.map((session, sessionKey) => (
-          <>
-            {unLabeled ? null : (
-              <SessionName key={sessionKey}>{session.name}</SessionName>
-            )}
-            <SessionCourses
-              key={sessionKey}
-              css={unLabeled ? tw`grid-cols-5 col-span-full` : ''}
-            >
-              {session.courses.map((course, courseIndex) => (
-                <Pill key={courseIndex}>{course.name}</Pill>
-              ))}
-            </SessionCourses>
-          </>
-        ))}
-      </div>
-    </article>
+    <>
+      {schedule.map((year, yearKey) => (
+        <article tw='w-2/3 my-5' key={yearKey}>
+          <Divider>{yearFormatter(year.year)}</Divider>
+          <div tw='flex flex-col justify-start items-stretch'>
+            {year.sessions.map((session, sessionKey) => (
+              <Session
+                session={session}
+                year={year.year}
+                key={sessionKey + 1000 * yearKey}
+              />
+            ))}
+          </div>
+        </article>
+      ))}
+    </>
   );
 }
 

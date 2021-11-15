@@ -12,15 +12,17 @@ export interface ISession {
   courses: ICourse[];
 }
 
-export interface ISchedule {
+export interface IYear {
   year: number;
   sessions: ISession[];
 }
 
+export type TSchedule = IYear[];
+
 export interface IProfile {
   name: string;
   // courses: { id: number; name: string }[];
-  schedule: ISchedule;
+  schedule: TSchedule;
   numOfSemesters: 4;
   isDefault: boolean;
   isEditing: boolean;
