@@ -1,3 +1,4 @@
+from sqlalchemy.orm.session import SessionTransaction
 from .. import db
 from .courses import Course
 
@@ -32,52 +33,34 @@ class Profile(db.Model):
   courses = db.relationship('Course', secondary='course_profile_a',\
     lazy='subquery', viewonly=True)
 
-  # def get_formatted_courses(self):
-  #   associations = self.course_associations
-  #   schedule=list()
-  #   for assoc in associations:
-  #     course_id, course_code, year, session = \
-  #       assoc.course_id, assoc.course.code, assoc.year, assoc.session
-  #     item = {'id':course_id, 'code': course_code}
-  #     if filter(lambda x: (x.get('year') and x['year'] == year), schedule):
-  #       if filter(lambda x: (x['year'].get('session') \
-  #         and x['year']), schedule):
-  #         pass
-  #       schedule[year].append(item)
-  #     else:
-  #       schedule[year] = [item]
-  #   return schedule
+  def get_formatted_courses(self):
+    associations = self.course_associations
+    schedule = list()
+    for asc in associations:
+      year = (i for i, y in enumerate(schedule) if y.get('year') and y['year'] == asc.year)
+      year = next(year, None)
+      if year is None:
+        schedule.append({'year': asc.year, 'sessions': []})
+        year = len(schedule)-1
+      session = (i for i, s in enumerate(schedule[year]['sessions'])\
+        if s.get('name') and s['name'] == asc.session)
+      session = next(session, None)
+      if session is None:
+        schedule[year]['sessions'].append\
+          ({'name': asc.session, 'courses': []})
+        session = len(schedule[year]['sessions'])-1
+      schedule[year]['sessions'][session]['courses']\
+        .append({'id': asc.course.id, 'code': asc.course.code})
+    return schedule
   
-  # def del_formatted_courses(self):
-  #   del self.__formatted_courses
-  
-  # profile_sessions = property(get_formatted_courses,None,del_formatted_courses)
+  profile_sessions = property(get_formatted_courses,None,None)
 
-
-  # @overload
-  def add_courses(self, course_list: list[tuple[Course, str]])->None:
-    for course, session in course_list:
-      course_association = Course_Profile_A(session=session, course=course)
+  def add_courses(self, course_list: list[tuple[Course, str, int]])->None:
+    for course, session, year in course_list:
+      course_association = Course_Profile_A(session=session, course=course, \
+        year=year)
       self.course_associations.append(course_association)
   
-  # @overload
-  # def add_courses(self, course_list: list[tuple[int, str]])->None:
-  #   # get the courses
-  #   course_ids = []
-  #   course_sessions = []
-
-  #   for course in :
-  #     course_ids.append(course['id'])
-  #     course_sessions.append(course['session'])
-
-  #   courses_query = Course.query.filter(Course.id.in_(course_ids)).all()
-  #   courses = [(course,course_sessions[index]) \
-  #     for index, course in enumerate(courses_query)]
-
-  #   # newProfile = Profile(name=data['name'], creator=user)
-  #   profile.add_courses(courses)
-  #   pass
-
   def add_course(self, course: Course, session: str)-> None:
     course_association = Course_Profile_A(session=session, course=course)
     self.course_associations.append(course_association)
