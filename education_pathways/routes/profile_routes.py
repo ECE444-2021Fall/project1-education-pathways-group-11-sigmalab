@@ -7,7 +7,7 @@ from ..models.profiles_schema import years_schema, profile_schema, profiles_sche
 
 @app.route('/getProfile', methods=['GET'])
 def getProfile():
-  data = request.json
+  data = request.args
   profile = db.session.query(Profile).join(Profile, User.profiles).\
     filter(User.username==data['username']).\
     filter(Profile.name==data['name']).one()
@@ -17,30 +17,25 @@ def getProfile():
 
 @app.route('/createProfile', methods=['POST'])
 def createProfile():
-  print('------------begin----------', flush=True)
   data = request.json
   
   user = User.query.filter_by(username=data['creator_username']).one()
   if next((True for prof in user.profiles if prof.name == data['name']), False):
     return {"message": "Profile already exists"}, 422
-  for profile in user.profiles:
-    print(profile, flush=True)
-  new_profile = Profile(name=data['name'], creator=user)
 
+  new_profile = Profile(name=data['name'], creator=user)
   db.session.add(new_profile)
   try:
     db.session.commit()
   except Exception as err:
     return {"message": str(err)}, 400
 
-  print('-------------end-----------', flush=True)
   return jsonify(success=True), 200
 
 
 # simple profile.create endpoint using cascades
 @app.route('/updateProfile', methods=['PUT'])
 def updateProfile():
-  print('------------begin----------', flush=True)
   data = request.json
 
   # get the profile
@@ -64,10 +59,8 @@ def updateProfile():
   profile.add_courses(courses)
 
   db.session.add(profile)
-  print(profile, flush=True)
   try:
     db.session.commit()
   except Exception as err:
     return {"message": str(err)}, 400
-  print('-------------end-----------', flush=True)
   return jsonify(success=True), 200
