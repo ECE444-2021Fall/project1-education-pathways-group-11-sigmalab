@@ -1,6 +1,6 @@
 from . import app, db
 from flask import jsonify, request
-from ..models.profiles import Profile
+from ..models.profiles import Profile, Course_Profile_A
 from ..models.users import User
 from ..models.courses import Course
 from ..models.profiles_schema import years_schema, profile_schema, profiles_schema
@@ -60,6 +60,8 @@ def updateProfile():
   profile = db.session.query(Profile).join(Profile, User.profiles).\
     filter(User.username==data['username']).\
     filter(Profile.name==data['name']).one()
+
+  Course_Profile_A.query.filter_by(profile_id=profile.id).delete()
 
   # get the courses
   course_ids = []
