@@ -6,13 +6,14 @@ import axios from 'axios';
 
 //import course from '../datafillers/course';
 
-function Courses(): JSX.Element {
+function Courses(props: any): JSX.Element {
+  const code: string = props.match.params['code'];
   const [course, setCourse] = useState<CourseProps>(Object);
   const [error, setError] = useState(0);
   const getCourseInfo = () => {
     axios
       .get(ROUTES.backend + 'getCourse', {
-        params: { code: 'ECE444H1' },
+        params: { code: code },
         headers: {},
       })
       .then((response) => setCourse(response.data))
