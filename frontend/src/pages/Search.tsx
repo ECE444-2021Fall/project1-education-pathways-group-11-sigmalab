@@ -18,25 +18,25 @@ function Search(): JSX.Element {
         setResults={setResults}
         tw='position[absolute] flex'
       />
-
-      {searchState && <Resultsheader setSearchState={setSearchState} />}
-
-      {searchState &&
-        results?.map((result, index) => (
-          <>
-            <Results
-              key={index}
-              tw='position[absolute] flex mb-2'
-              courseName={result.name}
-              courseCode={result.code}
-              courseDivision={result.division}
-              courseDepartment={result.department}
-              courseDescription={
-                result.course_description.substring(0, 300) + '...'
-              }
-            />
-          </>
-        ))}
+      <div tw='w-5/6'>
+        {searchState && <Resultsheader setSearchState={setSearchState} />}{' '}
+        {searchState &&
+          results?.map((result, index) => (
+            <>
+              <Results
+                key={index}
+                tw='position[absolute] flex mb-2'
+                courseName={result.name}
+                courseCode={result.code}
+                courseDivision={result.division}
+                courseDepartment={result.department}
+                courseDescription={
+                  result.course_description.substring(0, 300) + '...'
+                }
+              />
+            </>
+          ))}
+      </div>
     </div>
   );
 }

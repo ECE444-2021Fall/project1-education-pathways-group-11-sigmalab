@@ -10,7 +10,7 @@ interface ResultsheaderProps {
 function Resultsheader({ setSearchState }: ResultsheaderProps): JSX.Element {
   return (
     <Fragment>
-      <Card tw='w-5/6 mb-2 flex flex-row mb-2 px-2 py-4'>
+      <Card tw='mb-2 flex flex-row mb-2 px-2 py-4'>
         <ResultCard tw='mx-2 w-1/12 flex-auto min-width[fit-content] my-auto h-auto text-center'>
           Name
         </ResultCard>
@@ -28,7 +28,7 @@ function Resultsheader({ setSearchState }: ResultsheaderProps): JSX.Element {
           Description
         </ResultCard>
         <Button
-          tw='mx-2 h-auto flex-1 my-auto w-1/12 px-4 py-4 rounded-3xl'
+          tw='mx-2 w-1/12 py-2 flex-auto my-auto px-4 rounded-3xl'
           onClick={() => {
             setSearchState(false);
           }}

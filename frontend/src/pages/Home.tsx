@@ -5,6 +5,7 @@ import Whatsnew from '../components/Home/Whatsnew';
 import Quickprofile from '../components/Home/Quickprofile';
 import { CourseResults } from '../lib/searchQuery';
 import Results from '../components/Search/Results';
+import Resultsheader from '../components/Search/Resultsheader';
 
 const StyledSection = tw.section`w-1/2`;
 
@@ -17,29 +18,32 @@ function Home(): JSX.Element {
         Sigma Educate
       </h1>
       <div tw='h-full w-full px-20'>
-        <div tw='mb-10'>
+        <div tw='mb-5'>
           <Quicksearch
             setSearchState={setSearchState}
             setResults={setResults}
             tw='w-full'
           />
         </div>
-        {searchState &&
-          results?.slice(0, 3).map((result, index) => (
-            <>
-              <Results
-                key={index}
-                tw='position[absolute] flex mb-2'
-                courseName={result.name}
-                courseCode={result.code}
-                courseDivision={result.division}
-                courseDepartment={result.department}
-                courseDescription={
-                  result.course_description.substring(0, 300) + '...'
-                }
-              />
-            </>
-          ))}
+        <div tw='mb-10'>
+          {searchState && <Resultsheader setSearchState={setSearchState} />}
+          {searchState &&
+            results?.slice(0, 2).map((result, index) => (
+              <>
+                <Results
+                  key={index}
+                  tw='position[absolute] flex mb-2 w-full'
+                  courseName={result.name}
+                  courseCode={result.code}
+                  courseDivision={result.division}
+                  courseDepartment={result.department}
+                  courseDescription={
+                    result.course_description.substring(0, 300) + '...'
+                  }
+                />
+              </>
+            ))}
+        </div>
         <div tw='flex flex-row'>
           <Quickprofile tw='flex-1 h-full' />
           <Whatsnew tw='flex-1 h-screen'></Whatsnew>

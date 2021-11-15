@@ -23,7 +23,7 @@ function Results({
 
   return (
     <Fragment>
-      <Card tw='w-5/6 flex flex-row flex-wrap mb-2 px-2 py-4 transition-duration[0.50s]'>
+      <Card tw='flex flex-row flex-wrap mb-2 px-2 py-4 transition-duration[0.50s]'>
         <ResultCard tw='mx-2 w-1/12 flex-auto flex-col min-height[fit-content] text-center p-2'>
           {courseName}
         </ResultCard>
