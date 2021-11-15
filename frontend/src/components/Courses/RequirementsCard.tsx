@@ -5,15 +5,18 @@ import { Card } from '../shared';
 import StyledLink from '../shared/StyledLink';
 
 function requirementsCard(
-  prerequisites: string[],
-  corequisites: string[],
-  exclusions: string[]
+  prerequisites: string | undefined,
+  corequisites: string | undefined,
+  exclusions: string | undefined
 ): JSX.Element {
-  const requirements = [];
-  if (prerequisites.length)
-    requirements.push(['Pre-Requisites', prerequisites]);
-  if (corequisites.length) requirements.push(['Co-Requisites', corequisites]);
-  if (exclusions.length) requirements.push(['Exclusions', exclusions]);
+  let reqs: [string, string[]];
+  const requirements: Array<typeof reqs> = [];
+  if (prerequisites && prerequisites != 'NULL' && prerequisites != '')
+    requirements.push(['Pre-Requisites', new String(prerequisites).split(' ')]);
+  if (corequisites && corequisites != 'NULL' && corequisites != '')
+    requirements.push(['Co-Requisites', new String(corequisites).split(' ')]);
+  if (exclusions && exclusions != 'NULL' && exclusions != '')
+    requirements.push(['Exclusions', new String(exclusions).split(' ')]);
 
   const cardBody: JSX.Element[] = [];
   requirements.forEach((element) => {
@@ -21,15 +24,15 @@ function requirementsCard(
       <>
         <Typography tw='text-lg font-bold'>{element[0]}</Typography>
         <Typography tw='text-lg padding-left[1rem]'>
-          <>
-            {Array.isArray(element[1]) ? (
-              element[1].forEach((course) => {
-                <StyledLink to='/'>{course}</StyledLink>;
-              })
-            ) : (
-              <StyledLink to='/'>{element[1]}</StyledLink>
-            )}
-          </>
+          {' '}
+          {element[1].forEach((course, id) => (
+            <>
+              <StyledLink key={id} to={'/courses/' + course}>
+                {course}
+              </StyledLink>
+              {id + 1 === element[1].length ? null : ', '}
+            </>
+          ))}
         </Typography>
       </>
     );

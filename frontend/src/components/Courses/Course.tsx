@@ -11,12 +11,12 @@ export interface CourseProps {
   division: string;
   department: string;
   campus: string;
-  description: string;
-  lastUpdated: string;
-  offered?: string[];
-  prerequisites?: string[];
-  corequisites?: string[];
-  exclusions?: string[];
+  course_description: string;
+  last_updated: string;
+  term: string;
+  pre_requisites?: string;
+  corequisite?: string;
+  exclusion?: string;
 }
 function Course({
   code,
@@ -24,19 +24,26 @@ function Course({
   division,
   department,
   campus,
-  description,
-  lastUpdated,
-  offered = [],
-  prerequisites = [],
-  corequisites = [],
-  exclusions = [],
+  course_description,
+  last_updated,
+  term,
+  pre_requisites,
+  corequisite,
+  exclusion,
 }: CourseProps): JSX.Element {
   const wideCol = [
-    card('Description', [description]),
-    RequirementsCard(prerequisites, corequisites, exclusions),
+    card('Description', [course_description]),
+    RequirementsCard(pre_requisites, corequisite, exclusion),
   ];
   const narrowCol = [InfoCard(code, division, department, campus)];
-  if (offered.length) narrowCol.push(card('Offered', offered));
+  if (term != 'NULL' && term != '') {
+    const list = new String(term).split(' ');
+    const offered: string[] = [];
+    for (let i = 0; i < list.length - 1; i += 2) {
+      offered.push(list[i].concat(' ', list[i + 1]));
+    }
+    narrowCol.push(card('Offered', offered));
+  }
 
   return (
     <Box tw='h-screen bg-gray-light'>
@@ -60,6 +67,9 @@ function Course({
           {customColumn(wideCol)}
         </Grid>
       </Grid>
+      <p tw='position[absolute] bottom-1 text-gray-300'>
+        Last updated: {last_updated}
+      </p>
     </Box>
   );
 }
@@ -80,7 +90,7 @@ function card(title: string, content: string[]): JSX.Element {
   const cardContent = [];
   for (const text of content) {
     cardContent.push(
-      <Typography tw='text-lg text-gray-600 padding-left[1rem]'>
+      <Typography key={text} tw='text-lg text-gray-600 padding-left[1rem]'>
         {text}
       </Typography>
     );

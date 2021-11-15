@@ -5,7 +5,7 @@ const ROUTES = {
   search: '/search',
   courses: '/courses/:code',
   profiles: '/profiles',
-  backend: 'http://edu_pathways:5000/',
+  backend: 'http://localhost:5000',
 };
 
 export default ROUTES;
