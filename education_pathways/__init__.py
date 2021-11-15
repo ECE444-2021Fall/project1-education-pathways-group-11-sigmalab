@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_msearch import Search
+from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
 
@@ -14,12 +15,14 @@ app.config['MSEARCH_ENABLE'] = True
 app.config['WHOOSH_BASE'] = 'whoosh_index'
 app.config['WHOOSH_ENABLE'] = True
 
+# delete in production
+app.config['JSON_SORT_KEYS'] = False
 
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
 
-
-from . import routes
 from . import models
+from . import routes
 
 
 # NOTE: Uncomment this to re-populate db
