@@ -11,7 +11,7 @@ def getProfile():
   profile = db.session.query(Profile).join(Profile, User.profiles).\
     filter(User.username==data['username']).\
     filter(Profile.name==data['name']).one()
-  schedule = profile.profile_sessions
+  schedule = profile.profile_sessions()
   response = years_schema.dump(schedule)
   return jsonify(response), 200
 

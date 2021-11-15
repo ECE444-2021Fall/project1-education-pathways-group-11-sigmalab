@@ -33,7 +33,7 @@ class Profile(db.Model):
   courses = db.relationship('Course', secondary='course_profile_a',\
     lazy='subquery', viewonly=True)
 
-  def get_formatted_courses(self):
+  def profile_sessions(self):
     associations = self.course_associations
     schedule = list()
     for asc in associations:
@@ -52,8 +52,6 @@ class Profile(db.Model):
       schedule[year]['sessions'][session]['courses']\
         .append({'id': asc.course.id, 'code': asc.course.code})
     return schedule
-  
-  profile_sessions = property(get_formatted_courses,None,None)
 
   def add_courses(self, course_list: list[tuple[Course, str, int]])->None:
     for course, session, year in course_list:
