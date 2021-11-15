@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import tw from 'twin.macro';
-import { Box, Grid, Typography } from '@mui/material';
+import { Alert, Box, Grid, Typography } from '@mui/material';
 import { Card, Button } from '../shared';
 import InfoCard from './InfoCard';
 import RequirementsCard from './RequirementsCard';
@@ -34,6 +34,7 @@ function Course({
   exclusion,
 }: CourseProps): JSX.Element {
   const [inProfile, setInProfile] = useState(false);
+  const [alertOpen, setAlertOpen] = useState('');
 
   async function addToProfile() {
     axios
@@ -43,9 +44,11 @@ function Course({
       })
       .then((response) => {
         setInProfile(true);
+        setAlertOpen('The course was added to your default profile!');
       })
       .catch((error) => {
         console.log(error);
+        setAlertOpen('Something happened: could not add to your profile');
       });
   }
 
@@ -89,6 +92,13 @@ function Course({
           </Grid>
         </div>
       </Box>
+      {alertOpen != '' ? (
+        <Alert tw='mx-6' severity='info' onClose={() => setAlertOpen('')}>
+          {alertOpen}
+        </Alert>
+      ) : (
+        <></>
+      )}
       <Grid
         container
         direction='row'
