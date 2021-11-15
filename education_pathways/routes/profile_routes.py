@@ -37,6 +37,19 @@ def createProfile():
   print('-------------end-----------', flush=True)
   return jsonify(success=True), 200
 
+@app.route('/deleteProfile', methods=['POST'])
+def deleteProfile():
+  data = request.json
+  
+  user = User.query.filter_by(username=data['creator_username']).first()
+  Profile.query.filter_by(name=data['name'], creator=user).delete()
+
+  try:
+    db.session.commit()
+  except Exception as err:
+    return {"message": str(err)}, 400
+
+  return jsonify(success=True), 200
 
 # simple profile.create endpoint using cascades
 @app.route('/updateProfile', methods=['PUT'])
