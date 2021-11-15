@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import tw from 'twin.macro';
 import ResultCard from './Resultcard';
 import { Card, Button } from '../shared';
+import { useHistory } from 'react-router';
 
 interface ResultsProps {
   courseName: string;
@@ -20,6 +21,8 @@ function Results({
   courseDepartment,
   courseDescription,
 }: ResultsProps): JSX.Element {
+  const history = useHistory();
+
   return (
     <Fragment>
       <Card tw='w-2/3 flex flex-row mb-2'>
@@ -35,7 +38,12 @@ function Results({
           {courseDepartment}
         </ResultCard>
         <ResultCard tw='mx-2 w-auto h-auto'>{courseDescription}</ResultCard>
-        <Button tw='mx-2 h-24 my-auto w-auto px-4 rounded-3xl'>
+        <Button
+          tw='mx-2 h-24 my-auto w-auto px-4 rounded-3xl'
+          onClick={() => {
+            history.push('/courses/' + courseCode);
+          }}
+        >
           More Information
         </Button>
       </Card>

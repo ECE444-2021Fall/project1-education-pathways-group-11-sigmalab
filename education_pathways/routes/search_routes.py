@@ -65,6 +65,8 @@ def filter_results(courses, filters, n_return=10):
   for course in courses:
     course_filtered = True
     for course_selector in filters.keys():
+      if filters[course_selector] == "":
+        continue
       if course_selector == "term":
         year, semester = filters["term"].split(" ")[:2]
         if year not in course[course_selector] and semester not in course[course_selector]:

@@ -20,6 +20,9 @@ interface Response {
 
 interface Filters {
   year: string;
+  division: string;
+  department: string;
+  campus: string;
 }
 
 const schema: yup.SchemaOf<Response> = yup

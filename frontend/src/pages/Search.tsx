@@ -20,7 +20,7 @@ function Search(): JSX.Element {
         tw='position[absolute] flex'
       />
 
-      {searchState && <Resultsheader />}
+      {searchState && <Resultsheader setSearchState={setSearchState} />}
 
       {searchState &&
         results?.map((result, index) => (

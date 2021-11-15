@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import SearchQuery, { CourseResults } from '../../lib/searchQuery';
+import Department from './Department';
 
 interface SearchProps {
   defaultSearchTerm: string;
@@ -18,6 +19,9 @@ interface SearchProps {
 interface FormValues {
   searchQuery: string;
   yearFilter: string;
+  divisionFilter: string;
+  departmentFilter: string;
+  campusFilter: string;
 }
 
 const schema: yup.SchemaOf<FormValues> = yup
@@ -25,6 +29,9 @@ const schema: yup.SchemaOf<FormValues> = yup
   .shape({
     searchQuery: yup.string().min(3).defined(),
     yearFilter: yup.string(),
+    divisionFilter: yup.string(),
+    departmentFilter: yup.string(),
+    campusFilter: yup.string(),
   })
   .defined();
 
@@ -44,6 +51,9 @@ function Fullsearch({
     console.log(data);
     const results = await SearchQuery(data['searchQuery'], {
       year: data['yearFilter'],
+      division: data['divisionFilter'],
+      department: data['departmentFilter'],
+      campus: data['campusFilter'],
     });
     console.log(results);
     if (results != null && results != undefined) {
@@ -89,16 +99,49 @@ function Fullsearch({
                 </StyledDropdown>
               )}
             />
-
-            <StyledDropdown name='Division' id='Division' tw='h-16 mb-2'>
-              <option value='Any'>Select Division</option>
-            </StyledDropdown>
-            <StyledDropdown name='Dept' id='Dept' tw='h-16 mb-2'>
-              <option value='Any'>Select Department</option>
-            </StyledDropdown>
-            <StyledDropdown name='Campus' id='Dept' tw='h-16 mb-2'>
-              <option value='Any'>Select Campus</option>
-            </StyledDropdown>
+            <Controller
+              name='divisionFilter'
+              control={control}
+              render={({ field }) => (
+                <StyledDropdown id='Division' tw='h-16 mb-2' {...field}>
+                  <option value=''>Select Division</option>
+                  <option value='Faculty of Applied Science & Engineering'>
+                    Faculty of Applied Science & Engineering
+                  </option>
+                  <option value='Faculty of Arts and Science'>
+                    Faculty of Arts and Science
+                  </option>
+                  <option value='University of Toronto Mississauga'>
+                    University of Toronto Mississauga
+                  </option>
+                  <option value='University of Toronto Scarborough'>
+                    University of Toronto Scarborough
+                  </option>
+                </StyledDropdown>
+              )}
+            />
+            <Controller
+              name='departmentFilter'
+              control={control}
+              render={({ field }) => (
+                <StyledDropdown id='Dept' tw='h-16 mb-2' {...field}>
+                  <option value=''>Select Department</option>
+                  <Department></Department>
+                </StyledDropdown>
+              )}
+            />
+            <Controller
+              name='campusFilter'
+              control={control}
+              render={({ field }) => (
+                <StyledDropdown id='Campus' tw='h-16 mb-2' {...field}>
+                  <option value=''>Select Campus</option>
+                  <option value='Mississauga'>Mississauga</option>
+                  <option value='Scarborough'>Scarborough</option>
+                  <option value='St. George'>St. George</option>
+                </StyledDropdown>
+              )}
+            />
           </div>
         </form>
       </Card>
