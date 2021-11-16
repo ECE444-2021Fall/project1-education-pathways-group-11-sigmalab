@@ -28,6 +28,9 @@ function App(): JSX.Element {
                 <Route path={ROUTES.home} exact>
                   <Home />
                 </Route>
+                <Route path={ROUTES.search} exact>
+                  <Search />
+                </Route>
               </Switch>
             </div>
           </div>
