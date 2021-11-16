@@ -3,6 +3,9 @@ import tw, { TwStyle } from 'twin.macro';
 import { NavLink } from 'react-router-dom';
 import ROUTES from '../config/routes';
 import { SearchIcon, LogoIcon, ProfilesIcon } from './Icons';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 interface NavbarProps {
   width?: TwStyle;
@@ -22,6 +25,17 @@ function Navbar({ width: navbarWidth }: NavbarProps): JSX.Element {
         navbarWidth,
       ]}
     >
+      <StyledLink
+        tw='flex justify-center items-center mb-10 w-full text-gray-light'
+        to={ROUTES.login}
+        onClick={() => {
+          cookies.remove('username');
+          cookies.remove('password');
+        }}
+      >
+        Logout
+      </StyledLink>
+
       <StyledLink
         to={ROUTES.home}
         tw='flex justify-center items-center mb-10 w-full text-gray-light'
