@@ -20,15 +20,15 @@ function App(): JSX.Element {
               <Switch>
               <Route path={ROUTES.search} exact>
                   <Search />
-                </Route>
+              </Route>
+              <Route
+                  path={ROUTES.courses}
+                  render={(props) => <Courses {...props} />} exact
+                />
                 <PrivateRoute path={ROUTES.profiles}>
                   <ProfilesPage />
                 </PrivateRoute>
                 {/* TODO: add dynamic path */}
-                <Route
-                  path={ROUTES.courses}
-                  render={(props) => <Courses {...props} />}
-                />
                 <PrivateRoute path={ROUTES.home}>
                   <Home />
                 </PrivateRoute>
