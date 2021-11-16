@@ -10,25 +10,25 @@ interface ResultsheaderProps {
 function Resultsheader({ setSearchState }: ResultsheaderProps): JSX.Element {
   return (
     <Fragment>
-      <Card tw='mb-2 flex flex-row px-2 py-4'>
-        <ResultCard tw='mx-2 w-1/12 flex-auto min-width[fit-content] my-auto h-auto text-center'>
+      <Card tw='flex flex-row flex-wrap mb-2 px-2 py-4 transition-duration[0.50s]'>
+        <ResultCard tw='mx-2 w-1/12 flex-auto flex-col min-height[fit-content] text-center p-2'>
           Name
         </ResultCard>
-        <ResultCard tw='mx-2 w-1/12 flex-auto min-width[fit-content] my-auto h-auto text-center'>
+        <ResultCard tw='mx-2 w-1/12 flex-auto flex-col min-height[fit-content] text-center p-2'>
           Code
         </ResultCard>
 
-        <ResultCard tw='mx-2 w-1/12 flex-auto min-width[fit-content] my-auto h-auto text-center'>
+        <ResultCard tw='mx-2 w-1/12 flex-auto flex-col min-height[fit-content] text-center p-2'>
           Division
         </ResultCard>
-        <ResultCard tw='mx-2 w-1/12 flex-auto min-width[fit-content] my-auto h-auto text-center'>
+        <ResultCard tw='mx-2 w-1/12 flex-auto flex-col min-height[fit-content] text-center p-2'>
           Department
         </ResultCard>
-        <ResultCard tw='mx-2 w-1/2 my-auto flex-auto h-auto'>
+        <ResultCard tw='mx-2 flex-auto w-1/2 min-height[fit-content]'>
           Description
         </ResultCard>
         <Button
-          tw='mx-2 w-1/12 py-2 flex-auto my-auto px-4 rounded-3xl'
+          tw='mx-2 h-auto flex-auto w-1/12 min-w-min px-4 py-4 rounded-3xl'
           onClick={() => {
             setSearchState(false);
           }}
