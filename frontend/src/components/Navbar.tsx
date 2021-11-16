@@ -18,7 +18,7 @@ function Navbar({ width: navbarWidth }: NavbarProps): JSX.Element {
   return (
     <div
       css={[
-        tw`flex flex-col justify-start items-center h-screen bg-blue-uoft pt-12`,
+        tw`position[sticky] top-0 items-center bg-blue-uoft pt-12`,
         navbarWidth,
       ]}
     >
