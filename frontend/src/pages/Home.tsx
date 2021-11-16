@@ -27,17 +27,17 @@ function Home(): JSX.Element {
           />
         </div>
         <div tw='mb-10'>
-          {searchState && !results && (
+          {searchState && results_length < 1 && (
             <Noresults setSearchState={setSearchState} />
           )}
 
-          {searchState && results && (
+          {searchState && results_length > 0 && (
             <Resultsheader setSearchState={setSearchState} />
           )}
 
           {searchState &&
-            results &&
-            results.slice(0, 2).map((result, index) => (
+            results_length > 0 &&
+            results?.slice(0, 2).map((result, index) => (
               <>
                 <Results
                   key={index}

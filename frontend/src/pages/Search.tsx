@@ -10,7 +10,7 @@ import { CourseResults } from '../lib/searchQuery';
 function Search(): JSX.Element {
   const [searchState, setSearchState] = useState(false);
   const [results, setResults] = useState<CourseResults[] | null>(null);
-
+  const results_length = results ? results.length : -1;
   return (
     <div tw='flex flex-col justify-center items-center h-full w-full '>
       <Fullsearch
@@ -19,14 +19,14 @@ function Search(): JSX.Element {
         tw='position[absolute] flex'
       />
       <div tw='w-5/6 mt-2'>
-        {searchState && !results && (
+        {searchState && results_length < 1 && (
           <Noresults setSearchState={setSearchState} />
         )}
-        {searchState && results && (
+        {searchState && results_length > 0 && (
           <Resultsheader setSearchState={setSearchState} />
         )}{' '}
         {searchState &&
-          results &&
+          results_length > 0 &&
           results?.map((result, index) => (
             <>
               <Results
