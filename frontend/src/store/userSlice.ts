@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { cloneDeep, isEqual, pull, pullAllWith, remove } from 'lodash';
+import { cloneDeep, isEqual, map, pull, pullAllWith, remove } from 'lodash';
 import schedule from '../datafillers/schedules';
 import { getIndexfromName } from '../lib/storeHelpers';
 
@@ -28,24 +28,24 @@ export interface IProfile {
   schedule: TSchedule;
   numOfSemesters: 4;
   isDefault: boolean;
-  isEditing: boolean;
 }
 
 export interface UserState {
   username?: string;
-  defaultProfile?: string;
+  isEditing: boolean;
+  currentProfile: string;
   profiles: IProfile[];
 }
 
 const initialState: UserState = {
   username: undefined,
-  defaultProfile: undefined,
+  isEditing: true,
+  currentProfile: 'main',
   profiles: [
     {
       name: 'main',
       numOfSemesters: 4,
       isDefault: true,
-      isEditing: false,
       schedule: schedule,
     },
   ],
@@ -65,7 +65,6 @@ export const userSlice = createSlice({
     ) => {
       state.username = action.payload.username;
       state.profiles = cloneDeep(action.payload.profiles);
-      state.defaultProfile = action.payload.defaultProfile;
     },
     updateProfiles: (state, action: PayloadAction<IProfile[]>) => {
       state.profiles = cloneDeep(action.payload);
@@ -79,6 +78,15 @@ export const userSlice = createSlice({
     },
     addCourse: (state, action: PayloadAction<ICourse>) => {
       return;
+    },
+    editSchedule: (state) => {
+      state.isEditing = true;
+    },
+    cancelEdit: (state) => {
+      state.isEditing = false;
+    },
+    saveSchedule: (state) => {
+      state.isEditing = false;
     },
     moveCourse: (
       state,
@@ -129,6 +137,14 @@ export const userSlice = createSlice({
   },
 });
 
-export const { moveCourse, updateProfiles, updateProfile, logUser, addCourse } =
-  userSlice.actions;
+export const {
+  moveCourse,
+  editSchedule,
+  saveSchedule,
+  cancelEdit,
+  updateProfiles,
+  updateProfile,
+  logUser,
+  addCourse,
+} = userSlice.actions;
 export default userSlice.reducer;

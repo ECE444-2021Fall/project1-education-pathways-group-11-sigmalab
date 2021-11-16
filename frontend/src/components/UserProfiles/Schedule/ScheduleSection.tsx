@@ -6,11 +6,15 @@ import Session from './Session';
 
 interface ScheduleSectionProps {
   schedule: TSchedule;
+  isEditing?: boolean;
 }
 
 const yearFormatter = (year: number) => (year < 1 ? 'unassigned' : year);
 
-function ScheduleSection({ schedule }: ScheduleSectionProps): JSX.Element {
+function ScheduleSection({
+  schedule,
+  isEditing,
+}: ScheduleSectionProps): JSX.Element {
   return (
     <>
       {schedule.map((year, yearKey) => (
@@ -22,7 +26,7 @@ function ScheduleSection({ schedule }: ScheduleSectionProps): JSX.Element {
                 session={session}
                 year={year.year}
                 key={sessionKey + 1000 * yearKey}
-                isEditing
+                isEditing={isEditing}
               />
             ))}
           </div>
