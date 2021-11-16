@@ -3,6 +3,7 @@ import { useDrop } from 'react-dnd';
 import tw from 'twin.macro';
 import { useAppDispatch } from '../../../hooks';
 import { ISession, moveCourse } from '../../../store/userSlice';
+import { Pill } from '../../shared';
 import Course, { CourseProps } from './Course';
 
 interface SessionProps {
@@ -17,7 +18,7 @@ const SessionCourses = tw.div`col-span-2 grid gap-2 grid-cols-3 grid-rows-2 mb-2
 function Session({ session, year, isEditing }: SessionProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const [{ hovered }, dropRef] = useDrop(() => ({
+  const [{ draggedCourse, hovered }, dropRef] = useDrop(() => ({
     accept: 'course',
     drop: (item: CourseProps) => {
       const params = {
@@ -31,6 +32,7 @@ function Session({ session, year, isEditing }: SessionProps): JSX.Element {
     canDrop: () => !!isEditing,
     collect: (monitor) => ({
       hovered: monitor.isOver(),
+      draggedCourse: monitor.getItem<CourseProps>(),
     }),
   }));
   const unLabeled = year <= 0;
@@ -55,6 +57,9 @@ function Session({ session, year, isEditing }: SessionProps): JSX.Element {
             isEditing
           />
         ))}
+        {hovered && (
+          <Pill tw='grayscale opacity-50'>{draggedCourse.course.name}</Pill>
+        )}
       </SessionCourses>
     </div>
   );

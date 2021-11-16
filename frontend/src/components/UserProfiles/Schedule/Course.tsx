@@ -31,7 +31,10 @@ function Course({
   );
 
   return (
-    <Pill ref={dragRef} css={isDragging ? tw`opacity-0` : tw`opacity-100`}>
+    <Pill
+      ref={dragRef}
+      css={isDragging ? tw`opacity-0 order-last` : tw`opacity-100`}
+    >
       {course.name}
     </Pill>
   );
