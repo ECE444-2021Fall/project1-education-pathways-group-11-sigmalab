@@ -22,16 +22,16 @@ function App(): JSX.Element {
                   <ProfilesPage />
                 </PrivateRoute>
                 {/* TODO: add dynamic path */}
-                <PrivateRoute
+                <Route
                   path={ROUTES.courses}
                   render={(props) => <Courses {...props} />}
-                />
-                <PrivateRoute path={ROUTES.home} exact>
+                ></Route>
+                <PrivateRoute path={ROUTES.home}>
                   <Home />
                 </PrivateRoute>
-                <Route path={ROUTES.search} exact>
+                <Route path={ROUTES.search}>
                   <Search />
-                </PrivateRoute>
+                </Route>
               </Switch>
             </div>
           </div>
