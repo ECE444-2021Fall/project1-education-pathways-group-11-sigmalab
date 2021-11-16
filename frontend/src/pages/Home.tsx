@@ -6,12 +6,13 @@ import Quickprofile from '../components/Home/Quickprofile';
 import { CourseResults } from '../lib/searchQuery';
 import Results from '../components/Search/Results';
 import Resultsheader from '../components/Search/Resultsheader';
-
+import Noresults from '../components/Search/Noresults';
 const StyledSection = tw.section`w-1/2`;
 
 function Home(): JSX.Element {
   const [searchState, setSearchState] = useState(false);
   const [results, setResults] = useState<CourseResults[] | null>(null);
+  const results_length = results ? results.length : -1;
   return (
     <Fragment>
       <h1 tw='px-20 pt-12 text-5xl justify-center font-bold text-gray-800 mb-10'>
@@ -26,9 +27,17 @@ function Home(): JSX.Element {
           />
         </div>
         <div tw='mb-10'>
-          {searchState && <Resultsheader setSearchState={setSearchState} />}
+          {searchState && !results && (
+            <Noresults setSearchState={setSearchState} />
+          )}
+
+          {searchState && results && (
+            <Resultsheader setSearchState={setSearchState} />
+          )}
+
           {searchState &&
-            results?.slice(0, 2).map((result, index) => (
+            results &&
+            results.slice(0, 2).map((result, index) => (
               <>
                 <Results
                   key={index}

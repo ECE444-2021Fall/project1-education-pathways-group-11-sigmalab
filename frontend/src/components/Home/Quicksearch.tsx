@@ -33,9 +33,9 @@ function Quicksearch({
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
+    // console.log(data);
     const results = await SearchQuery(data['searchQuery'], '');
-    console.log(results);
+    // console.log(results);
     if (results != null && results != undefined) {
       setResults(results.results);
     } else {
@@ -58,7 +58,7 @@ function Quicksearch({
             <Button
               variant='primary'
               type='submit'
-              tw=' h-auto ml-4 justify-center'
+              tw=' h-auto ml-4 w-1/12 justify-center'
             >
               Search
             </Button>

@@ -40,20 +40,23 @@ function Fullsearch({
   // eslint-disable-next-line
   setResults,
 }: SearchProps): JSX.Element {
-  const { handleSubmit, register, control } = useForm<FormValues>({
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+    control,
+  } = useForm<FormValues>({
     resolver: yupResolver(schema),
     //defaultValues: { searchQuery: '' },
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
     const results = await SearchQuery(data['searchQuery'], {
       year: data['yearFilter'],
       division: data['divisionFilter'],
       department: data['departmentFilter'],
       campus: data['campusFilter'],
     });
-    console.log(results);
     if (results != null && results != undefined) {
       setResults(results.results);
     } else {

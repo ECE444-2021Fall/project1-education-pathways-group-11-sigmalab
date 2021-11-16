@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import tw from 'twin.macro';
 import Fullsearch from '../components/Search/Fullsearch';
 import Results from '../components/Search/Results';
+import Noresults from '../components/Search/Noresults';
 import Resultsheader from '../components/Search/Resultsheader';
 import axios from 'axios';
 import { CourseResults } from '../lib/searchQuery';
-import { result } from 'lodash';
 
 function Search(): JSX.Element {
   const [searchState, setSearchState] = useState(false);
@@ -18,9 +18,15 @@ function Search(): JSX.Element {
         setResults={setResults}
         tw='position[absolute] flex'
       />
-      <div tw='w-5/6'>
-        {searchState && <Resultsheader setSearchState={setSearchState} />}{' '}
+      <div tw='w-5/6 mt-2'>
+        {searchState && !results && (
+          <Noresults setSearchState={setSearchState} />
+        )}
+        {searchState && results && (
+          <Resultsheader setSearchState={setSearchState} />
+        )}{' '}
         {searchState &&
+          results &&
           results?.map((result, index) => (
             <>
               <Results

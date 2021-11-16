@@ -15,13 +15,13 @@ search.init_app(app)
 
 ##Uncomment to delete 
 # search.delete_index()
-# search.delete_index(Course)
+#search.delete_index(Course)
 # ##Uncomment on first run
-# search.create_index()
+#search.create_index()
 # search.create_index(Course)
 
 # Uncomment to update
-# search.update_index()
+#search.update_index()
 # search.update_index(Course)
 
 @app.route('/search', methods=['POST'])
