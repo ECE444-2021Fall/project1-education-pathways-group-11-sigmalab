@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import tw from 'twin.macro';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,7 +7,8 @@ import { BsFillLockFill, BsFillPersonFill } from 'react-icons/bs';
 import Input from './Input';
 import Button from './Button';
 import ROUTES from '../../config/routes';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 export type FormValues = {
   username: string;
@@ -23,6 +24,10 @@ const schema: yup.SchemaOf<FormValues> = yup
   .defined();
 
 function LoginForm(): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookies, setCookie] = useCookies(['username', 'password']);
+  const [redirectToHome, setRedirectToHome] = useState(false);
+
   const { handleSubmit, control } = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: { username: '', password: '' },
@@ -42,15 +47,20 @@ function LoginForm(): JSX.Element {
         if (!(response.status === 201)) {
           throw new Error(response.statusText);
         } else {
-          return 'Valid login';
+          setCookie('username', data.username, { path: '/' });
+          setCookie('password', data.password, { path: '/' });
+          setRedirectToHome(true);
+          //return 'Valid';
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   });
 
-  return (
+  return redirectToHome ? (
+    <Redirect to={ROUTES.home} />
+  ) : (
     <form onSubmit={onSubmit} tw='flex flex-col items-center gap-2'>
       <Input
         placeholder='Username'

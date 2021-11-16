@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import tw from 'twin.macro';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,7 +7,8 @@ import { BsFillLockFill, BsFillPersonFill } from 'react-icons/bs';
 import Input from './Input';
 import Button from './Button';
 import ROUTES from '../../config/routes';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 export type FormValues = {
   username: string;
@@ -28,6 +29,9 @@ const schema: yup.SchemaOf<FormValues> = yup
   .defined();
 
 function SignupForm(): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookies, setCookie] = useCookies(['username', 'password']);
+  const [redirectToHome, setRedirectToHome] = useState(false);
   const { handleSubmit, control } = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: { username: '', password: '', confirmPassword: '' },
@@ -43,19 +47,24 @@ function SignupForm(): JSX.Element {
       body: JSON.stringify({ username, password }),
     })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         if (!(response.status === 200)) {
           throw new Error(response.statusText);
         } else {
-          return 'Valid, creating user';
+          setCookie('username', data.username, { path: '/' });
+          setCookie('password', data.password, { path: '/' });
+          setRedirectToHome(true);
+          //return 'Valid, creating user';
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   });
 
-  return (
+  return redirectToHome ? (
+    <Redirect to={ROUTES.home} />
+  ) : (
     <form onSubmit={onSubmit} tw='flex flex-col items-center gap-2'>
       <Input
         placeholder='Username'

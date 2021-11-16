@@ -5,6 +5,7 @@ import { Courses, Home, Login, ProfilesPage, Search } from './pages';
 import Navbar from './components/Navbar';
 import ROUTES from './config/routes';
 import PrivateRoute from './components/PrivateRoute';
+
 function App(): JSX.Element {
   return (
     <Router>
@@ -22,9 +23,9 @@ function App(): JSX.Element {
             <Route path={ROUTES.search}>
               <Search />
             </Route>
-            <Route path={ROUTES.courses}>
+            <PrivateRoute path={ROUTES.courses}>
               <Courses />
-            </Route>
+            </PrivateRoute>
             <PrivateRoute path={ROUTES.home}>
               <Home />
             </PrivateRoute>
