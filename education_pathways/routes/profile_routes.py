@@ -17,7 +17,6 @@ def getProfile():
 
 @app.route('/createProfile', methods=['POST'])
 def createProfile():
-  print('------------begin----------', flush=True)
   data = request.json
   
   user = User.query.filter_by(username=data['creator_username']).one()
@@ -33,7 +32,6 @@ def createProfile():
   except Exception as err:
     return {"message": str(err)}, 400
 
-  print('-------------end-----------', flush=True)
   return jsonify(success=True), 200
 
 @app.route('/deleteProfile', methods=['POST'])
@@ -53,7 +51,6 @@ def deleteProfile():
 # simple profile.create endpoint using cascades
 @app.route('/updateProfile', methods=['PUT'])
 def updateProfile():
-  print('------------begin----------', flush=True)
   data = request.json
 
   # get the profile
@@ -84,5 +81,4 @@ def updateProfile():
     db.session.commit()
   except Exception as err:
     return {"message": str(err)}, 400
-  print('-------------end-----------', flush=True)
   return jsonify(success=True), 200
