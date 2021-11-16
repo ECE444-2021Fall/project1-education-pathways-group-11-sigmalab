@@ -2,9 +2,10 @@ const ROUTES = {
   home: '/',
   login: '/login',
   signup: '/signup',
-  courses: '/courses',
   search: '/search',
+  courses: '/courses/:code',
   profiles: '/profiles',
+  backend: 'http://localhost:5000',
 };
 
 export default ROUTES;

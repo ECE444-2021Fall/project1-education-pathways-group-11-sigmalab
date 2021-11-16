@@ -15,16 +15,16 @@ search.init_app(app)
 
 ##Uncomment to delete 
 # search.delete_index()
-# search.delete_index(Course)
+#search.delete_index(Course)
 # ##Uncomment on first run
-# search.create_index()
+#search.create_index()
 # search.create_index(Course)
 
 # Uncomment to update
-# search.update_index()
+#search.update_index()
 # search.update_index(Course)
 
-@app.route('/search', methods=['GET'])
+@app.route('/search', methods=['POST'])
 def searchTest():
   data = request.json
   sQuery = data['query']
@@ -45,7 +45,6 @@ def searchTest():
     print(i, flush=True)
     result_schema = resultSchema().dump(i)
     result_schemas.append(result_schema)
-
   return jsonify(success=True, query=sQuery, results = result_schemas), 200
 
 def unique_entries(results):
@@ -66,6 +65,8 @@ def filter_results(courses, filters, n_return=10):
   for course in courses:
     course_filtered = True
     for course_selector in filters.keys():
+      if filters[course_selector] == "":
+        continue
       if course_selector == "term":
         year, semester = filters["term"].split(" ")[:2]
         if year not in course[course_selector] and semester not in course[course_selector]:

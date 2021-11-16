@@ -9,29 +9,34 @@ import PrivateRoute from './components/PrivateRoute';
 function App(): JSX.Element {
   return (
     <Router>
-      <div tw='flex flex-row align-top'>
-        <Navbar width={tw`w-16`} />
-        <div tw='w-full'>
-          <Switch>
-            <Route path={[ROUTES.login, ROUTES.signup]}>
-              <Login />
-            </Route>
-            <PrivateRoute path={ROUTES.profiles}>
-              <ProfilesPage />
-            </PrivateRoute>
-            {/* TODO: add dynamic path */}
-            <Route path={ROUTES.search}>
-              <Search />
-            </Route>
-            <PrivateRoute path={ROUTES.courses}>
-              <Courses />
-            </PrivateRoute>
-            <PrivateRoute path={ROUTES.home}>
-              <Home />
-            </PrivateRoute>
-          </Switch>
-        </div>
-      </div>
+      <Switch>
+        <Route path={[ROUTES.login, ROUTES.signup]}>
+          <Login />
+        </Route>
+        <Route>
+          <div tw='flex flex-row align-top'>
+            <Navbar width={tw`w-16`} />
+            <div tw='w-full'>
+              <Switch>
+                <PrivateRoute path={ROUTES.profiles}>
+                  <ProfilesPage />
+                </PrivateRoute>
+                {/* TODO: add dynamic path */}
+                <PrivateRoute
+                  path={ROUTES.courses}
+                  render={(props) => <Courses {...props} />}
+                />
+                <PrivateRoute path={ROUTES.home} exact>
+                  <Home />
+                </PrivateRoute>
+                <Route path={ROUTES.search} exact>
+                  <Search />
+                </PrivateRoute>
+              </Switch>
+            </div>
+          </div>
+        </Route>
+      </Switch>
     </Router>
   );
 }

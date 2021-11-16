@@ -17,6 +17,11 @@ app.config['WHOOSH_ENABLE'] = True
 
 # delete in production
 app.config['JSON_SORT_KEYS'] = False
+db = SQLAlchemy(app)
+@app.after_request
+def apply_headers(re):
+    re.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+    return re
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)

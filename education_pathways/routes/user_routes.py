@@ -32,7 +32,6 @@ def createUser():
     return {"message": str(err)}, 400
   return jsonify(success=True), 200
 
-
 @app.route('/validateLogin', methods=['POST'])
 def validateLogin():
   json_data = request.get_json()
@@ -49,3 +48,27 @@ def validateLogin():
     return jsonify(success=True), 201
   else:
     return {"message":"Invalid login details"}, 500
+
+@app.route('/deleteUser', methods=['POST'])
+def deleteUser():
+  json_data = request.get_json()
+  if not json_data:
+    return {"message": "No input data provided"}, 400
+  try:
+    data = user_schema.load(json_data, partial=('id', 'profiles'))
+  except ValidationError as err:
+    return err.messages, 422
+  
+  user = User.query.filter_by(username=data['username']).first()
+  
+  if not user:
+    return {"message": "User does not exist in database"}, 422
+
+  # Remove user, and user's profiles
+  User.query.filter_by(id=user.id).delete()
+
+  try:
+    db.session.commit()
+  except Exception as err:
+    return {"message": str(err)}, 400
+  return jsonify(success=True), 200
