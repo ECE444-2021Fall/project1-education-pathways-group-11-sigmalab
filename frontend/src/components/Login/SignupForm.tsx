@@ -32,6 +32,7 @@ function SignupForm(): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookies, setCookie] = useCookies(['username', 'password']);
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const [accountAlreadyExists, setAccountAlreadyExists] = useState(false);
   const { handleSubmit, control } = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: { username: '', password: '', confirmPassword: '' },
@@ -59,6 +60,8 @@ function SignupForm(): JSX.Element {
       })
       .catch((err) => {
         //console.log(err);
+        //Give user feedback that account already exists:
+        setAccountAlreadyExists(true);
       });
   });
 
@@ -91,6 +94,12 @@ function SignupForm(): JSX.Element {
       <Link to={ROUTES.login} tw='text-blue-200 text-sm hover:underline'>
         Already have an account? Log In
       </Link>
+      {accountAlreadyExists && (
+        <div tw='text-red-900'>
+          {' '}
+          Account already exists. Please use login or create a different account.
+        </div>
+      )}
     </form>
   );
 }

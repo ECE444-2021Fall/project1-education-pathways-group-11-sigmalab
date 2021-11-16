@@ -27,6 +27,7 @@ function LoginForm(): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookies, setCookie] = useCookies(['username', 'password']);
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const [incorrectLoginDetails, setincorrectLoginDetails] = useState(false);
 
   const { handleSubmit, control } = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -55,6 +56,8 @@ function LoginForm(): JSX.Element {
       })
       .catch((err) => {
         //console.log(err);
+        //Give user feedback:
+        setincorrectLoginDetails(true);
       });
   });
 
@@ -81,6 +84,12 @@ function LoginForm(): JSX.Element {
       <Link to={ROUTES.signup} tw='text-blue-200 text-sm hover:underline'>
         Don&apos;t have an account? Sign-up
       </Link>
+      {incorrectLoginDetails && (
+        <div tw='text-red-900'>
+          {' '}
+          Incorrect Login Details. Please sign up or try again.
+        </div>
+      )}
     </form>
   );
 }
