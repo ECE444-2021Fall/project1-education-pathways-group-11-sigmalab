@@ -9,6 +9,7 @@ import * as types from 'styled-components/cssprop';
 import App from './App';
 import tw, { GlobalStyles } from 'twin.macro';
 import { createGlobalStyle } from 'styled-components';
+import { CookiesProvider } from 'react-cookie';
 
 const CustomGlobalStyles = createGlobalStyle`
   body {
@@ -20,7 +21,9 @@ ReactDOM.render(
   <React.StrictMode>
     <GlobalStyles />
     <CustomGlobalStyles />
-    <App />
+    <CookiesProvider>
+      <App />
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

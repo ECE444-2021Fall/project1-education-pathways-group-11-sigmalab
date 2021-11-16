@@ -30,8 +30,8 @@ from . import models
 from . import routes
 
 # NOTE: Uncomment this to re-populate db
-# db.drop_all()
-# from . import db_init
+#db.drop_all()
+#from . import db_init
 
 
 db.create_all()
@@ -39,3 +39,4 @@ db.create_all()
 
 if __name__=="__main__":
     app.run(host='0.0.0.0')
+

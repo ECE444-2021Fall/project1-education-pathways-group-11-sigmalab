@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Courses, Home, Login, ProfilesPage, Search } from './pages';
 import Navbar from './components/Navbar';
 import ROUTES from './config/routes';
+import PrivateRoute from './components/PrivateRoute';
 
 function App(): JSX.Element {
   return (
@@ -17,20 +18,20 @@ function App(): JSX.Element {
             <Navbar width={tw`w-16`} />
             <div tw='w-full min-h-screen'>
               <Switch>
-                <Route path={ROUTES.profiles}>
-                  <ProfilesPage />
-                </Route>
-                {/* TODO: add dynamic path */}
-                <Route
-                  path={ROUTES.courses}
-                  render={(props) => <Courses {...props} />}
-                />
-                <Route path={ROUTES.home} exact>
-                  <Home />
-                </Route>
-                <Route path={ROUTES.search} exact>
+              <Route path={ROUTES.search} exact>
                   <Search />
-                </Route>
+              </Route>
+              <Route
+                  path={ROUTES.courses}
+                  render={(props) => <Courses {...props} />} exact
+                />
+                <PrivateRoute path={ROUTES.profiles}>
+                  <ProfilesPage />
+                </PrivateRoute>
+                {/* TODO: add dynamic path */}
+                <PrivateRoute path={ROUTES.home}>
+                  <Home />
+                </PrivateRoute>
               </Switch>
             </div>
           </div>

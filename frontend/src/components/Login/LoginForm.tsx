@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import tw from 'twin.macro';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,7 +7,8 @@ import { BsFillLockFill, BsFillPersonFill } from 'react-icons/bs';
 import Input from './Input';
 import Button from './Button';
 import ROUTES from '../../config/routes';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 export type FormValues = {
   username: string;
@@ -23,16 +24,46 @@ const schema: yup.SchemaOf<FormValues> = yup
   .defined();
 
 function LoginForm(): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookies, setCookie] = useCookies(['username', 'password']);
+  const [redirectToHome, setRedirectToHome] = useState(false);
+  const [incorrectLoginDetails, setincorrectLoginDetails] = useState(false);
+
   const { handleSubmit, control } = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: { username: '', password: '' },
   });
 
   const onSubmit = handleSubmit((data) => {
-    // TODO: login handler goes here
+    fetch('http://localhost:5000/validateLogin', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        //console.log(response);
+        if (!(response.status === 201)) {
+          throw new Error(response.statusText);
+        } else {
+          setCookie('username', data.username, { path: '/' });
+          setCookie('password', data.password, { path: '/' });
+          setRedirectToHome(true);
+          //return 'Valid';
+        }
+      })
+      .catch((err) => {
+        //console.log(err);
+        //Give user feedback:
+        setincorrectLoginDetails(true);
+      });
   });
 
-  return (
+  return redirectToHome ? (
+    <Redirect to={ROUTES.home} />
+  ) : (
     <form onSubmit={onSubmit} tw='flex flex-col items-center gap-2'>
       <Input
         placeholder='Username'
@@ -53,6 +84,12 @@ function LoginForm(): JSX.Element {
       <Link to={ROUTES.signup} tw='text-blue-200 text-sm hover:underline'>
         Don&apos;t have an account? Sign-up
       </Link>
+      {incorrectLoginDetails && (
+        <div tw='text-red-900'>
+          {' '}
+          Incorrect Login Details. Please sign up or try again.
+        </div>
+      )}
     </form>
   );
 }
