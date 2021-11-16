@@ -1,6 +1,8 @@
 import React from 'react';
 import tw from 'twin.macro';
 import { Schedule, Profiles } from '../components/UserProfiles';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const StyledSection = tw.section`w-1/2`;
 
@@ -10,7 +12,9 @@ function ProfilesPage(): JSX.Element {
       <h1 tw='text-5xl font-bold text-gray-800 mb-10'>User Profiles</h1>
       <div tw='flex flex-row justify-start'>
         <StyledSection>
-          <Schedule />
+          <DndProvider backend={HTML5Backend}>
+            <Schedule />
+          </DndProvider>
         </StyledSection>
         <StyledSection>
           <Profiles />

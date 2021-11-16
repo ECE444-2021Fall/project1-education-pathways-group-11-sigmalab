@@ -1,14 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { cloneDeep } from 'lodash';
-import { getProfileIndex } from '../lib/storeHelpers';
+import { cloneDeep, isEqual, pull, pullAllWith, remove } from 'lodash';
+import schedule from '../datafillers/schedules';
+import { getIndexfromName } from '../lib/storeHelpers';
 
 export interface ICourse {
   id: number;
   name: string;
 }
 
+export type TSessionName = 'fall' | 'winter' | 'summer' | 'unassigned';
+
 export interface ISession {
-  name: 'fall' | 'winter' | 'summer' | 'unassigned';
+  name: TSessionName;
   courses: ICourse[];
 }
 
@@ -37,7 +40,15 @@ export interface UserState {
 const initialState: UserState = {
   username: undefined,
   defaultProfile: undefined,
-  profiles: [],
+  profiles: [
+    {
+      name: 'main',
+      numOfSemesters: 4,
+      isDefault: true,
+      isEditing: false,
+      schedule: schedule,
+    },
+  ],
 };
 
 export const userSlice = createSlice({
@@ -60,15 +71,64 @@ export const userSlice = createSlice({
       state.profiles = cloneDeep(action.payload);
     },
     updateProfile: (state, action: PayloadAction<IProfile>) => {
-      const profileIndex = getProfileIndex(action.payload.name, state.profiles);
+      const profileIndex = getIndexfromName(
+        action.payload.name,
+        state.profiles
+      );
       state.profiles[profileIndex] = cloneDeep(action.payload);
     },
     addCourse: (state, action: PayloadAction<ICourse>) => {
       return;
     },
+    moveCourse: (
+      state,
+      action: PayloadAction<{
+        profileName: string;
+        year: number;
+        sessionName: TSessionName;
+        course: ICourse;
+        targetYear: number;
+        targetSessionName: TSessionName;
+      }>
+    ) => {
+      // extract params
+      const {
+        profileName,
+        year,
+        sessionName,
+        course,
+        targetSessionName,
+        targetYear,
+      } = action.payload;
+
+      const profileIndex = getIndexfromName(profileName, state.profiles);
+      const schedule = state.profiles[profileIndex].schedule;
+
+      const yearIndex = schedule.findIndex((s) => s.year === year);
+      const sessionIndex = getIndexfromName(
+        sessionName,
+        state.profiles[profileIndex].schedule[yearIndex].sessions
+      );
+      const targetYearIndex = schedule.findIndex((s) => s.year === targetYear);
+      const targetSessionIndex = getIndexfromName(
+        targetSessionName,
+        state.profiles[profileIndex].schedule[targetYearIndex].sessions
+      );
+
+      // remove course from source
+      const courses =
+        state.profiles[profileIndex].schedule[yearIndex].sessions[sessionIndex]
+          .courses;
+      pullAllWith(courses, [course], isEqual);
+
+      //add course in target
+      state.profiles[profileIndex].schedule[targetYearIndex].sessions[
+        targetSessionIndex
+      ].courses.push(course);
+    },
   },
 });
 
-export const { updateProfiles, updateProfile, logUser, addCourse } =
+export const { moveCourse, updateProfiles, updateProfile, logUser, addCourse } =
   userSlice.actions;
 export default userSlice.reducer;

@@ -2,9 +2,12 @@ import { IProfile } from '../store/userSlice';
 
 // getProfileIndex returns the index of a profile if
 // found in list of profiles
-function getProfileIndex(profileName: string, profiles: IProfile[]): number {
-  const index = profiles.findIndex((profile) => profile.name === profileName);
+function getIndexfromName(
+  name: string,
+  list: Required<{ name: string }>[]
+): number {
+  const index = list.findIndex((entry) => entry.name === name);
   return index;
 }
 
-export { getProfileIndex };
+export { getIndexfromName };

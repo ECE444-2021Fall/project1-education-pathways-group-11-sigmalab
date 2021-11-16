@@ -22,6 +22,7 @@ function ScheduleSection({ schedule }: ScheduleSectionProps): JSX.Element {
                 session={session}
                 year={year.year}
                 key={sessionKey + 1000 * yearKey}
+                isEditing
               />
             ))}
           </div>
