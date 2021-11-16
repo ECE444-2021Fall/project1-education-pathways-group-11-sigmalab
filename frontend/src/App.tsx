@@ -15,7 +15,7 @@ function App(): JSX.Element {
         <Route>
           <div tw='flex flex-row align-top'>
             <Navbar width={tw`w-16`} />
-            <div tw='w-full'>
+            <div tw='w-full min-h-screen'>
               <Switch>
                 <Route path={ROUTES.profiles}>
                   <ProfilesPage />
