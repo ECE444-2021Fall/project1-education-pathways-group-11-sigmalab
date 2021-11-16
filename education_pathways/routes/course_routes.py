@@ -224,7 +224,7 @@ def addCourse():
   profile = Profile.query.filter_by(id=data["profile_id"]).one()
   
   course_data = data["course"]
-  course = Course.query.filter_by(id=course_data["id"]).one()
+  course = Course.query.filter_by(code=course_data["code"]).one()
   session, year = str(course_data["session"]), int(course_data["year"])
 
   profile.add_course(course, session, year)
@@ -243,7 +243,7 @@ def deleteCourse():
   profile = Profile.query.filter_by(id=data["profile_id"]).one()
   
   course_data = data["course"]
-  course = Course.query.filter_by(id=course_data["id"]).one()
+  course = Course.query.filter_by(code=course_data["code"]).one()
   
   Course_Profile_A.query.filter_by(profile_id=profile.id).\
     filter_by(course_id=course.id).delete()
