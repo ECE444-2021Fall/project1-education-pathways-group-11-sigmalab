@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import tw from 'twin.macro';
-import { Box, Grid, Typography } from '@mui/material';
-import { Card } from '../shared';
+import { Alert, Box, Grid, Typography } from '@mui/material';
+import { Card, Button } from '../shared';
 import InfoCard from './InfoCard';
 import RequirementsCard from './RequirementsCard';
+import ROUTES from '../../config/routes';
+import axios from 'axios';
 
-interface CourseProps {
+export interface CourseProps {
   code: string;
   name: string;
   division: string;
   department: string;
   campus: string;
-  description: string;
-  lastUpdated: string;
-  offered?: string[];
-  prerequisites?: string[];
-  corequisites?: string[];
-  exclusions?: string[];
+  course_description: string;
+  last_updated: string;
+  term: string;
+  pre_requisites?: string;
+  corequisite?: string;
+  exclusion?: string;
 }
 function Course({
   code,
@@ -24,27 +26,79 @@ function Course({
   division,
   department,
   campus,
-  description,
-  lastUpdated,
-  offered = [],
-  prerequisites = [],
-  corequisites = [],
-  exclusions = [],
+  course_description,
+  last_updated,
+  term,
+  pre_requisites,
+  corequisite,
+  exclusion,
 }: CourseProps): JSX.Element {
+  const [inProfile, setInProfile] = useState(false);
+  const [alertOpen, setAlertOpen] = useState('');
+
+  async function addToProfile() {
+    axios
+      .get(ROUTES.backend + '/edpoint', {
+        params: { code: code },
+        headers: {},
+      })
+      .then((response) => {
+        setInProfile(true);
+        setAlertOpen('The course was added to your default profile!');
+      })
+      .catch((error) => {
+        console.log(error);
+        setAlertOpen('Something happened: could not add to your profile');
+      });
+  }
+
   const wideCol = [
-    card('Description', [description]),
-    RequirementsCard(prerequisites, corequisites, exclusions),
+    card('Description', [course_description]),
+    RequirementsCard(pre_requisites, corequisite, exclusion),
   ];
   const narrowCol = [InfoCard(code, division, department, campus)];
-  if (offered.length) narrowCol.push(card('Offered', offered));
+  if (term != 'NULL' && term != '') {
+    const list = new String(term).split(' ');
+    const offered: string[] = [];
+    for (let i = 0; i < list.length - 1; i += 2) {
+      offered.push(list[i].concat(' ', list[i + 1]));
+    }
+    narrowCol.push(card('Offered', offered));
+  }
 
   return (
     <Box tw='h-screen bg-gray-light'>
       <Box>
-        <div tw='px-20 pt-12'>
-          <h1 tw='text-5xl font-bold text-gray-800 mb-10'>{name}</h1>
+        <div tw='pl-20 pr-5 pt-12'>
+          <Grid
+            container
+            direction='row-reverse'
+            justifyContent='flex-start'
+            alignItems='flex-start'
+            rowSpacing={0}
+            columnSpacing={0}
+          >
+            <Grid item xs={1.5}>
+              <Button
+                tw='padding[1rem] h-auto w-auto'
+                onClick={() => addToProfile()}
+              >
+                {inProfile ? 'In profile' : 'Add to profile'}
+              </Button>
+            </Grid>
+            <Grid item xs={10.5}>
+              <h1 tw='text-5xl font-bold text-gray-800 mb-10'>{name}</h1>
+            </Grid>
+          </Grid>
         </div>
       </Box>
+      {alertOpen != '' ? (
+        <Alert tw='mx-6' severity='info' onClose={() => setAlertOpen('')}>
+          {alertOpen}
+        </Alert>
+      ) : (
+        <></>
+      )}
       <Grid
         container
         direction='row'
@@ -60,6 +114,9 @@ function Course({
           {customColumn(wideCol)}
         </Grid>
       </Grid>
+      <p tw='position[absolute] bottom-1 ml-2 text-gray-300'>
+        Last updated: {last_updated}
+      </p>
     </Box>
   );
 }
@@ -80,7 +137,7 @@ function card(title: string, content: string[]): JSX.Element {
   const cardContent = [];
   for (const text of content) {
     cardContent.push(
-      <Typography tw='text-lg text-gray-600 padding-left[1rem]'>
+      <Typography key={text} tw='text-lg text-gray-600 padding-left[1rem]'>
         {text}
       </Typography>
     );

@@ -16,11 +16,16 @@ function InfoCard(
     ['Campus', campus],
   ];
   const cardBody: JSX.Element[] = [];
-  infoList.forEach((element) => {
+  infoList.forEach((element, id) => {
     cardBody.push(
       <>
-        <Typography tw='text-lg font-bold'>{element[0]}</Typography>
-        <Typography tw='text-lg font-style[italic] text-gray-600 padding-left[1rem]'>
+        <Typography key={id} tw='text-lg font-bold'>
+          {element[0]}
+        </Typography>
+        <Typography
+          key={id + 1000}
+          tw='text-lg font-style[italic] text-gray-600 padding-left[1rem]'
+        >
           {element[1]}
         </Typography>
       </>

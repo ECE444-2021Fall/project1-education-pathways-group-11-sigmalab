@@ -8,23 +8,31 @@ import ROUTES from './config/routes';
 function App(): JSX.Element {
   return (
     <Router>
-      <div tw='flex flex-row align-top'>
-        <Navbar width={tw`w-16`} />
-        <div tw='w-full'>
-          <Switch>
-            <Route path={ROUTES.profiles}>
-              <ProfilesPage />
-            </Route>
-            {/* TODO: add dynamic path */}
-            <Route path={ROUTES.search}>
-              <Search />
-            </Route>
-            <Route path={ROUTES.home} exact>
-              <Home />
-            </Route>
-          </Switch>
-        </div>
-      </div>
+      <Switch>
+        <Route path={[ROUTES.login, ROUTES.signup]}>
+          <Login />
+        </Route>
+        <Route>
+          <div tw='flex flex-row align-top'>
+            <Navbar width={tw`w-16`} />
+            <div tw='w-full'>
+              <Switch>
+                <Route path={ROUTES.profiles}>
+                  <ProfilesPage />
+                </Route>
+                {/* TODO: add dynamic path */}
+                <Route
+                  path={ROUTES.courses}
+                  render={(props) => <Courses {...props} />}
+                />
+                <Route path={ROUTES.home} exact>
+                  <Home />
+                </Route>
+              </Switch>
+            </div>
+          </div>
+        </Route>
+      </Switch>
     </Router>
   );
 }

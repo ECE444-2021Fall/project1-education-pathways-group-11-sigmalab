@@ -24,7 +24,6 @@ ma = Marshmallow(app)
 from . import models
 from . import routes
 
-
 # NOTE: Uncomment this to re-populate db
 # db.drop_all()
 # from . import db_init
