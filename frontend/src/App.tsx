@@ -18,6 +18,9 @@ function App(): JSX.Element {
             <Navbar width={tw`w-16`} />
             <div tw='w-full'>
               <Switch>
+              <Route path={ROUTES.search} exact>
+                  <Search />
+                </Route>
                 <PrivateRoute path={ROUTES.profiles}>
                   <ProfilesPage />
                 </PrivateRoute>
@@ -25,13 +28,10 @@ function App(): JSX.Element {
                 <Route
                   path={ROUTES.courses}
                   render={(props) => <Courses {...props} />}
-                ></Route>
+                />
                 <PrivateRoute path={ROUTES.home}>
                   <Home />
                 </PrivateRoute>
-                <Route path={ROUTES.search}>
-                  <Search />
-                </Route>
               </Switch>
             </div>
           </div>
