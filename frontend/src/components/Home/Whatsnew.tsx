@@ -11,13 +11,11 @@ function Whatsnew(): JSX.Element {
         <Blogpost
           title='Upcoming Features'
           body='Sigma Educate will have a bunch of new features coming up. Please stay tuned as we work towards making the ultimate course selection app.'
-          link=''
           tw='flex-auto'
         />
         <Blogpost
           title='Just Launched'
-          body='Sigma Educate has just launched the MVP. Please provide feedback if you encounter any issues.'
-          link=''
+          body='Sigma Educate has just launched the MVP. Please provide feedback if you encounter any issues. Browsing courses and viewing course information is fully implemented. You can also create custom profiles with different courses.'
           tw='flex-auto'
         />
       </Card>
