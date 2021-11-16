@@ -4,7 +4,6 @@ from wtforms import Form, StringField, SelectField
 from ..models.courses import Course
 from ..models.profiles import Profile, Course_Profile_A
 from ..models.course_schema import courseSchema
-
 import pickle
 import numpy as np
 import pandas as pd
@@ -211,6 +210,8 @@ def getCourse():
     print(data, flush=True)
     try:
         courseData = Course.query.filter(Course.code==data['code']).one()
+        courseData.views += 1
+        db.session.commit()
     except Exception as err:
         return {"message":str(err)}, 400
 
@@ -243,8 +244,7 @@ def deleteCourse():
   
   course_data = data["course"]
   course = Course.query.filter_by(id=course_data["id"]).one()
-#   session, year = str(course_data["session"]), int(course_data["year"])
-
+  
   Course_Profile_A.query.filter_by(profile_id=profile.id).\
     filter_by(course_id=course.id).delete()
 

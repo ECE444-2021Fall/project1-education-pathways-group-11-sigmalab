@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS course(
     maybe_restricted              TEXT,
     majors_outcomes               TEXT,
     minors_outcomes               TEXT,
-    ai_pre_reqs                   TEXT
+    ai_pre_reqs                   TEXT,
+    views                         INT
 )
 """
 
@@ -101,6 +102,9 @@ for course_code, course_attributes in df.iterrows():
     current_row.append(serialize_array(course_attributes["MinorsOutcomes"]))
     current_row.append(serialize_array(course_attributes["AIPreReqs"]))
     
+    # view count
+    current_row.append("0")
+
     # formatting
     for i in range(len(current_row)):
         current_row[i] = current_row[i].replace("'", "''")
@@ -135,7 +139,8 @@ for course_code, course_attributes in df.iterrows():
         maybe_restricted,
         majors_outcomes,
         minors_outcomes,
-        ai_pre_reqs
+        ai_pre_reqs,
+        views
     ) VALUES (
         '%s', 
         '%s', 
@@ -162,6 +167,7 @@ for course_code, course_attributes in df.iterrows():
         '%s', 
         '%s', 
         '%s', 
+        '%s',
         '%s'
     )
     """ % tuple(current_row)

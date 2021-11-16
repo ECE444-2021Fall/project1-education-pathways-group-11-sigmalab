@@ -18,5 +18,6 @@ class CourseSchema(ma.SQLAlchemySchema):
     last_updated = ma.auto_field()
     exclusion = ma.auto_field()
     corequisite = ma.auto_field()
+    views = ma.auto_field()
 
 courseSchema = CourseSchema()
