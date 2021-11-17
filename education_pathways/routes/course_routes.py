@@ -2,6 +2,7 @@ from . import app, db
 from flask import render_template, request, redirect, jsonify
 from wtforms import Form, StringField, SelectField
 from ..models.courses import Course
+from ..models.profiles import Profile, Course_Profile_A
 from ..models.course_schema import courseSchema
 import pickle
 import numpy as np
@@ -213,7 +214,47 @@ def getCourse():
     print(data, flush=True)
     try:
         courseData = Course.query.filter(Course.code==data['code']).one()
+        courseData.views += 1
+        db.session.commit()
     except Exception as err:
         return {"message":str(err)}, 400
 
     return jsonify(courseSchema.dump(courseData), 200)
+
+@app.route('/addCourse', methods=['POST'])
+def addCourse():
+  data = request.json
+
+  profile = Profile.query.filter_by(id=data["profile_id"]).one()
+  
+  course_data = data["course"]
+  course = Course.query.filter_by(code=course_data["code"]).one()
+  session, year = str(course_data["session"]), int(course_data["year"])
+
+  profile.add_course(course, session, year)
+
+  try:
+    db.session.commit()
+  except Exception as err:
+    return {"message": str(err)}, 400
+
+  return jsonify(success=True), 200
+
+@app.route('/deleteCourse', methods=['POST'])
+def deleteCourse():
+  data = request.json
+
+  profile = Profile.query.filter_by(id=data["profile_id"]).one()
+  
+  course_data = data["course"]
+  course = Course.query.filter_by(code=course_data["code"]).one()
+  
+  Course_Profile_A.query.filter_by(profile_id=profile.id).\
+    filter_by(course_id=course.id).delete()
+
+  try:
+    db.session.commit()
+  except Exception as err:
+    return {"message": str(err)}, 400
+
+  return jsonify(success=True), 200

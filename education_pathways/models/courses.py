@@ -31,6 +31,7 @@ class Course(db.Model):
   majors_outcomes = db.Column(db.Text())
   minors_outcomes = db.Column(db.Text())
   ai_pre_reqs = db.Column(db.Text())
+  views = db.Column(db.Integer)
 
   def __repr__(self):
     return '<Course {}: {}>'.format(self.id, self.code)
