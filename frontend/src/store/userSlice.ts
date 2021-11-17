@@ -79,6 +79,9 @@ export const userSlice = createSlice({
     addCourse: (state, action: PayloadAction<ICourse>) => {
       return;
     },
+    selectProfile: (state, action: PayloadAction<string>) => {
+      state.currentProfile = action.payload;
+    },
     editSchedule: (state) => {
       state.isEditing = true;
     },
@@ -142,6 +145,7 @@ export const {
   editSchedule,
   saveSchedule,
   cancelEdit,
+  selectProfile,
   updateProfiles,
   updateProfile,
   logUser,
