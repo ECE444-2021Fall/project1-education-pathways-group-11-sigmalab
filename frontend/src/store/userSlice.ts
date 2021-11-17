@@ -1,14 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  cloneDeep,
-  find,
-  isEqual,
-  orderBy,
-  pullAllWith,
-  pullAt,
-  reduce,
-  reduceRight,
-} from 'lodash';
+import { cloneDeep, find, isEqual, orderBy, pullAllWith, pullAt } from 'lodash';
 import schedule from '../datafillers/schedules';
 import {
   emptyYearConstructor,
@@ -106,7 +97,9 @@ export const userSlice = createSlice({
       state.isEditing = false;
     },
     createProfile: (state, action: PayloadAction<string>) => {
-      const exists = find(state.profiles, { name: action.payload });
+      const exists = find(state.profiles, {
+        name: action.payload.toLowerCase(),
+      });
       if (exists) throw 'Profile already exists';
       const sessions = ['fall', 'winter', 'summer'].map(
         (sessionName): ISession => ({
@@ -115,7 +108,7 @@ export const userSlice = createSlice({
         })
       );
       const newProfile: IProfile = {
-        name: action.payload,
+        name: action.payload.toLowerCase(),
         courses: [],
         schedule: [
           { year: 2021, sessions: cloneDeep(sessions) },
@@ -168,9 +161,6 @@ export const userSlice = createSlice({
         state.profiles[profileIndex].schedule[yearIndex].sessions[sessionIndex]
           .courses;
       pullAllWith(courses, [course], isEqual);
-      const isEmpty = isYearEmpty(
-        state.profiles[profileIndex].schedule[yearIndex].sessions
-      );
 
       //add course in target
       state.profiles[profileIndex].schedule[targetYearIndex].sessions[

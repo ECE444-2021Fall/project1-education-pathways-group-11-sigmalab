@@ -11,7 +11,7 @@ export interface IEditProps {
 
 export function useScheduleEditProps() {
   const dispatch = useAppDispatch();
-  const [isEditing, currentProfile] = useAppSelector((state) => [
+  const [isEditing] = useAppSelector((state) => [
     state.user.isEditing,
     state.user.currentProfile,
   ]);

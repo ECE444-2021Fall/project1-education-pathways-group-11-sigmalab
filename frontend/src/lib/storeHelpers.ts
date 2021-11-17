@@ -1,4 +1,4 @@
-import { IProfile, TSessionName, ISession, IYear } from '../store/userSlice';
+import { TSessionName, ISession, IYear } from '../store/userSlice';
 
 // getProfileIndex returns the index of a profile if
 // found in list of profiles
