@@ -55,12 +55,11 @@ class Profile(db.Model):
 
   def add_courses(self, course_list: list[tuple[Course, str, int]])->None:
     for course, session, year in course_list:
-      course_association = Course_Profile_A(session=session, course=course, \
-        year=year)
-      self.course_associations.append(course_association)
+      self.add_course(course, session, year)
   
-  def add_course(self, course: Course, session: str)-> None:
-    course_association = Course_Profile_A(session=session, course=course)
+  def add_course(self, course: Course, session: str, year: int)-> None:
+    course_association = Course_Profile_A(session=session, course=course, \
+      year=year)
     self.course_associations.append(course_association)
   
   def __repr__(self):

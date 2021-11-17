@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'twin.macro';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Courses, Home, Login, ProfilesPage, Search } from './pages';
+import { Courses, Home, Login, ProfilesPage, Search, Help } from './pages';
 import Navbar from './components/Navbar';
 import ROUTES from './config/routes';
 import PrivateRoute from './components/PrivateRoute';
@@ -16,7 +16,7 @@ function App(): JSX.Element {
         <Route>
           <div tw='flex flex-row align-top'>
             <Navbar width={tw`w-16`} />
-            <div tw='w-full'>
+            <div tw='w-full min-h-screen'>
               <Switch>
               <Route path={ROUTES.search} exact>
                   <Search />
@@ -32,6 +32,12 @@ function App(): JSX.Element {
                 <PrivateRoute path={ROUTES.home}>
                   <Home />
                 </PrivateRoute>
+                <Route path={ROUTES.search} exact>
+                  <Search />
+                </Route>
+                <Route path={ROUTES.help}>
+                  <Help />
+                </Route>
               </Switch>
             </div>
           </div>
