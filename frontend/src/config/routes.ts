@@ -5,6 +5,7 @@ const ROUTES = {
   search: '/search',
   courses: '/courses/:code',
   profiles: '/profiles',
+  help: '/help',
   backend: 'http://localhost:5000',
 };
 
