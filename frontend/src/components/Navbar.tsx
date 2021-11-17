@@ -3,6 +3,7 @@ import tw, { TwStyle } from 'twin.macro';
 import { NavLink } from 'react-router-dom';
 import ROUTES from '../config/routes';
 import { SearchIcon, LogoIcon, ProfilesIcon } from './Icons';
+import { MdOutlineHelpOutline, MdOutlineLogout } from 'react-icons/md';
 
 interface NavbarProps {
   width?: TwStyle;
@@ -33,6 +34,12 @@ function Navbar({ width: navbarWidth }: NavbarProps): JSX.Element {
       </StyledLink>
       <StyledLink to={ROUTES.profiles} activeStyle={activeLinkStyles}>
         <ProfilesIcon css={iconStyles} />
+      </StyledLink>
+      <StyledLink to={ROUTES.help} activeStyle={activeLinkStyles}>
+        <MdOutlineHelpOutline tw='fill-current h-5 w-full' />
+      </StyledLink>
+      <StyledLink to={ROUTES.help} activeStyle={activeLinkStyles}>
+        <MdOutlineLogout tw='fill-current h-5 w-full' />
       </StyledLink>
     </div>
   );
