@@ -16,7 +16,8 @@ function App(): JSX.Element {
         <Route>
           <div tw='flex flex-row align-top'>
             <Navbar width={tw`w-16`} />
-            <div tw='w-full min-h-screen'>
+            <div tw='w-16' />
+            <div tw='w-full '>
               <Switch>
                 <Route path={ROUTES.search} exact>
                   <Search />
@@ -35,9 +36,6 @@ function App(): JSX.Element {
                 <PrivateRoute path={ROUTES.home}>
                   <Home />
                 </PrivateRoute>
-                <Route path={ROUTES.search} exact>
-                  <Search />
-                </Route>
               </Switch>
             </div>
           </div>
