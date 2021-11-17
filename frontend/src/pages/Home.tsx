@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import tw from 'twin.macro';
 import Quicksearch from '../components/Home/Quicksearch';
-import Whatsnew from '../components/Home/Whatsnew';
+import TopCourses from '../components/Home/TopCourses';
 import Quickprofile from '../components/Home/Quickprofile';
 import { CourseResults } from '../lib/searchQuery';
 import Results from '../components/Search/Results';
@@ -55,7 +55,7 @@ function Home(): JSX.Element {
         </div>
         <div tw='flex flex-row'>
           <Quickprofile tw='flex-1 h-full' />
-          <Whatsnew tw='flex-1 h-screen'></Whatsnew>
+          <TopCourses tw='flex-1 h-screen'></TopCourses>
         </div>
 
         {/* <h1 css={[tw`text-5xl text-white`]}>Hello World</h1> */}
