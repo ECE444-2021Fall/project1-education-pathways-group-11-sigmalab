@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import tw from 'twin.macro';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { ISession, moveCourse } from '../../../store/userSlice';
 import { Pill } from '../../shared';
 import Course, { CourseProps } from './Course';
@@ -15,26 +15,34 @@ interface SessionProps {
 const SessionName = tw.p`text-gray-500 text-lg capitalize mt-0.5`;
 const SessionCourses = tw.div`col-span-2 grid gap-2 grid-cols-3 grid-rows-2 mb-2`;
 
-function Session({ session, year, isEditing }: SessionProps): JSX.Element {
+function Session({ session, year }: SessionProps): JSX.Element {
+  const [isEditing, currentProfile] = useAppSelector((state) => [
+    state.user.isEditing,
+    state.user.currentProfile,
+  ]);
   const dispatch = useAppDispatch();
 
-  const [{ draggedCourse, hovered }, dropRef] = useDrop(() => ({
-    accept: 'course',
-    drop: (item: CourseProps) => {
-      const params = {
-        profileName: 'main',
-        ...item,
-        targetYear: year,
-        targetSessionName: session.name,
-      };
-      dispatch(moveCourse(params));
-    },
-    canDrop: () => !!isEditing,
-    collect: (monitor) => ({
-      hovered: monitor.isOver(),
-      draggedCourse: monitor.getItem<CourseProps>(),
+  const [{ draggedCourse, hovered }, dropRef] = useDrop(
+    () => ({
+      accept: 'course',
+      drop: (item: CourseProps) => {
+        const params = {
+          profileName: currentProfile,
+          ...item,
+          targetYear: year,
+          targetSessionName: session.name,
+        };
+        console.log('im here');
+        dispatch(moveCourse(params));
+      },
+      canDrop: () => !!isEditing,
+      collect: (monitor) => ({
+        hovered: monitor.isOver(),
+        draggedCourse: monitor.getItem<CourseProps>(),
+      }),
     }),
-  }));
+    [isEditing, currentProfile, year, session]
+  );
   const unLabeled = year <= 0;
 
   return (

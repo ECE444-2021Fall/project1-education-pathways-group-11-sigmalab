@@ -32,7 +32,6 @@ function Profile({
   const selectProfileHandler = () => {
     !isEditing && editProps.selectProfileHandler(name);
   };
-  console.log(isEditing, currentlyEditing);
   return (
     <Card
       tw='w-full h-56 flex flex-col justify-start mb-10'
@@ -45,23 +44,21 @@ function Profile({
       <h3 tw='mb-3.5 flex items-center'>
         <span tw='text-2xl capitalize inline-block width[20ch] flex-grow-0 truncate'>
           {name}
+          {isDefault && <Tags tw='lowercase'>default</Tags>}
         </span>
         <AiOutlineEdit
           tw='text-gray-400 h-5 w-auto ml-3 cursor-pointer'
           css={currentlyEditing ? undefined : tw`invisible`}
         />
-        {isDefault && <Tags>default</Tags>}
         {currentlyEditing && <Tags>editing</Tags>}
       </h3>
       <Details>
         {'Courses: '}
         {courses?.map((course, id) => (
-          <>
-            <StyledLink key={id} to='/'>
-              {course.name}
-            </StyledLink>
+          <React.Fragment key={id}>
+            <StyledLink to='/'>{course.name}</StyledLink>
             {id + 1 === courses.length ? null : ', '}
-          </>
+          </React.Fragment>
         ))}
       </Details>
       <Details tw='mb-auto'>

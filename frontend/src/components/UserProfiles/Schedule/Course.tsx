@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDrag } from 'react-dnd';
-import { getEmptyImage } from 'react-dnd-html5-backend';
 import tw from 'twin.macro';
+import { useAppSelector } from '../../../hooks';
 import { ICourse, TSessionName } from '../../../store/userSlice';
 import { Pill } from '../../shared';
 
@@ -12,12 +12,8 @@ export interface CourseProps {
   isEditing?: boolean;
 }
 
-function Course({
-  course,
-  year,
-  sessionName,
-  isEditing,
-}: CourseProps): JSX.Element {
+function Course({ course, year, sessionName }: CourseProps): JSX.Element {
+  const isEditing = useAppSelector((state) => state.user.isEditing);
   const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: 'course',
@@ -27,7 +23,7 @@ function Course({
         isDragging: monitor.isDragging(),
       }),
     }),
-    [course, year, sessionName]
+    [isEditing, course, year, sessionName]
   );
 
   return (

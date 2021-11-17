@@ -2,13 +2,30 @@ import React, { useCallback } from 'react';
 import tw from 'twin.macro';
 import Profile from './Profile';
 import EmptyProfile from './EmptyProfile';
-import profiles from '../../../datafillers/profiles';
 import { useScheduleEditProps } from '../../../lib/scheduleEdit';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { selectProfile } from '../../../store/userSlice';
+import { IProfile, selectProfile } from '../../../store/userSlice';
+
+const stats = (
+  profile: IProfile
+): { numOfCourses: number; numOfSemesters: number } => {
+  let numOfCourses = 0,
+    numOfSemesters = 0;
+  profile.schedule.forEach((year) => {
+    if (year.year <= 2000) return;
+    year.sessions.forEach((session) => {
+      numOfSemesters += session.name != 'unassigned' ? 1 : 0;
+      numOfCourses += session.courses.length;
+    });
+  });
+  return { numOfCourses, numOfSemesters };
+};
 
 function Profiles(): JSX.Element {
-  const currentProfile = useAppSelector((state) => state.user.currentProfile);
+  const [currentProfile, profiles] = useAppSelector((state) => [
+    state.user.currentProfile,
+    state.user.profiles,
+  ]);
   const { editProps } = useScheduleEditProps();
   const dispatch = useAppDispatch();
   const selectProfileHandler = useCallback(
@@ -26,10 +43,7 @@ function Profiles(): JSX.Element {
           key={index}
           name={profile.name}
           courses={profile.courses}
-          stats={{
-            numOfCourses: profile.numOfCourses,
-            numOfSemesters: profile.numOfSemesters,
-          }}
+          stats={stats(profile)}
           isDefault={profile.isDefault}
           isCurrent={currentProfile === profile.name}
           editProps={{ ...editProps, selectProfileHandler }}

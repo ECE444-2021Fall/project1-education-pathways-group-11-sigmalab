@@ -24,7 +24,7 @@ export type TSchedule = IYear[];
 
 export interface IProfile {
   name: string;
-  // courses: { id: number; name: string }[];
+  courses: { id: number; name: string }[];
   schedule: TSchedule;
   numOfSemesters: 4;
   isDefault: boolean;
@@ -35,20 +35,23 @@ export interface UserState {
   isEditing: boolean;
   currentProfile: string;
   profiles: IProfile[];
+  profileTemp: IProfile[];
 }
 
 const initialState: UserState = {
   username: undefined,
-  isEditing: true,
+  isEditing: false,
   currentProfile: 'main',
   profiles: [
     {
       name: 'main',
       numOfSemesters: 4,
+      courses: [],
       isDefault: true,
       schedule: schedule,
     },
   ],
+  profileTemp: [],
 };
 
 export const userSlice = createSlice({
@@ -84,9 +87,11 @@ export const userSlice = createSlice({
     },
     editSchedule: (state) => {
       state.isEditing = true;
+      state.profileTemp = cloneDeep(state.profiles);
     },
     cancelEdit: (state) => {
       state.isEditing = false;
+      state.profiles = cloneDeep(state.profileTemp);
     },
     saveSchedule: (state) => {
       state.isEditing = false;

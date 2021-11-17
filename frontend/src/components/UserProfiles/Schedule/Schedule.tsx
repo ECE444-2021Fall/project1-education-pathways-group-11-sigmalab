@@ -4,11 +4,17 @@ import ScheduleSection from './ScheduleSection';
 import { useAppSelector } from '../../../hooks';
 import EditControls from './EditControls';
 import { useScheduleEditProps } from '../../../lib/scheduleEdit';
+import { find } from 'lodash';
 
 function Schedule(): JSX.Element {
   const { isEditing, editProps } = useScheduleEditProps();
-  const schedule = useAppSelector((state) => state.user.profiles)?.[0]
-    ?.schedule;
+  const [profiles, currentProfile] = useAppSelector((state) => [
+    state.user.profiles,
+    state.user.currentProfile,
+  ]);
+  // ?.[0]?.schedule;
+  const schedule = find(profiles, { name: currentProfile })?.schedule;
+
   return (
     <>
       <div tw='flex flex-row justify-between w-2/3'>

@@ -15,7 +15,6 @@ export function useScheduleEditProps() {
     state.user.isEditing,
     state.user.currentProfile,
   ]);
-  console.log(isEditing);
   const editHandler = useCallback(() => {
     dispatch(editSchedule());
   }, [dispatch]);
