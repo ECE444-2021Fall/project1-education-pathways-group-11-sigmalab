@@ -18,25 +18,25 @@ function App(): JSX.Element {
             <Navbar width={tw`w-16`} />
             <div tw='w-full min-h-screen'>
               <Switch>
-              <Route path={ROUTES.search} exact>
+                <Route path={ROUTES.search} exact>
                   <Search />
-              </Route>
-              <Route
+                </Route>
+                <Route path={ROUTES.help} exact>
+                  <Help />
+                </Route>
+                <Route
                   path={ROUTES.courses}
-                  render={(props) => <Courses {...props} />} exact
+                  render={(props) => <Courses {...props} />}
+                  exact
                 />
                 <PrivateRoute path={ROUTES.profiles}>
                   <ProfilesPage />
                 </PrivateRoute>
-                {/* TODO: add dynamic path */}
                 <PrivateRoute path={ROUTES.home}>
                   <Home />
                 </PrivateRoute>
                 <Route path={ROUTES.search} exact>
                   <Search />
-                </Route>
-                <Route path={ROUTES.help}>
-                  <Help />
                 </Route>
               </Switch>
             </div>

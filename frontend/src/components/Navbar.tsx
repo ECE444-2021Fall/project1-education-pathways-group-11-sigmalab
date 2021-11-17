@@ -8,7 +8,6 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 import { MdOutlineHelpOutline, MdOutlineLogout } from 'react-icons/md';
 
-
 interface NavbarProps {
   width?: TwStyle;
 }
@@ -27,7 +26,6 @@ function Navbar({ width: navbarWidth }: NavbarProps): JSX.Element {
         navbarWidth,
       ]}
     >
-
       <StyledLink
         to={ROUTES.home}
         tw='flex justify-center items-center mb-10 w-full text-gray-light'
@@ -40,15 +38,17 @@ function Navbar({ width: navbarWidth }: NavbarProps): JSX.Element {
       <StyledLink to={ROUTES.profiles} activeStyle={activeLinkStyles}>
         <ProfilesIcon css={iconStyles} />
       </StyledLink>
-      <StyledLink to={ROUTES.help} activeStyle={activeLinkStyles}
+      <StyledLink activeStyle={activeLinkStyles} to={ROUTES.help}>
+        <MdOutlineHelpOutline tw='fill-current h-5 w-full' />
+      </StyledLink>
+      <StyledLink
         to={ROUTES.login}
+        activeStyle={activeLinkStyles}
         onClick={() => {
           cookies.remove('username');
           cookies.remove('password');
-        }}>
-        <MdOutlineHelpOutline tw='fill-current h-5 w-full' />
-      </StyledLink>
-      <StyledLink to={ROUTES.help} activeStyle={activeLinkStyles}>
+        }}
+      >
         <MdOutlineLogout tw='fill-current h-5 w-full' />
       </StyledLink>
     </div>
