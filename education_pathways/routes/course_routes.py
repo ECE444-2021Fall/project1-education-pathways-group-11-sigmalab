@@ -207,21 +207,23 @@ def course(code):
 
 @app.route('/getCourse', methods=['GET'])
 def getCourse():
-    data = request.args
-    if (data == None):
-        return jsonify(543)
-    print(data, flush=True)
-    try:
-        courseData = Course.query.filter(Course.code==data['code']).one()
-        courseData.views += 1
-        db.session.commit()
-    except Exception as err:
-        return {"message":str(err)}, 400
+  """GET request to get the database entry for the specified course."""
+  data = request.args
+  if (data == None):
+    return jsonify(543)
+  print(data, flush=True)
+  try:
+    courseData = Course.query.filter(Course.code==data['code']).one()
+    courseData.views += 1
+    db.session.commit()
+  except Exception as err:
+    return {"message":str(err)}, 400
 
-    return jsonify(courseSchema.dump(courseData), 200)
+  return jsonify(courseSchema.dump(courseData), 200)
 
 @app.route('/addCourse', methods=['POST'])
 def addCourse():
+  """POST request to add a specified course to the a profile."""
   data = request.json
 
   profile = Profile.query.filter_by(id=data["profile_id"]).one()
@@ -241,6 +243,7 @@ def addCourse():
 
 @app.route('/deleteCourse', methods=['POST'])
 def deleteCourse():
+  """POST request to delete a specified course from the profile."""
   data = request.json
 
   profile = Profile.query.filter_by(id=data["profile_id"]).one()
