@@ -2,7 +2,8 @@ import React from 'react';
 import tw, { TwStyle } from 'twin.macro';
 import { NavLink } from 'react-router-dom';
 import ROUTES from '../config/routes';
-import { SearchIcon, LogoIcon, ProfilesIcon, HelpIcon } from './Icons';
+import { SearchIcon, LogoIcon, ProfilesIcon } from './Icons';
+import { MdOutlineHelpOutline } from 'react-icons/md';
 
 interface NavbarProps {
   width?: TwStyle;
@@ -35,8 +36,7 @@ function Navbar({ width: navbarWidth }: NavbarProps): JSX.Element {
         <ProfilesIcon css={iconStyles} />
       </StyledLink>
       <StyledLink to={ROUTES.help} activeStyle={activeLinkStyles}>
-        {/* <HelpIcon css={iconStyles} /> */}
-        <h1 css={iconStyles}>&#63;</h1>
+        <MdOutlineHelpOutline tw='fill-current h-6 w-full' />
       </StyledLink>
     </div>
   );
