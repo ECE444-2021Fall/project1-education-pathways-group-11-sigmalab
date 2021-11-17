@@ -14,16 +14,21 @@ const yearFormatter = (year: number) => (year < 1 ? 'unassigned' : year);
 function ScheduleSection({ schedule }: ScheduleSectionProps): JSX.Element {
   const isEditing = useAppSelector((state) => state.user.isEditing);
   return (
-    <>
+    <div tw='flex flex-col'>
       {schedule.map((year, yearKey) => {
         const notEmpty =
           year.sessions.reduce(
             (numCourses, session) => numCourses + session.courses.length,
             0
           ) != 0;
+        const isUnassigned = year.year === -1;
         return (
-          (notEmpty || isEditing) && (
-            <article tw='w-2/3 my-5' key={yearKey}>
+          (notEmpty || isEditing || isUnassigned) && (
+            <article
+              tw='w-2/3 my-5'
+              key={yearKey}
+              css={isUnassigned ? tw`order-last` : undefined}
+            >
               <Divider>{yearFormatter(year.year)}</Divider>
               <div tw='flex flex-col justify-start items-stretch'>
                 {year.sessions.map((session, sessionKey) => (
@@ -38,7 +43,7 @@ function ScheduleSection({ schedule }: ScheduleSectionProps): JSX.Element {
           )
         );
       })}
-    </>
+    </div>
   );
 }
 

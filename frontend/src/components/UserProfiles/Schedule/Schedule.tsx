@@ -12,7 +12,6 @@ function Schedule(): JSX.Element {
     state.user.profiles,
     state.user.currentProfile,
   ]);
-  // ?.[0]?.schedule;
   const schedule = find(profiles, { name: currentProfile })?.schedule;
 
   return (
