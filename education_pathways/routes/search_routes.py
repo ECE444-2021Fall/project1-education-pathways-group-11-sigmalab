@@ -6,12 +6,13 @@ from ..models.courses import Course
 from flask_msearch import Search
 from marshmallow import Schema, fields
 from ..models.resultSchema import resultSchema
+from flask_cors import CORS
 
 # https://programmerall.com/article/8033330201/
 # https://tutorial101.blogspot# .com/2021/04/python-flask-blog-with-admin-using.html
 search=Search(db=db)
 search.init_app(app)
-
+CORS(app, resources={r"/*": {"origins":"*"}})
 
 ##Uncomment to delete 
 # search.delete_index()

@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_msearch import Search
 from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -18,6 +19,10 @@ app.config['WHOOSH_ENABLE'] = True
 # delete in production
 app.config['JSON_SORT_KEYS'] = False
 db = SQLAlchemy(app)
+
+CORS(app, resources={r"/*": {"origins":"*"}})
+
+
 @app.after_request
 def apply_headers(re):
     re.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'

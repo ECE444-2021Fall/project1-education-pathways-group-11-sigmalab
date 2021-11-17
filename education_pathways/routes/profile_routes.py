@@ -4,6 +4,10 @@ from ..models.profiles import Profile, Course_Profile_A
 from ..models.users import User
 from ..models.courses import Course
 from ..models.profiles_schema import years_schema, profile_schema, profiles_schema
+from flask_cors import CORS
+
+CORS(app, resources={r"/*": {"origins":"*"}})
+
 
 @app.route('/getProfile', methods=['GET'])
 def getProfile():

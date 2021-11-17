@@ -9,6 +9,10 @@ import pandas as pd
 import networkx as nx
 from collections import defaultdict
 from sklearn.metrics.pairwise import cosine_similarity
+from flask_cors import CORS
+
+CORS(app, resources={r"/*": {"origins":"*"}})
+
 
 with open('resources/course_vectorizer.pickle','rb') as f:
     vectorizer = pickle.load(f)
