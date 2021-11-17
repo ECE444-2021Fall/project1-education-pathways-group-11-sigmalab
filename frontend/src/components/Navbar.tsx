@@ -3,6 +3,9 @@ import tw, { TwStyle } from 'twin.macro';
 import { NavLink } from 'react-router-dom';
 import ROUTES from '../config/routes';
 import { SearchIcon, LogoIcon, ProfilesIcon } from './Icons';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 import { MdOutlineHelpOutline, MdOutlineLogout } from 'react-icons/md';
 
 interface NavbarProps {
@@ -35,10 +38,17 @@ function Navbar({ width: navbarWidth }: NavbarProps): JSX.Element {
       <StyledLink to={ROUTES.profiles} activeStyle={activeLinkStyles}>
         <ProfilesIcon css={iconStyles} />
       </StyledLink>
-      <StyledLink to={ROUTES.help} activeStyle={activeLinkStyles}>
+      <StyledLink activeStyle={activeLinkStyles} to={ROUTES.help}>
         <MdOutlineHelpOutline tw='fill-current h-5 w-full' />
       </StyledLink>
-      <StyledLink to={ROUTES.help} activeStyle={activeLinkStyles}>
+      <StyledLink
+        to={ROUTES.login}
+        activeStyle={activeLinkStyles}
+        onClick={() => {
+          cookies.remove('username');
+          cookies.remove('password');
+        }}
+      >
         <MdOutlineLogout tw='fill-current h-5 w-full' />
       </StyledLink>
     </div>

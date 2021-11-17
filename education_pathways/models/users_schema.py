@@ -11,6 +11,7 @@ class UserSchema(ma.SQLAlchemySchema):
     model = User
   id = ma.auto_field()
   username = ma.auto_field()
+  password= ma.auto_field()
   profiles = ma.Nested(ProfileSchema, many=True)
 
   @validates_schema

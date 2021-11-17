@@ -18,7 +18,7 @@ function Home(): JSX.Element {
       <h1 tw='px-20 pt-12 text-5xl justify-center font-bold text-gray-800 mb-10'>
         Sigma Educate
       </h1>
-      <div tw='h-full w-full px-20'>
+      <div tw='w-full px-20'>
         <div tw='mb-5'>
           <Quicksearch
             setSearchState={setSearchState}
