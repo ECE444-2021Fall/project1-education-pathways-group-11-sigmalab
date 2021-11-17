@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "c95c6713-9704-43c0-b972-d6fb43b1b1fb",
+		"name": "Education_Pathways",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"adel12345\",\r\n    \"password\":\"adel12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/createUser",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"createUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validateLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"adel1234\",\r\n    \"password\": \"adel1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/validateLogin",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"validateLogin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"adel12345\",\r\n    \"password\": \"adel12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/deleteUser",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"deleteUser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "createProfile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"adel1234\",\r\n    \"name\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/createProfile",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"createProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProfile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/getProfile?username=adel1234&name=test",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"getProfile"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "adel1234"
+								},
+								{
+									"key": "name",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProfile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"adel1234\",\r\n    \"name\": \"test\",\r\n    \"courses\": [{\"id\":121, \"session\":\"winter\",\"year\":2023},\r\n                {\"id\":122, \"session\":\"fall\", \"year\":2024},\r\n                {\"id\":123, \"session\":\"winter\", \"year\":2022},\r\n                {\"id\":124, \"session\":\"winter\",\"year\":2023},\r\n                {\"id\":125, \"session\":\"fall\", \"year\":2024},\r\n                {\"id\":126, \"session\":\"winter\", \"year\":2022}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/updateProfile",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"updateProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProfile",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"adel1234\",\r\n    \"name\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/deleteProfile",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"deleteProfile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "search",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": \"algorithms\",\r\n    \"filters\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/search",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCourse?code",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/getCourse?code=",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"getCourse"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
