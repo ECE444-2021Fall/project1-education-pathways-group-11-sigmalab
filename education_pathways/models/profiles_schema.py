@@ -41,6 +41,9 @@ class ProfileSchema(ma.SQLAlchemySchema):
   name = ma.auto_field()
   creator_id = ma.auto_field(dump_only=True)
   creator_username = ma.Str()
+  num_courses = ma.Int(dump_only=True)
+  num_semesters = ma.Int(dump_only=True)
+  schedule = ma.List(ma.Nested(YearSchema), dump_only=True)
   # courses = ma.Nested(CourseSchema, many=True)
 
   @validates_schema

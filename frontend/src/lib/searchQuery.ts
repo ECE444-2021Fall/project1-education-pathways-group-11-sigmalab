@@ -55,18 +55,14 @@ async function SearchQuery(
   await axios
     .post(ROUTES.backend + ROUTES.search, request_param)
     .then((response) => {
-      //setResults(response.data))
-      schema.validate(response.data).catch((error) => {
-        console.log(error);
+      schema.validate(response.data).catch(() => {
+        return;
       });
       res = response.data;
-      console.log(res);
-      //console.log(response);
     })
-    .catch((error) => {
-      console.log(error + 'Error in search');
+    .catch(() => {
+      return;
     });
-  console.log(res);
   return res;
 }
 

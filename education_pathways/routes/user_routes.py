@@ -49,7 +49,7 @@ def validateLogin():
   else:
     return {"message":"Invalid login details"}, 500
 
-@app.route('/deleteUser', methods=['POST'])
+@app.route('/deleteUser', methods=['DELETE'])
 def deleteUser():
   json_data = request.get_json()
   if not json_data:
