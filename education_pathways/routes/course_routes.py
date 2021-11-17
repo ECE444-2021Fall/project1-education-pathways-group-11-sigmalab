@@ -14,7 +14,6 @@ from flask_cors import CORS
 
 CORS(app, resources={r"/*": {"origins":"*"}})
 
-
 with open('resources/course_vectorizer.pickle','rb') as f:
     vectorizer = pickle.load(f)
 with open('resources/course_vectors.npz','rb') as f:
