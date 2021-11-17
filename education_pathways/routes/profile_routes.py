@@ -12,18 +12,25 @@ CORS(app, resources={r"/*": {"origins":"*"}})
 @app.route('/getProfile', methods=['GET'])
 def getProfile():
   data = request.args
-  profile = db.session.query(Profile).join(Profile, User.profiles).\
-    filter(User.username==data['username']).\
-    filter(Profile.name==data['name']).one()
+  try:
+    profile = db.session.query(Profile).join(Profile, User.profiles).\
+      filter(User.username==data['username']).\
+      filter(Profile.name==data['name']).one()
+  except Exception as err:
+    return {"message": str(err)}, 400
   schedule = profile.profile_sessions()
-  response = years_schema.dump(schedule)
+  num_courses = len([asc.course for asc in profile.course_associations if asc.session != 'unassigned'])
+  num_semesters = len(set([str(asc.session)+str(asc.year) for asc in profile.course_associations if asc.session != 'unassigned']))
+  res = dict(schedule=schedule, num_courses=num_courses, num_semesters=num_semesters,\
+    creator_username=profile.creator.username, name=profile.name)
+  response = profile_schema.dump(res)
   return jsonify(response), 200
 
 @app.route('/createProfile', methods=['POST'])
 def createProfile():
   data = request.json
   
-  user = User.query.filter_by(username=data['creator_username']).one()
+  user = User.query.filter_by(username=data['username']).one()
   if next((True for prof in user.profiles if prof.name == data['name']), False):
     return {"message": "Profile already exists"}, 422
 
@@ -36,12 +43,14 @@ def createProfile():
 
   return jsonify(success=True), 200
 
-@app.route('/deleteProfile', methods=['POST'])
+@app.route('/deleteProfile', methods=['DELETE'])
 def deleteProfile():
   data = request.json
-  
-  user = User.query.filter_by(username=data['creator_username']).first()
-  Profile.query.filter_by(name=data['name'], creator=user).delete()
+  try:
+    user = User.query.filter_by(username=data['username']).first()
+    Profile.query.filter_by(name=data['name'], creator=user).delete()
+  except Exception as err:
+    return {"message": str(err)}, 400
 
   try:
     db.session.commit()
