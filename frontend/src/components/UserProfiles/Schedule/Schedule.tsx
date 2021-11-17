@@ -21,11 +21,11 @@ function Schedule(): JSX.Element {
         <h2 tw=' text-3xl text-gray-700 '>Current Schedule</h2>
         <EditControls {...editProps} />
       </div>
-      {schedule ? (
+      {schedule && schedule.length > 0 ? (
         <ScheduleSection schedule={schedule} {...isEditing} />
       ) : (
-        <h4 tw='text-xl text-gray-400 w-full text-center'>
-          Please select/create a profile
+        <h4 tw='text-xl text-gray-400 mt-6 text-center w-2/3'>
+          Please add courses
         </h4>
       )}
     </>

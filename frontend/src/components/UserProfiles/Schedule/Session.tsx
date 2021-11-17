@@ -9,7 +9,7 @@ import Course, { CourseProps } from './Course';
 interface SessionProps {
   session: ISession;
   year: number;
-  isEditing?: boolean;
+  showWhenEdit?: boolean;
 }
 
 const SessionName = tw.p`text-gray-500 text-lg capitalize mt-0.5`;
@@ -32,7 +32,6 @@ function Session({ session, year }: SessionProps): JSX.Element {
           targetYear: year,
           targetSessionName: session.name,
         };
-        console.log('im here');
         dispatch(moveCourse(params));
       },
       canDrop: () => !!isEditing,

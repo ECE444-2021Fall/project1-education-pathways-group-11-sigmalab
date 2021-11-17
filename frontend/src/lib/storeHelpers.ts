@@ -1,4 +1,4 @@
-import { IProfile } from '../store/userSlice';
+import { IProfile, TSessionName, ISession, IYear } from '../store/userSlice';
 
 // getProfileIndex returns the index of a profile if
 // found in list of profiles
@@ -10,4 +10,23 @@ function getIndexfromName(
   return index;
 }
 
-export { getIndexfromName };
+function isYearEmpty(sessions: ISession[]): boolean {
+  return (
+    sessions.reduce(
+      (numCourses, session) => numCourses + session.courses.length,
+      0
+    ) <= 0
+  );
+}
+
+function emptyYearConstructor(year: number): IYear {
+  const sessions = ['fall', 'winter', 'summer'].map(
+    (sessionName): ISession => ({
+      name: sessionName as TSessionName,
+      courses: [],
+    })
+  );
+  return { year, sessions };
+}
+
+export { getIndexfromName, isYearEmpty, emptyYearConstructor };

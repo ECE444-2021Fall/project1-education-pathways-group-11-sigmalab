@@ -54,6 +54,23 @@ const schedule: TSchedule = [
     ],
   },
   {
+    year: 2023,
+    sessions: [
+      {
+        name: 'fall',
+        courses: [],
+      },
+      {
+        name: 'winter',
+        courses: [],
+      },
+      {
+        name: 'summer',
+        courses: [],
+      },
+    ],
+  },
+  {
     year: -1,
     sessions: [
       {

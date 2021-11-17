@@ -44,7 +44,7 @@ function Profiles(): JSX.Element {
           name={profile.name}
           courses={profile.courses}
           stats={stats(profile)}
-          isDefault={profile.isDefault}
+          isDefault={false}
           isCurrent={currentProfile === profile.name}
           editProps={{ ...editProps, selectProfileHandler }}
         />

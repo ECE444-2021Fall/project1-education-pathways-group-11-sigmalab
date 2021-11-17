@@ -1,7 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { cloneDeep, isEqual, map, pull, pullAllWith, remove } from 'lodash';
+import {
+  cloneDeep,
+  find,
+  isEqual,
+  orderBy,
+  pullAllWith,
+  pullAt,
+  reduce,
+  reduceRight,
+} from 'lodash';
 import schedule from '../datafillers/schedules';
-import { getIndexfromName } from '../lib/storeHelpers';
+import {
+  emptyYearConstructor,
+  getIndexfromName,
+  isYearEmpty,
+} from '../lib/storeHelpers';
 
 export interface ICourse {
   id: number;
@@ -26,8 +39,6 @@ export interface IProfile {
   name: string;
   courses: { id: number; name: string }[];
   schedule: TSchedule;
-  numOfSemesters: 4;
-  isDefault: boolean;
 }
 
 export interface UserState {
@@ -45,9 +56,7 @@ const initialState: UserState = {
   profiles: [
     {
       name: 'main',
-      numOfSemesters: 4,
       courses: [],
-      isDefault: true,
       schedule: schedule,
     },
   ],
@@ -96,6 +105,29 @@ export const userSlice = createSlice({
     saveSchedule: (state) => {
       state.isEditing = false;
     },
+    createProfile: (state, action: PayloadAction<string>) => {
+      const exists = find(state.profiles, { name: action.payload });
+      if (exists) throw 'Profile already exists';
+      const sessions = ['fall', 'winter', 'summer'].map(
+        (sessionName): ISession => ({
+          name: sessionName as TSessionName,
+          courses: [],
+        })
+      );
+      const newProfile: IProfile = {
+        name: action.payload,
+        courses: [],
+        schedule: [
+          { year: 2021, sessions: cloneDeep(sessions) },
+          { year: 2022, sessions: cloneDeep(sessions) },
+          {
+            year: -1,
+            sessions: [{ name: 'unassigned', courses: [] }],
+          },
+        ],
+      };
+      state.profiles.push(newProfile);
+    },
     moveCourse: (
       state,
       action: PayloadAction<{
@@ -136,11 +168,33 @@ export const userSlice = createSlice({
         state.profiles[profileIndex].schedule[yearIndex].sessions[sessionIndex]
           .courses;
       pullAllWith(courses, [course], isEqual);
+      const isEmpty = isYearEmpty(
+        state.profiles[profileIndex].schedule[yearIndex].sessions
+      );
 
       //add course in target
       state.profiles[profileIndex].schedule[targetYearIndex].sessions[
         targetSessionIndex
       ].courses.push(course);
+
+      const years = state.profiles[profileIndex].schedule.sort(
+        (prevYear, currYear) => prevYear.year - currYear.year
+      );
+      let previ = 0;
+      let prevVal = false;
+      for (let i = years.length - 1, val = false; i >= 0; i--) {
+        val = isYearEmpty(orderBy(years, ['year'], ['asc'])[i].sessions);
+        if (!val) {
+          if (i === years.length - 1)
+            years.push(emptyYearConstructor(years[i].year + 1));
+          break;
+        }
+        if (val && prevVal) {
+          pullAt(years, previ);
+        }
+        prevVal = val;
+        previ = i;
+      }
     },
   },
 });
@@ -153,6 +207,7 @@ export const {
   selectProfile,
   updateProfiles,
   updateProfile,
+  createProfile,
   logUser,
   addCourse,
 } = userSlice.actions;
