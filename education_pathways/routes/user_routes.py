@@ -2,9 +2,26 @@ from functools import partial
 from . import app, db
 from flask import jsonify, request
 from ..models.users import User
-from ..models.profiles import Profile
+from ..models.courses import Course
+from ..models.profiles import Profile, Course_Profile_A
 from ..models.users_schema import user_schema
 from marshmallow.exceptions import ValidationError
+from ..models.profiles_schema import years_schema
+from sqlalchemy import desc
+
+def mostViewed(profile: Profile, n=3):
+  courses = Course_Profile_A.query.filter_by(profile_id=profile.id).all()
+  course_ids = [course.course_id for course in courses]
+  courses = Course.query.filter(Course.id.in_(course_ids)).order_by(desc(Course.views)).all()
+
+  most_viewed = []
+  for course in courses:
+    if n <= 0:
+      break
+    most_viewed.append({"id": course.id, "name": course.code, "views": course.views})
+    n -= 1
+
+  return most_viewed
 
 # EXAMPLE: import the model used to create new rows in a table
 @app.route('/createUser', methods=['POST'])
@@ -22,8 +39,9 @@ def createUser():
   if user:
     return {"message": "User already exists"}, 422
   
-  new_user = User(username=data['username'], password=data['password'])
+  new_user = User(username=data['username'], password=data['password'], default_profile=None)
   new_user.profiles.append(Profile(name='wishlist'))
+  new_user.default_profile = 'wishlist'
   
   db.session.add(new_user)
   try:
@@ -41,11 +59,24 @@ def validateLogin():
   try:
     data = user_schema.load(json_data, partial=('id', 'profiles'))
   except ValidationError as err:
-    return err.messages, 422    
+    return err.messages, 422
 
-  user = User.query.filter_by(username=data['username'],password=data['password']).all()
+  user = User.query.filter_by(username=data['username'],password=data['password']).one()
   if user:
-    return jsonify(success=True), 201
+    # return jsonify(success=True), 201
+    profiles = Profile.query.filter_by(creator_id=user.id).all()
+    profiles_summary = []
+    for profile in profiles:
+      profile_preview = {}
+      profile_preview["name"] = profile.name
+      profile_preview["courses"] = mostViewed(profile)
+
+      profile_preview["numCourses"] = Course_Profile_A.query.filter_by(profile_id=profile.id).count()
+      profile_preview["numSemesters"] = Course_Profile_A.query.filter_by(profile_id=profile.id).distinct(Course_Profile_A.session, Course_Profile_A.year).count()
+      profile_preview["isDefault"] = user.default_profile == profile.name
+
+      profiles_summary.append(profile_preview)
+    return jsonify(profiles_summary), 200
   else:
     return {"message":"Invalid login details"}, 500
 
@@ -71,4 +102,20 @@ def deleteUser():
     db.session.commit()
   except Exception as err:
     return {"message": str(err)}, 400
+  return jsonify(success=True), 200
+
+@app.route('/setDefault', methods=['POST'])
+def setDefault():
+  data = request.json
+
+  user = User.query.filter_by(username=data["username"]).one()
+  profile = Profile.query.filter_by(name=data["profile_name"]).one()
+
+  user.default_profile = profile.name
+
+  try:
+    db.session.commit()
+  except Exception as err:
+    return {"message": str(err)}, 400
+
   return jsonify(success=True), 200
