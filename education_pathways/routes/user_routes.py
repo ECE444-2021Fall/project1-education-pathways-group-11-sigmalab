@@ -120,3 +120,31 @@ def setDefault():
     return {"message": str(err)}, 400
 
   return jsonify(success=True), 200
+
+@app.route('/publishProfile', methods=['POST'])
+def publishProfile():
+  data = request.json
+
+  profile = Profile.query.filter_by(id=data["profile_id"]).one()
+  profile.public = 1
+
+  try:
+    db.session.commit()
+  except Exception as err:
+    return {"message": str(err)}, 400
+
+  return jsonify(success=True), 200
+
+@app.route('/hideProfile', methods=['POST'])
+def hideProfile():
+  data = request.json
+
+  profile = Profile.query.filter_by(id=data["profile_id"]).one()
+  profile.public = 0
+
+  try:
+    db.session.commit()
+  except Exception as err:
+    return {"message": str(err)}, 400
+
+  return jsonify(success=True), 200

@@ -3,16 +3,6 @@ from .profiles import Course_Profile_A, Profile
 from marshmallow.exceptions import ValidationError
 from marshmallow import validates_schema, validate
 
-#### SCHEMAS ####
-
-# class UnformattedCourseSchema(ma.SQLAlchemySchema):
-#   class Meta:
-#     model = Course_Profile_A
-#   course = ma.auto_field()
-#   session = ma.auto_field()
-#   class Meta:
-#     ordered = True
-
 class CourseSchema(ma.Schema):
   id = ma.Int()
   code= ma.Str()
@@ -40,6 +30,7 @@ class ProfileSchema(ma.SQLAlchemySchema):
   id = ma.auto_field(dump_only=True)
   name = ma.auto_field()
   creator_id = ma.auto_field(dump_only=True)
+  public = ma.auto_field()
   creator_username = ma.Str()
   # courses = ma.Nested(CourseSchema, many=True)
 
