@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import tw from 'twin.macro';
 import ResultCard from './Resultcard';
 import { Card, Button } from '../shared';
@@ -8,7 +8,6 @@ interface ResultsProps {
   courseName: string;
   courseCode: string;
   courseDivision: string;
-  courseDepartment: string;
   courseDescription: string;
 }
 
@@ -16,13 +15,12 @@ function Results({
   courseName,
   courseCode,
   courseDivision,
-  courseDepartment,
   courseDescription,
 }: ResultsProps): JSX.Element {
   const history = useHistory();
 
   return (
-    <Fragment>
+    <>
       <Card tw='flex flex-row flex-wrap mb-2 px-2 py-4 bg-gray-100 transition-duration[0.50s]'>
         <ResultCard tw='mx-2 w-1/12 flex-auto flex-col min-height[fit-content] text-center p-2'>
           {courseName}
@@ -45,7 +43,7 @@ function Results({
           More Information
         </Button>
       </Card>
-    </Fragment>
+    </>
   );
 }
 

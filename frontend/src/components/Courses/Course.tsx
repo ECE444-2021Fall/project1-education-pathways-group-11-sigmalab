@@ -47,7 +47,6 @@ function Course({
         setAlertOpen('The course was added to your default profile!');
       })
       .catch((error) => {
-        console.log(error);
         setAlertOpen('Something happened: could not add to your profile');
       });
   }

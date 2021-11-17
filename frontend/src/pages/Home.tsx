@@ -1,13 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import tw from 'twin.macro';
-import Quicksearch from '../components/Home/Quicksearch';
+import QuickSearch from '../components/Home/QuickSearch';
 import TopCourses from '../components/Home/TopCourses';
-import Quickprofile from '../components/Home/Quickprofile';
+import QuickProfile from '../components/Home/QuickProfile';
 import { CourseResults } from '../lib/searchQuery';
 import Results from '../components/Search/Results';
-import Resultsheader from '../components/Search/Resultsheader';
-import Noresults from '../components/Search/Noresults';
-const StyledSection = tw.section`w-1/2`;
+import ResultsHeader from '../components/Search/ResultsHeader';
+import NoResultsHeader from '../components/Search/NoResults';
 
 function Home(): JSX.Element {
   const [searchState, setSearchState] = useState(false);
@@ -20,7 +19,7 @@ function Home(): JSX.Element {
       </h1>
       <div tw='w-full px-20'>
         <div tw='mb-5'>
-          <Quicksearch
+          <QuickSearch
             setSearchState={setSearchState}
             setResults={setResults}
             tw='w-full'
@@ -28,11 +27,11 @@ function Home(): JSX.Element {
         </div>
         <div tw='mb-10'>
           {searchState && results_length < 1 && (
-            <Noresults setSearchState={setSearchState} />
+            <NoResultsHeader setSearchState={setSearchState} />
           )}
 
           {searchState && results_length > 0 && (
-            <Resultsheader setSearchState={setSearchState} />
+            <ResultsHeader setSearchState={setSearchState} />
           )}
 
           {searchState &&
@@ -45,7 +44,6 @@ function Home(): JSX.Element {
                   courseName={result.name}
                   courseCode={result.code}
                   courseDivision={result.division}
-                  courseDepartment={result.department}
                   courseDescription={
                     result.course_description.substring(0, 300) + '...'
                   }
@@ -54,7 +52,7 @@ function Home(): JSX.Element {
             ))}
         </div>
         <div tw='flex flex-row'>
-          <Quickprofile tw='flex-1 h-full' />
+          <QuickProfile tw='flex-1 h-full' />
           <TopCourses tw='flex-1 h-screen'></TopCourses>
         </div>
 

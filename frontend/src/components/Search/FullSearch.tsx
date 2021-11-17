@@ -1,15 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import tw from 'twin.macro';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Button, Card, Pill } from '../shared/';
-import ROUTES from '../../config/routes';
-import axios from 'axios';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import SearchQuery, { CourseResults } from '../../lib/searchQuery';
 import Department from './Department';
-import Filters from './Filters';
 
 interface SearchProps {
   setSearchState: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,17 +32,12 @@ const schema: yup.SchemaOf<FormValues> = yup
   })
   .defined();
 
-function Fullsearch({
+function FullSearch({
   setSearchState,
   // eslint-disable-next-line
   setResults,
 }: SearchProps): JSX.Element {
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-    control,
-  } = useForm<FormValues>({
+  const { handleSubmit, register, control } = useForm<FormValues>({
     resolver: yupResolver(schema),
     //defaultValues: { searchQuery: '' },
   });
@@ -89,7 +81,7 @@ function Fullsearch({
 
           <div tw='flex-row w-full'>
             <Pill
-              tw='text-gray-800 bg-gray-300 shadow-xl text-lg mr-5'
+              tw='text-gray-800 bg-gray-300 shadow-xl text-lg mr-5 hover:bg-gray-400'
               onClick={() => setShowFilters(!showFilters)}
             >
               {' '}
@@ -101,7 +93,11 @@ function Fullsearch({
                   name='yearFilter'
                   control={control}
                   render={({ field }) => (
-                    <StyledDropdown id='years' tw='h-16 mb-2 w-32' {...field}>
+                    <StyledDropdown
+                      id='years'
+                      tw='h-16 mb-2 w-32 hover:bg-blue-900'
+                      {...field}
+                    >
                       <option value=''>Select Year</option>
                       <option value='1'>First Year</option>
                       <option value='2'>Second Year</option>
@@ -116,7 +112,7 @@ function Fullsearch({
                   render={({ field }) => (
                     <StyledDropdown
                       id='Division'
-                      tw='h-16 mb-2 w-36'
+                      tw='h-16 mb-2 w-36 hover:bg-blue-900'
                       {...field}
                     >
                       <option value=''>Select Division</option>
@@ -139,7 +135,11 @@ function Fullsearch({
                   name='departmentFilter'
                   control={control}
                   render={({ field }) => (
-                    <StyledDropdown id='Dept' tw='h-16 mb-2 w-44' {...field}>
+                    <StyledDropdown
+                      id='Dept'
+                      tw='h-16 mb-2 w-44 hover:bg-blue-900'
+                      {...field}
+                    >
                       <option value=''>Select Department</option>
                       <Department></Department>
                     </StyledDropdown>
@@ -149,7 +149,11 @@ function Fullsearch({
                   name='campusFilter'
                   control={control}
                   render={({ field }) => (
-                    <StyledDropdown id='Campus' tw='h-16 mb-2 w-36' {...field}>
+                    <StyledDropdown
+                      id='Campus'
+                      tw='h-16 mb-2 w-36 hover:bg-blue-900'
+                      {...field}
+                    >
                       <option value=''>Select Campus</option>
                       <option value='Mississauga'>Mississauga</option>
                       <option value='Scarborough'>Scarborough</option>
@@ -180,4 +184,4 @@ const StyledDropdown = styled.select`
   margin-right: 20px;
 `;
 
-export default Fullsearch;
+export default FullSearch;
