@@ -4,19 +4,19 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { BsFillLockFill, BsFillPersonFill } from 'react-icons/bs';
-import Input from './Input';
+import { InputE as Input } from './Input';
 import Button from './Button';
 import ROUTES from '../../config/routes';
 import { Link, Redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
-export type FormValues = {
+export type FormValuesWConfirm = {
   username: string;
   password: string;
   confirmPassword: string;
 };
 
-const schema: yup.SchemaOf<FormValues> = yup
+const schema: yup.SchemaOf<FormValuesWConfirm> = yup
   .object()
   .shape({
     username: yup.string().min(8).defined(),
@@ -33,7 +33,7 @@ function SignupForm(): JSX.Element {
   const [cookies, setCookie] = useCookies(['username', 'password']);
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [accountAlreadyExists, setAccountAlreadyExists] = useState(false);
-  const { handleSubmit, control } = useForm<FormValues>({
+  const { handleSubmit, control } = useForm<FormValuesWConfirm>({
     resolver: yupResolver(schema),
     defaultValues: { username: '', password: '', confirmPassword: '' },
   });

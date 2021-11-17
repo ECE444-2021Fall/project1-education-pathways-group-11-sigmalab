@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { BsFillLockFill, BsFillPersonFill } from 'react-icons/bs';
-import Input from './Input';
+import { Input } from './Input';
 import Button from './Button';
 import ROUTES, { API } from '../../config/routes';
 import { Link, Redirect } from 'react-router-dom';
