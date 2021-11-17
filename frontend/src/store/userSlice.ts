@@ -30,10 +30,12 @@ export interface IProfile {
   name: string;
   courses: { id: number; name: string }[];
   schedule: TSchedule;
+  num_courses: number;
+  num_semesters: number;
 }
 
 export interface UserState {
-  username?: string;
+  username: string;
   isEditing: boolean;
   currentProfile: string;
   profiles: IProfile[];
@@ -41,21 +43,15 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  username: undefined,
+  username: '',
   isEditing: false,
-  currentProfile: 'main',
-  profiles: [
-    {
-      name: 'main',
-      courses: [],
-      schedule: schedule,
-    },
-  ],
+  currentProfile: '',
+  profiles: [],
   profileTemp: [],
 };
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: 'adel1234',
   initialState,
   reducers: {
     logUser: (
@@ -109,6 +105,8 @@ export const userSlice = createSlice({
       );
       const newProfile: IProfile = {
         name: action.payload.toLowerCase(),
+        num_courses: 0,
+        num_semesters: 0,
         courses: [],
         schedule: [
           { year: 2021, sessions: cloneDeep(sessions) },

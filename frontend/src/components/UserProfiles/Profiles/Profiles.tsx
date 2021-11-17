@@ -5,6 +5,8 @@ import EmptyProfile from './EmptyProfile';
 import { useScheduleEditProps } from '../../../lib/scheduleEdit';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { IProfile, selectProfile } from '../../../store/userSlice';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 const stats = (
   profile: IProfile

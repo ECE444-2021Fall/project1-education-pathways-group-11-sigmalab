@@ -7,6 +7,7 @@ import { CourseResults } from '../lib/searchQuery';
 import Results from '../components/Search/Results';
 import Resultsheader from '../components/Search/Resultsheader';
 import Noresults from '../components/Search/Noresults';
+import { useQuery } from 'react-query';
 const StyledSection = tw.section`w-1/2`;
 
 function Home(): JSX.Element {
