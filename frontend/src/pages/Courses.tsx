@@ -3,8 +3,6 @@ import Course, { CourseProps } from '../components/Courses/Course';
 import ROUTES from '../config/routes';
 import axios from 'axios';
 
-//import course from '../datafillers/course';
-
 function Courses(props: any): JSX.Element {
   const code: string = props.match.params['code'];
   const [course, setCourse] = useState<CourseProps>(Object);

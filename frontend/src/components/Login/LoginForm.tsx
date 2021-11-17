@@ -51,12 +51,9 @@ function LoginForm(): JSX.Element {
           setCookie('username', data.username, { path: '/' });
           setCookie('password', data.password, { path: '/' });
           setRedirectToHome(true);
-          //return 'Valid';
         }
       })
-      .catch((err) => {
-        //console.log(err);
-        //Give user feedback:
+      .catch(() => {
         setincorrectLoginDetails(true);
       });
   });
@@ -78,9 +75,7 @@ function LoginForm(): JSX.Element {
         control={{ control, name: 'password' }}
       />
       <Button type='submit'>Log In</Button>
-      {/* <Button type='button' onClick={() => history.push(ROUTES.signup)}>
-        Sign-Up
-      </Button> */}
+
       <Link to={ROUTES.signup} tw='text-blue-200 text-sm hover:underline'>
         Don&apos;t have an account? Sign-up
       </Link>

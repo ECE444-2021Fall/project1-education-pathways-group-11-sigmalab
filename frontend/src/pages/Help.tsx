@@ -1,5 +1,4 @@
 import { Card } from '@mui/material';
-import { gt } from 'lodash';
 import React, { useState } from 'react';
 import tw from 'twin.macro';
 
@@ -19,7 +18,7 @@ function Help(): JSX.Element {
           tw='h-full w-11/12 flex flex-col justify-center m-auto mb-6 cursor-pointer'
           onClick={() => setShowCardHow(!showCardHow)}
         >
-          <h1 tw='px-20 pt-12 text-xl justify-center font-bold text-gray-800 mb-10'>
+          <h1 tw='px-20 pt-12 text-xl justify-center font-bold text-gray-800 mb-10 hover:underline'>
             {!showCardHow && <>&#9654;</>}
             {showCardHow && <>&#9660;</>} About Sigma Educate
           </h1>
@@ -35,7 +34,7 @@ function Help(): JSX.Element {
           tw='h-full w-11/12 flex flex-col justify-center m-auto mb-6 cursor-pointer'
           onClick={() => setCardFeatures(!showCardFeatures)}
         >
-          <h1 tw='px-20 pt-12 text-xl justify-center font-bold text-gray-800 mb-10'>
+          <h1 tw='px-20 pt-12 text-xl justify-center font-bold text-gray-800 mb-10 hover:underline'>
             {!showCardFeatures && <>&#9654;</>}
             {showCardFeatures && <>&#9660;</>} Current Features
           </h1>
@@ -60,7 +59,7 @@ function Help(): JSX.Element {
           tw='h-full w-11/12 flex flex-col justify-center m-auto mb-6 cursor-pointer'
           onClick={() => setShowCardUpcoming(!showCardUpcoming)}
         >
-          <h1 tw='px-20 pt-12 text-xl justify-center font-bold text-gray-800 mb-10'>
+          <h1 tw='px-20 pt-12 text-xl justify-center font-bold text-gray-800 mb-10 hover:underline'>
             {!showCardUpcoming && <>&#9654;</>}
             {showCardUpcoming && <>&#9660;</>} Upcoming Features
           </h1>
@@ -92,7 +91,7 @@ function Help(): JSX.Element {
           tw='h-full w-11/12 flex flex-col justify-center m-auto mb-6 cursor-pointer'
           onClick={() => setShowMenuHelp(!showMenuHelp)}
         >
-          <h1 tw='px-20 pt-12 text-xl justify-center font-bold text-gray-800 mb-10'>
+          <h1 tw='px-20 pt-12 text-xl justify-center font-bold text-gray-800 mb-10 hover:underline'>
             {!showMenuHelp && <>&#9654;</>}
             {showMenuHelp && <>&#9660;</>} The Menu Bar
           </h1>

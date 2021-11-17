@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import tw from 'twin.macro';
-import Fullsearch from '../components/Search/Fullsearch';
 import Results from '../components/Search/Results';
-import Noresults from '../components/Search/Noresults';
-import Resultsheader from '../components/Search/Resultsheader';
-import axios from 'axios';
+import NoResultsHeader from '../components/Search/NoResults';
+import ResultsHeader from '../components/Search/ResultsHeader';
 import { CourseResults } from '../lib/searchQuery';
+import FullSearch from '../components/Search/FullSearch';
 
 function Search(): JSX.Element {
   const [searchState, setSearchState] = useState(false);
@@ -13,17 +12,17 @@ function Search(): JSX.Element {
   const results_length = results ? results.length : -1;
   return (
     <div tw='flex flex-col justify-center items-center min-h-screen w-full '>
-      <Fullsearch
+      <FullSearch
         setSearchState={setSearchState}
         setResults={setResults}
         tw='position[absolute] flex'
       />
       <div tw='w-5/6 mt-2'>
         {searchState && results_length < 1 && (
-          <Noresults setSearchState={setSearchState} />
+          <NoResultsHeader setSearchState={setSearchState} />
         )}
         {searchState && results_length > 0 && (
-          <Resultsheader setSearchState={setSearchState} />
+          <ResultsHeader setSearchState={setSearchState} />
         )}{' '}
         {searchState &&
           results_length > 0 &&
@@ -35,7 +34,6 @@ function Search(): JSX.Element {
                 courseName={result.name}
                 courseCode={result.code}
                 courseDivision={result.division}
-                courseDepartment={result.department}
                 courseDescription={
                   result.course_description.substring(0, 300) + '...'
                 }
