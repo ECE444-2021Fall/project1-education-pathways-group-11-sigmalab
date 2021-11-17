@@ -63,19 +63,20 @@ def validateLogin():
 
   user = User.query.filter_by(username=data['username'],password=data['password']).one()
   if user:
-    # return jsonify(success=True), 201
     profiles = Profile.query.filter_by(creator_id=user.id).all()
+
     profiles_summary = []
     for profile in profiles:
       profile_preview = {}
+      
       profile_preview["name"] = profile.name
       profile_preview["courses"] = mostViewed(profile)
-
       profile_preview["numCourses"] = Course_Profile_A.query.filter_by(profile_id=profile.id).count()
       profile_preview["numSemesters"] = Course_Profile_A.query.filter_by(profile_id=profile.id).distinct(Course_Profile_A.session, Course_Profile_A.year).count()
       profile_preview["isDefault"] = user.default_profile == profile.name
 
       profiles_summary.append(profile_preview)
+
     return jsonify(profiles_summary), 200
   else:
     return {"message":"Invalid login details"}, 500
