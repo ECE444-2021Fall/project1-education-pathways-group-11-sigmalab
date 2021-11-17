@@ -6,6 +6,9 @@ import InfoCard from './InfoCard';
 import RequirementsCard from './RequirementsCard';
 import ROUTES from '../../config/routes';
 import axios from 'axios';
+import { useAppSelector } from '../../hooks';
+import { TSchedule } from '../../store/userSlice';
+import { find } from 'lodash';
 
 export interface CourseProps {
   code: string;
@@ -33,37 +36,91 @@ function Course({
   corequisite,
   exclusion,
 }: CourseProps): JSX.Element {
+  const [currentProfile, profiles] = useAppSelector((state) => [
+    state.user.currentProfile,
+    state.user.profiles,
+  ]);
+  const schedule = find(profiles, { name: currentProfile })?.schedule;
+  const isLoggedIn = useState(schedule ? true : false);
+  console.log(schedule);
+  let profileID = -1;
+  if (schedule) {
+    profileID = isInProfile(schedule);
+  }
+
   const [inProfile, setInProfile] = useState(false);
   const [alertOpen, setAlertOpen] = useState('');
-
-  async function addToProfile() {
-    axios
-      .get(ROUTES.backend + '/edpoint', {
-        params: { code: code },
-        headers: {},
-      })
-      .then((response) => {
-        setInProfile(true);
-        setAlertOpen('The course was added to your default profile!');
-      })
-      .catch((error) => {
-        console.log(error);
-        setAlertOpen('Something happened: could not add to your profile');
-      });
-  }
+  const [alertSeverity, setSeverity] = useState('info');
 
   const wideCol = [
     card('Description', [course_description]),
     RequirementsCard(pre_requisites, corequisite, exclusion),
   ];
+  const offered: string[] = [];
   const narrowCol = [InfoCard(code, division, department, campus)];
   if (term != 'NULL' && term != '') {
     const list = new String(term).split(' ');
-    const offered: string[] = [];
     for (let i = 0; i < list.length - 1; i += 2) {
       offered.push(list[i].concat(' ', list[i + 1]));
     }
     narrowCol.push(card('Offered', offered));
+  }
+
+  async function addToProfile() {
+    const param = {
+      profile_id: profileID,
+      course: {
+        code: code,
+        session: offered ? offered[1] : null,
+        year: offered ? offered[0] : null,
+      },
+    };
+    axios
+      .post(ROUTES.backend + '/addCourse', param)
+      .then((response) => {
+        setInProfile(true);
+        setAlertOpen('The course was added to your default profile!');
+        setSeverity('success');
+      })
+      .catch((error) => {
+        console.log(error);
+        setAlertOpen('Something happened: could not add to your profile');
+        setSeverity('error');
+      });
+  }
+
+  async function removeFromProfile() {
+    const param = {
+      profile_id: profileID,
+      course: {
+        code: code,
+        session: offered ? offered[1] : null,
+        year: offered ? offered[0] : null,
+      },
+    };
+    axios
+      .post(ROUTES.backend + '/deleteCourse', param)
+      .then((response) => {
+        setInProfile(true);
+        setAlertOpen('The course was removed!');
+        setSeverity('success');
+      })
+      .catch((error) => {
+        console.log(error);
+        setAlertOpen('Something happened: could not remove from profile');
+        setSeverity('error');
+      });
+  }
+
+  function isInProfile(schedule: TSchedule) {
+    for (const year of schedule) {
+      for (const session of year.sessions) {
+        for (const course of session.courses) {
+          if (course.name == code) return course.id;
+        }
+      }
+    }
+    return -1;
   }
 
   return (
@@ -81,9 +138,12 @@ function Course({
             <Grid item xs={1.5}>
               <Button
                 tw='padding[1rem] h-auto w-auto'
-                onClick={() => addToProfile()}
+                onClick={() =>
+                  inProfile ? removeFromProfile() : addToProfile()
+                }
+                disabled={!isLoggedIn}
               >
-                {inProfile ? 'In profile' : 'Add to profile'}
+                {inProfile ? 'Remove from profile' : 'Add to profile'}
               </Button>
             </Grid>
             <Grid item xs={10.5}>
@@ -93,7 +153,11 @@ function Course({
         </div>
       </Box>
       {alertOpen != '' ? (
-        <Alert tw='mx-6' severity='info' onClose={() => setAlertOpen('')}>
+        <Alert
+          tw='mx-6'
+          severity={alertSeverity == 'success' ? 'success' : 'error'}
+          onClose={() => setAlertOpen('')}
+        >
           {alertOpen}
         </Alert>
       ) : (
