@@ -17,7 +17,7 @@ function App(): JSX.Element {
           <div tw='flex flex-row align-top'>
             <Navbar width={tw`w-16`} />
             <div tw='w-16' />
-            <div tw='w-full'>
+            <div tw='w-full '>
               <Switch>
                 <Route path={ROUTES.search} exact>
                   <Search />

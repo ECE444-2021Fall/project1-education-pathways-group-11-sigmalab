@@ -12,7 +12,7 @@ function Search(): JSX.Element {
   const [results, setResults] = useState<CourseResults[] | null>(null);
   const results_length = results ? results.length : -1;
   return (
-    <div tw='flex flex-col justify-center items-center h-full w-full '>
+    <div tw='flex flex-col justify-center items-center min-h-screen w-full '>
       <Fullsearch
         setSearchState={setSearchState}
         setResults={setResults}
