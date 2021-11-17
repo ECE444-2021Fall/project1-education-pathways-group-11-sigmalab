@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, RouteProps } from 'react-router-dom';
 import ROUTES from './../config/routes';
 import Cookies from 'universal-cookie';
 
@@ -13,22 +13,17 @@ function isAuthenticated() {
   else return false;
 }
 
-interface RouterProps {
-  children: any;
-  path: string;
-}
-
-function PrivateRoute({ children, ...rest }: RouterProps) {
+function PrivateRoute({ children, ...rest }: RouteProps) {
   return (
     <Route
       {...rest}
-      render={() => {
-        return isAuthenticated() === true ? (
-          children
+      render={() =>
+        isAuthenticated() === true ? (
+          <>{children}</>
         ) : (
           <Redirect to={ROUTES.login} />
-        );
-      }}
+        )
+      }
     />
   );
 }

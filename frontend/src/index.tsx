@@ -26,7 +26,6 @@ ReactDOM.render(
     <CookiesProvider>
       <App />
     </CookiesProvider>
-    <App />
   </Provider>,
   document.getElementById('root')
 );

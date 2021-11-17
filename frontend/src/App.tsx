@@ -36,9 +36,6 @@ function App(): JSX.Element {
                 <PrivateRoute path={ROUTES.home}>
                   <Home />
                 </PrivateRoute>
-                <Route path={ROUTES.search} exact>
-                  <Search />
-                </Route>
               </Switch>
             </div>
           </div>
