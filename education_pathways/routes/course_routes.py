@@ -263,13 +263,18 @@ def deleteCourse():
 def topCourses():
   data = request.json
 
-  n = 5
+  n = int(data["n"])
 
-  courses = Course.query.order_by(desc(Course.views))[:n+1].all()
+  courses = Course.query.order_by(desc(Course.views)).all()
+  courses = courses[:n]
+
+  response = []
+  for course in courses:
+    response.append(courseSchema.dump(course))
 
   try:
     db.session.commit()
   except Exception as err:
     return {"message": str(err)}, 400
 
-  return jsonify(courseSchema.dump(courses), 200)
+  return jsonify(response, 200)
