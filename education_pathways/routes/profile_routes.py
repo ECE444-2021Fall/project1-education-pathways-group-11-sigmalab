@@ -11,6 +11,7 @@ CORS(app, resources={r"/*": {"origins":"*"}})
 
 @app.route('/getProfile', methods=['GET'])
 def getProfile():
+  """GET request handler to get the profile of a user based on username and profile name."""
   data = request.args
   try:
     profile = db.session.query(Profile).join(Profile, User.profiles).\
@@ -28,6 +29,7 @@ def getProfile():
 
 @app.route('/createProfile', methods=['POST'])
 def createProfile():
+  """POST request handler to create a new profile for a user based on their username and specified profile name."""
   data = request.json
   
   user = User.query.filter_by(username=data['username']).one()
@@ -45,6 +47,7 @@ def createProfile():
 
 @app.route('/deleteProfile', methods=['DELETE'])
 def deleteProfile():
+  """DELETE request handler to delete a profile for a user based on the specified profile name."""
   data = request.json
   try:
     user = User.query.filter_by(username=data['username']).first()
@@ -62,6 +65,7 @@ def deleteProfile():
 # simple profile.create endpoint using cascades
 @app.route('/updateProfile', methods=['PUT'])
 def updateProfile():
+  """"PUT request handler to update the profile of a user based on the specified profile name."""
   data = request.json
 
   # get the profile
