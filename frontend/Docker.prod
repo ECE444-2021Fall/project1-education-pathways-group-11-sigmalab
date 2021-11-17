@@ -1,0 +1,18 @@
+FROM node:16-slim as builder
+
+USER node
+WORKDIR '/app'
+
+COPY --chown=node:node ./package.json .
+COPY --chown=node:node ./yarn.lock .
+# ENV NODE_OPTIONS=--openssl-legacy-provider
+RUN yarn 
+COPY --chown=node:node . .
+CMD ["yarn", "build"]
+
+FROM nginx:mainline
+COPY --from=build /app/build /usr/share/nginx/html
+RUN rm /etc/nginc/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

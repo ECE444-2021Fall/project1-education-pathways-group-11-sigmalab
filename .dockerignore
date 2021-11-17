@@ -1,0 +1,10 @@
+frontend/node_modules
+frontend/build
+frontend/.dockerignore
+frontend/Dockerfile 
+*/**/__pycache__
+database
+postman.json
+README.md
+CONTRIBUTION.md
+docker-compose.yml
