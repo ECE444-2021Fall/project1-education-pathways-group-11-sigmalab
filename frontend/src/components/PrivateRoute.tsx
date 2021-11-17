@@ -14,11 +14,12 @@ function isAuthenticated() {
 }
 
 interface RouterProps {
+  //eslint-disable-next-line
   children: any;
   path: string;
 }
 
-function PrivateRoute({ children, ...rest }: RouterProps) {
+function PrivateRoute({ children, ...rest }: RouterProps): JSX.Element {
   return (
     <Route
       {...rest}

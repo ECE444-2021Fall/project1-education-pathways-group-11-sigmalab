@@ -4,7 +4,6 @@ import Fullsearch from '../components/Search/Fullsearch';
 import Results from '../components/Search/Results';
 import Noresults from '../components/Search/Noresults';
 import Resultsheader from '../components/Search/Resultsheader';
-import axios from 'axios';
 import { CourseResults } from '../lib/searchQuery';
 
 function Search(): JSX.Element {
@@ -24,7 +23,7 @@ function Search(): JSX.Element {
         )}
         {searchState && results_length > 0 && (
           <Resultsheader setSearchState={setSearchState} />
-        )}{' '}
+        )}
         {searchState &&
           results_length > 0 &&
           results?.map((result, index) => (
@@ -35,7 +34,6 @@ function Search(): JSX.Element {
                 courseName={result.name}
                 courseCode={result.code}
                 courseDivision={result.division}
-                courseDepartment={result.department}
                 courseDescription={
                   result.course_description.substring(0, 300) + '...'
                 }

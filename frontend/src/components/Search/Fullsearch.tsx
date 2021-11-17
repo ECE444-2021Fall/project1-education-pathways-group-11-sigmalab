@@ -1,15 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import tw from 'twin.macro';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Button, Card, Pill } from '../shared/';
-import ROUTES from '../../config/routes';
-import axios from 'axios';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import SearchQuery, { CourseResults } from '../../lib/searchQuery';
 import Department from './Department';
-import Filters from './Filters';
 
 interface SearchProps {
   setSearchState: React.Dispatch<React.SetStateAction<boolean>>;
@@ -40,14 +37,8 @@ function Fullsearch({
   // eslint-disable-next-line
   setResults,
 }: SearchProps): JSX.Element {
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-    control,
-  } = useForm<FormValues>({
+  const { handleSubmit, register, control } = useForm<FormValues>({
     resolver: yupResolver(schema),
-    //defaultValues: { searchQuery: '' },
   });
 
   const onSubmit = handleSubmit(async (data) => {

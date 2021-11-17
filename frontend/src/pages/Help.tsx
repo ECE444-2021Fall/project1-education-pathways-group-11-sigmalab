@@ -1,5 +1,4 @@
 import { Card } from '@mui/material';
-import { gt } from 'lodash';
 import React, { useState } from 'react';
 import tw from 'twin.macro';
 

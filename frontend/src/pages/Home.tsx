@@ -7,7 +7,6 @@ import { CourseResults } from '../lib/searchQuery';
 import Results from '../components/Search/Results';
 import Resultsheader from '../components/Search/Resultsheader';
 import Noresults from '../components/Search/Noresults';
-const StyledSection = tw.section`w-1/2`;
 
 function Home(): JSX.Element {
   const [searchState, setSearchState] = useState(false);
@@ -45,7 +44,6 @@ function Home(): JSX.Element {
                   courseName={result.name}
                   courseCode={result.code}
                   courseDivision={result.division}
-                  courseDepartment={result.department}
                   courseDescription={
                     result.course_description.substring(0, 300) + '...'
                   }
@@ -57,8 +55,6 @@ function Home(): JSX.Element {
           <Quickprofile tw='flex-1 h-full' />
           <Whatsnew tw='flex-1 h-screen'></Whatsnew>
         </div>
-
-        {/* <h1 css={[tw`text-5xl text-white`]}>Hello World</h1> */}
       </div>
     </Fragment>
   );

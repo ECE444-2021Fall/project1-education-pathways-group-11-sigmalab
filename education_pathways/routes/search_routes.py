@@ -5,28 +5,22 @@ from ..models.users import User
 from ..models.courses import Course
 from flask_msearch import Search
 from marshmallow import Schema, fields
-from ..models.resultSchema import resultSchema
+from ..models.result_schema import ResultSchema
 from flask_cors import CORS
 
-# https://programmerall.com/article/8033330201/
-# https://tutorial101.blogspot# .com/2021/04/python-flask-blog-with-admin-using.html
 search=Search(db=db)
 search.init_app(app)
 CORS(app, resources={r"/*": {"origins":"*"}})
 
-##Uncomment to delete 
+##Uncomment to delete search indexing
 # search.delete_index()
-#search.delete_index(Course)
-# ##Uncomment on first run
+##Uncomment to create search indexing
 #search.create_index()
-# search.create_index(Course)
-
-# Uncomment to update
+##Uncomment to update search indexing
 #search.update_index()
-# search.update_index(Course)
 
 @app.route('/search', methods=['POST'])
-def searchTest():
+def getSearchResults():
   data = request.json
   sQuery = data['query']
   sFilters = data['filters']
@@ -44,7 +38,7 @@ def searchTest():
   result_schemas = []
   for i in results:
     print(i, flush=True)
-    result_schema = resultSchema().dump(i)
+    result_schema = ResultSchema().dump(i)
     result_schemas.append(result_schema)
   return jsonify(success=True, query=sQuery, results = result_schemas), 200
 

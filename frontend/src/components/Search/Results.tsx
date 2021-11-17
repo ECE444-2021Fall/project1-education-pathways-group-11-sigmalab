@@ -8,7 +8,6 @@ interface ResultsProps {
   courseName: string;
   courseCode: string;
   courseDivision: string;
-  courseDepartment: string;
   courseDescription: string;
 }
 
@@ -16,7 +15,6 @@ function Results({
   courseName,
   courseCode,
   courseDivision,
-  courseDepartment,
   courseDescription,
 }: ResultsProps): JSX.Element {
   const history = useHistory();

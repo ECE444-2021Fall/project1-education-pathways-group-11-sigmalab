@@ -4,9 +4,8 @@ import { NavLink } from 'react-router-dom';
 import ROUTES from '../config/routes';
 import { SearchIcon, LogoIcon, ProfilesIcon } from './Icons';
 import Cookies from 'universal-cookie';
-
-const cookies = new Cookies();
 import { MdOutlineHelpOutline, MdOutlineLogout } from 'react-icons/md';
+const cookies = new Cookies();
 
 interface NavbarProps {
   width?: TwStyle;

@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import tw from 'twin.macro';
-import { Card, Button } from '../shared';
-import ResultCard from './Resultcard';
+import { Card } from '../shared';
 
 interface NoResultsProps {
   setSearchState: React.Dispatch<React.SetStateAction<boolean>>;
