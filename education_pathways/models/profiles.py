@@ -27,6 +27,8 @@ class Profile(db.Model):
   creator_id = db.Column(db.Integer,  \
     db.ForeignKey('user.id', onupdate="CASCADE", ondelete="CASCADE"), \
     nullable=False)
+  public = db.Column(db.Integer, default=0, nullable=True)
+
   creator = db.relationship('User', back_populates='profiles', uselist=False)
 
   # Course-related fields
