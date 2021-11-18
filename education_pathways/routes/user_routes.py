@@ -24,7 +24,7 @@ def mostViewed(profile: Profile, n=3):
   return most_viewed
 
 # EXAMPLE: import the model used to create new rows in a table
-@app.route('/createUser', methods=['POST'])
+@app.('/api/createUser', methods=['POST'])
 def createUser():
   json_data = request.get_json()
   if not json_data:
@@ -50,7 +50,7 @@ def createUser():
     return {"message": str(err)}, 400
   return jsonify(success=True), 200
 
-@app.route('/validateLogin', methods=['POST'])
+@app.('/api/validateLogin', methods=['POST'])
 def validateLogin():
   json_data = request.get_json()
   if not json_data:
@@ -84,7 +84,7 @@ def validateLogin():
   else:
     return {"message":"Invalid login details"}, 500
 
-@app.route('/deleteUser', methods=['DELETE'])
+@app.('/api/deleteUser', methods=['DELETE'])
 def deleteUser():
   json_data = request.get_json()
   if not json_data:
@@ -108,7 +108,7 @@ def deleteUser():
     return {"message": str(err)}, 400
   return jsonify(success=True), 200
 
-@app.route('/setDefault', methods=['POST'])
+@app.('/api/setDefault', methods=['POST'])
 def setDefault():
   data = request.json
 
@@ -124,7 +124,7 @@ def setDefault():
 
   return jsonify(success=True), 200
 
-@app.route('/publishProfile', methods=['POST'])
+@app.('/publishProfile', methods=['POST'])
 def publishProfile():
   data = request.json
 
@@ -138,7 +138,7 @@ def publishProfile():
 
   return jsonify(success=True), 200
 
-@app.route('/hideProfile', methods=['POST'])
+@app.('/api/hideProfile', methods=['POST'])
 def hideProfile():
   data = request.json
 

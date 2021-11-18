@@ -21,7 +21,7 @@ CORS(app, resources={r"/*": {"origins":"*"}})
 # Uncomment to update search indexing
 # search.update_index()
 
-@app.route('/search', methods=['POST'])
+@app.route('/api/search', methods=['POST'])
 def getSearchResults():
   """POST request to get the search results based on a given query and filters."""
   data = request.json

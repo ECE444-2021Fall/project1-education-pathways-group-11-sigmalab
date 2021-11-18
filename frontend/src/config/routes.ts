@@ -1,4 +1,4 @@
-const backend = 'http://localhost:5000';
+const backend = 'api';
 const ROUTES = {
   home: '/',
   login: '/login',
@@ -7,7 +7,7 @@ const ROUTES = {
   courses: '/courses/:code',
   profiles: '/profiles',
   help: '/help',
-  backend: 'http://localhost:5000',
+  backend: 'api',
 };
 export const API = {
   updateProfile: backend + '/updateProfile',

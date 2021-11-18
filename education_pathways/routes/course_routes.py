@@ -207,7 +207,7 @@ def course(code):
         zip=zip
         )
 
-@app.route('/getCourse', methods=['GET'])
+@app.route('/api/getCourse', methods=['GET'])
 def getCourse():
   """GET request to get the database entry for the specified course."""
   data = request.args
@@ -223,7 +223,7 @@ def getCourse():
 
   return jsonify(courseSchema.dump(courseData), 200)
 
-@app.route('/addCourse', methods=['POST'])
+@app.route('/api/addCourse', methods=['POST'])
 def addCourse():
   """POST request to add a specified course to the a profile."""
   data = request.json
@@ -243,7 +243,7 @@ def addCourse():
 
   return jsonify(success=True), 200
 
-@app.route('/deleteCourse', methods=['POST'])
+@app.route('/api/deleteCourse', methods=['POST'])
 def deleteCourse():
   """POST request to delete a specified course from the profile."""
   data = request.json
@@ -263,7 +263,7 @@ def deleteCourse():
 
   return jsonify(success=True), 200
 
-@app.route('/topCourses', methods=['GET'])
+@app.route('/api/topCourses', methods=['GET'])
 def topCourses():
   data = request.args
 
@@ -283,7 +283,7 @@ def topCourses():
 
   return jsonify(response, 200)
 
-@app.route('/appendCourse', methods=['POST'])
+@app.route('/api/appendCourse', methods=['POST'])
 def appendCourse():
   data = request.json
   course_code = data['course_code']

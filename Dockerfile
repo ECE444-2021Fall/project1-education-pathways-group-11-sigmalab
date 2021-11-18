@@ -30,6 +30,6 @@ COPY ./education_pathways/requirements.txt .
 RUN pip3 install -r requirements.txt
 RUN pip3 install gunicorn
 COPY ./education_pathways .
-CMD gunicorn -b 0.0.0.0:5000 app:app --daemon && \
-      sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && \
-      nginx -g 'daemon off;'
+CMD gunicorn -b 0.0.0.0:5000 education_pathways:app --daemon --log-level debug && \
+    sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && \
+    nginx -g 'daemon off;'

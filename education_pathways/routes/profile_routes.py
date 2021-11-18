@@ -9,7 +9,7 @@ from flask_cors import CORS
 CORS(app, resources={r"/*": {"origins":"*"}})
 
 
-@app.route('/getProfile', methods=['GET'])
+@app.route('/api/getProfile', methods=['GET'])
 def getProfile():
   """GET request handler to get the profile of a user based on username and profile name."""
   data = request.args
@@ -27,7 +27,7 @@ def getProfile():
   response = profile_schema.dump(res)
   return jsonify(response), 200
 
-@app.route('/createProfile', methods=['POST'])
+@app.route('/api/createProfile', methods=['POST'])
 def createProfile():
   """POST request handler to create a new profile for a user based on their username and specified profile name."""
   data = request.json
@@ -45,7 +45,7 @@ def createProfile():
 
   return jsonify(success=True), 200
 
-@app.route('/deleteProfile', methods=['DELETE'])
+@app.route('/api/deleteProfile', methods=['DELETE'])
 def deleteProfile():
   """DELETE request handler to delete a profile for a user based on the specified profile name."""
   data = request.json
@@ -63,7 +63,7 @@ def deleteProfile():
   return jsonify(success=True), 200
 
 # simple profile.create endpoint using cascades
-@app.route('/updateProfile', methods=['PUT'])
+@app.route('/api/updateProfile', methods=['PUT'])
 def updateProfile():
   """"PUT request handler to update the profile of a user based on the specified profile name."""
   data = request.json
