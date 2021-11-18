@@ -43,7 +43,7 @@ function Course({
   const schedule = find(profiles, { name: currentProfile })?.schedule;
   const isLoggedIn = useState(schedule ? true : false);
   console.log(schedule);
-  let profileID = -1;
+  let profileID = 3;
   if (schedule) {
     profileID = isInProfile(schedule);
   }
@@ -66,15 +66,19 @@ function Course({
     narrowCol.push(card('Offered', offered));
   }
 
+  const session = new String(term).split(' ')[1];
+  const year = new String(term).split(' ')[0];
+
   async function addToProfile() {
     const param = {
       profile_id: profileID,
       course: {
         code: code,
-        session: offered ? offered[1] : null,
-        year: offered ? offered[0] : null,
+        session: offered ? session : null,
+        year: offered ? year : null,
       },
     };
+    console.log(param);
     axios
       .post(ROUTES.backend + '/addCourse', param)
       .then((response) => {
