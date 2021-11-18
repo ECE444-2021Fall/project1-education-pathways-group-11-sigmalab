@@ -52,7 +52,7 @@ class Profile(db.Model):
           ({'name': asc.session, 'courses': []})
         session = len(schedule[year]['sessions'])-1
       schedule[year]['sessions'][session]['courses']\
-        .append({'id': asc.course.id, 'code': asc.course.code})
+        .append({'id': asc.course.id, 'name': asc.course.code, 'views': asc.course.views})
     return schedule
 
   def add_courses(self, course_list: list[tuple[Course, str, int]])->None:

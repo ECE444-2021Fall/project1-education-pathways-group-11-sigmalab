@@ -5,7 +5,9 @@ from marshmallow import validates_schema, validate
 
 class CourseSchema(ma.Schema):
   id = ma.Int()
-  code= ma.Str()
+  code= ma.Str(data_key='name')
+  views= ma.Int()
+
 class SessionSchema(ma.Schema):
   name = ma.Str(validate=validate. \
     OneOf(['fall', 'winter', 'summer', 'unassigned']))
@@ -13,7 +15,6 @@ class SessionSchema(ma.Schema):
 class YearSchema(ma.Schema):
   year = ma.Int()
   sessions = ma.List(ma.Nested(SessionSchema))
-# class ScheduleSchema(ma.Schema):
 
 
 year_schema = YearSchema()

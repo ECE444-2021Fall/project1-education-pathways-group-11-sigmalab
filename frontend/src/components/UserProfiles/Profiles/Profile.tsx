@@ -4,10 +4,6 @@ import { Button, Card } from '../../shared';
 import StyledLink from '../../shared/StyledLink';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { IEditProps } from '../../../lib/scheduleEdit';
-import { useGetProfile } from '../../../lib/queries';
-import { CircularProgress } from '@mui/material';
-import { useAppDispatch } from '../../../hooks';
-import { updateProfile } from '../../../store/userSlice';
 
 interface ProfileProps {
   name: string;
@@ -31,21 +27,11 @@ function Profile({
   isCurrent = false,
   editProps,
 }: ProfileProps): JSX.Element {
-  const profileQuery = useGetProfile(name, isCurrent);
-  const dispatch = useAppDispatch();
   const { isEditing } = editProps;
   const currentlyEditing = isEditing && isCurrent;
   const selectProfileHandler = () => {
     !isEditing && editProps.selectProfileHandler(name);
   };
-  if (!profileQuery.isSuccess) {
-    return (
-      <Card tw='w-full h-56 flex flex-col justify-center items-center mb-10'>
-        <CircularProgress />
-      </Card>
-    );
-  }
-  dispatch(updateProfile(profileQuery.data));
   return (
     <Card
       tw='w-full h-56 flex flex-col justify-start mb-10'

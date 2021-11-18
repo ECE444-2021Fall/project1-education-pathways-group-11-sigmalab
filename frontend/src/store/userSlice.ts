@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { cloneDeep, find, isEqual, orderBy, pullAllWith, pullAt } from 'lodash';
-import schedule from '../datafillers/schedules';
 import {
   emptyYearConstructor,
   getIndexfromName,
@@ -10,6 +9,7 @@ import {
 export interface ICourse {
   id: number;
   name: string;
+  views: number;
 }
 
 export type TSessionName = 'fall' | 'winter' | 'summer' | 'unassigned';
@@ -28,25 +28,28 @@ export type TSchedule = IYear[];
 
 export interface IProfile {
   name: string;
-  courses: { id: number; name: string }[];
+  courses: ICourse[];
   schedule: TSchedule;
-  num_courses: number;
-  num_semesters: number;
+  numCourses: number;
+  numSemesters: number;
+  isDefault: boolean;
 }
 
 export interface UserState {
   username: string;
+  password: string;
+  profiles: IProfile[];
   isEditing: boolean;
   currentProfile: string;
-  profiles: IProfile[];
   profileTemp: IProfile[];
 }
 
 const initialState: UserState = {
   username: '',
+  password: '',
+  profiles: [],
   isEditing: false,
   currentProfile: '',
-  profiles: [],
   profileTemp: [],
 };
 
@@ -58,12 +61,66 @@ export const userSlice = createSlice({
       state,
       action: PayloadAction<{
         username: string;
-        profiles: IProfile[];
-        defaultProfile?: string;
+        password: string;
       }>
     ) => {
       state.username = action.payload.username;
-      state.profiles = cloneDeep(action.payload.profiles);
+      state.password = action.payload.password;
+    },
+    populateStore: (
+      state,
+      action: PayloadAction<
+        Omit<UserState, 'profileTemp' | 'currentProfile' | 'isEditing'>
+      >
+    ) => {
+      state.username = action.payload.username;
+      state.password = action.payload.password;
+      const profiles = cloneDeep(action.payload.profiles);
+      for (let i = 0; i < profiles.length; i++) {
+        const years = profiles[i].schedule.sort(
+          (prevYear, currYear) => prevYear.year - currYear.year
+        );
+        const fullYears: IYear[] = [];
+        for (let j = 0; j < years.length; j++) {
+          if (years[j].year < 1) continue;
+          const sessions = ['fall', 'winter', 'summer'].map(
+            (sessionName): ISession => {
+              const sesh = find(
+                years[j].sessions,
+                (s) => s.name === sessionName
+              );
+              if (typeof sesh != 'undefined') {
+                return sesh;
+              } else {
+                return {
+                  name: sessionName as TSessionName,
+                  courses: [],
+                };
+              }
+            }
+          );
+          fullYears.push({ year: years[j].year, sessions: sessions });
+        }
+        const unassignedExists = find(fullYears, (y) => y.year === -1);
+        if (typeof unassignedExists == 'undefined')
+          fullYears.unshift({
+            year: -1,
+            sessions: [{ name: 'unassigned', courses: [] }],
+          });
+        profiles[i].schedule = cloneDeep(fullYears);
+        const newYear = {
+          year: fullYears[fullYears.length - 1].year,
+          sessions: ['fall', 'winter', 'summer'].map(
+            (sessionName): ISession => ({
+              name: sessionName as TSessionName,
+              courses: [],
+            })
+          ),
+        };
+        profiles[i].schedule.push(newYear);
+        if (profiles[i].isDefault) state.currentProfile = profiles[i].name;
+      }
+      state.profiles = cloneDeep(profiles);
     },
     updateProfiles: (state, action: PayloadAction<IProfile[]>) => {
       state.profiles = cloneDeep(action.payload);
@@ -105,9 +162,10 @@ export const userSlice = createSlice({
       );
       const newProfile: IProfile = {
         name: action.payload.toLowerCase(),
-        num_courses: 0,
-        num_semesters: 0,
+        numCourses: 0,
+        numSemesters: 0,
         courses: [],
+        isDefault: false,
         schedule: [
           { year: 2021, sessions: cloneDeep(sessions) },
           { year: 2022, sessions: cloneDeep(sessions) },
@@ -198,5 +256,6 @@ export const {
   createProfile,
   logUser,
   addCourse,
+  populateStore,
 } = userSlice.actions;
 export default userSlice.reducer;

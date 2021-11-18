@@ -13,6 +13,7 @@ export const API = {
   updateProfile: backend + '/updateProfile',
   getProfile: backend + '/getProfile',
   createProfile: backend + '/createProfile',
+  validateLogin: backend + '/validateLogin',
 };
 
 export default ROUTES;

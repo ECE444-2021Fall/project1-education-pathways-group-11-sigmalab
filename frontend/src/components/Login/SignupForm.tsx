@@ -97,7 +97,8 @@ function SignupForm(): JSX.Element {
       {accountAlreadyExists && (
         <div tw='text-red-900'>
           {' '}
-          Account already exists. Please use login or create a different account.
+          Account already exists. Please use login or create a different
+          account.
         </div>
       )}
     </form>

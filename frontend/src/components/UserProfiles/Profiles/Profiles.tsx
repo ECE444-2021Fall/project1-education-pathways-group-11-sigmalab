@@ -4,24 +4,7 @@ import Profile from './Profile';
 import EmptyProfile from './EmptyProfile';
 import { useScheduleEditProps } from '../../../lib/scheduleEdit';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { IProfile, selectProfile } from '../../../store/userSlice';
-import { useQuery } from 'react-query';
-import axios from 'axios';
-
-const stats = (
-  profile: IProfile
-): { numOfCourses: number; numOfSemesters: number } => {
-  let numOfCourses = 0,
-    numOfSemesters = 0;
-  profile.schedule.forEach((year) => {
-    if (year.year <= 2000) return;
-    year.sessions.forEach((session) => {
-      numOfSemesters += session.name != 'unassigned' ? 1 : 0;
-      numOfCourses += session.courses.length;
-    });
-  });
-  return { numOfCourses, numOfSemesters };
-};
+import { selectProfile } from '../../../store/userSlice';
 
 function Profiles(): JSX.Element {
   const [currentProfile, profiles] = useAppSelector((state) => [
@@ -45,7 +28,10 @@ function Profiles(): JSX.Element {
           key={index}
           name={profile.name}
           courses={profile.courses}
-          stats={stats(profile)}
+          stats={{
+            numOfCourses: profile.numCourses,
+            numOfSemesters: profile.numSemesters,
+          }}
           isDefault={false}
           isCurrent={currentProfile === profile.name}
           editProps={{ ...editProps, selectProfileHandler }}

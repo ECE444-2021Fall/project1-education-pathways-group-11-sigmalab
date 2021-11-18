@@ -74,10 +74,13 @@ def validateLogin():
       profile_preview["numCourses"] = Course_Profile_A.query.filter_by(profile_id=profile.id).count()
       profile_preview["numSemesters"] = Course_Profile_A.query.filter_by(profile_id=profile.id).distinct(Course_Profile_A.session, Course_Profile_A.year).count()
       profile_preview["isDefault"] = user.default_profile == profile.name
+      profile_preview["schedule"] = profile.profile_sessions()
 
       profiles_summary.append(profile_preview)
 
-    return jsonify(profiles_summary), 200
+    response = dict(username=data['username'], \
+      password=data['password'], profiles=profiles_summary)
+    return jsonify(response), 200
   else:
     return {"message":"Invalid login details"}, 500
 

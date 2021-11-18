@@ -31,7 +31,7 @@ function Course({ course, year, sessionName }: CourseProps): JSX.Element {
       ref={dragRef}
       css={isDragging ? tw`opacity-0 order-last` : tw`opacity-100`}
     >
-      {course.name}
+      {course.name.slice(0, -2)}
     </Pill>
   );
 }

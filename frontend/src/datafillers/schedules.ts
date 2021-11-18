@@ -1,5 +1,5 @@
-import type { TSchedule } from '../store/userSlice';
-const schedule: TSchedule = [
+// import type { TSchedule } from '../store/userSlice';
+const schedule = [
   {
     year: 2021,
     sessions: [
