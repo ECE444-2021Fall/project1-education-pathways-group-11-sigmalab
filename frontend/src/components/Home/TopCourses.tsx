@@ -1,17 +1,34 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import tw from 'twin.macro';
 import SmallCard from './SmallCard';
 import { Card } from '../shared';
+import axios from 'axios';
+import ROUTES from '../../config/routes';
 
 function TopCourses(): JSX.Element {
-  const cardBody: JSX.Element[] = [];
-  cardBody.push(
-    SmallCard(
-      'ECE444H1',
-      'Software Engineering',
-      'The software development process. Software requirements and specifications. Software design techniques. Techniques for developing large software systems; CASE tools and software development environments.'
-    )
-  );
+  const [cardBody, setCardBody] = useState<JSX.Element[]>([]);
+
+  useEffect(() => {
+    async function getCourseInfo() {
+      axios
+        .get(ROUTES.backend + '/topCourses', {
+          params: { n: 3 },
+          headers: {},
+        })
+        .then((response) => {
+          const arr = [];
+          for (const course of response.data[0]) {
+            arr.push(
+              SmallCard(course.code, course.name, course.course_description)
+            );
+          }
+          setCardBody(arr);
+        })
+        .catch();
+    }
+    getCourseInfo();
+  }, []);
+
   return (
     <Fragment>
       <Card tw='h-full w-1/2 flex flex-col justify-center mb-1'>
