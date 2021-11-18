@@ -40,7 +40,7 @@ function SignupForm(): JSX.Element {
 
   const onSubmit = handleSubmit((data) => {
     const { username, password } = data;
-    fetch('http://localhost:5000/createUser', {
+    fetch(ROUTES.backend + '/createUser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
