@@ -11,6 +11,7 @@ import networkx as nx
 from collections import defaultdict
 from sklearn.metrics.pairwise import cosine_similarity
 from flask_cors import CORS
+from sqlalchemy import desc
 
 CORS(app, resources={r"/*": {"origins":"*"}})
 
@@ -260,3 +261,23 @@ def deleteCourse():
     return {"message": str(err)}, 400
 
   return jsonify(success=True), 200
+
+@app.route('/topCourses', methods=['GET'])
+def topCourses():
+  data = request.args
+
+  n = int(data["n"])
+
+  courses = Course.query.order_by(desc(Course.views)).all()
+  courses = courses[:n]
+
+  response = []
+  for course in courses:
+    response.append(courseSchema.dump(course))
+
+  try:
+    db.session.commit()
+  except Exception as err:
+    return {"message": str(err)}, 400
+
+  return jsonify(response, 200)
