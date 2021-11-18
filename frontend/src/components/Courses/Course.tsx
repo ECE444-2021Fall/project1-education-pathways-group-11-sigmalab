@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import tw from 'twin.macro';
 import { Alert, Box, Grid, Typography } from '@mui/material';
 import { Card, Button } from '../shared';
@@ -36,21 +36,22 @@ function Course({
   corequisite,
   exclusion,
 }: CourseProps): JSX.Element {
-  const [currentProfile, profiles] = useAppSelector((state) => [
+  const [currentProfile, profiles, username] = useAppSelector((state) => [
     state.user.currentProfile,
     state.user.profiles,
+    state.user.username,
   ]);
   const schedule = find(profiles, { name: currentProfile })?.schedule;
-  const isLoggedIn = useState(schedule ? true : false);
-  console.log(schedule);
-  let profileID = 3;
-  if (schedule) {
-    profileID = isInProfile(schedule);
-  }
+  const isLoggedIn = useState(currentProfile ? true : false);
+  console.log(currentProfile);
 
   const [inProfile, setInProfile] = useState(false);
   const [alertOpen, setAlertOpen] = useState('');
   const [alertSeverity, setSeverity] = useState('info');
+
+  if (schedule) {
+    setInProfile(isInProfile(schedule));
+  }
 
   const wideCol = [
     card('Description', [course_description]),
@@ -71,7 +72,8 @@ function Course({
 
   async function addToProfile() {
     const param = {
-      profile_id: profileID,
+      profile_name: currentProfile,
+      username: username,
       course: {
         code: code,
         session: offered ? session : null,
@@ -120,11 +122,11 @@ function Course({
     for (const year of schedule) {
       for (const session of year.sessions) {
         for (const course of session.courses) {
-          if (course.name == code) return course.id;
+          if (course.name == code) return true;
         }
       }
     }
-    return -1;
+    return false;
   }
 
   return (
