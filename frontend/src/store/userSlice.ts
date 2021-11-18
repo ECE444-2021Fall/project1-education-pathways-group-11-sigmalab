@@ -176,6 +176,7 @@ export const userSlice = createSlice({
         ],
       };
       state.profiles.push(newProfile);
+      state.currentProfile = newProfile.name;
     },
     moveCourse: (
       state,

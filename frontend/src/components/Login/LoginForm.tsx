@@ -46,7 +46,7 @@ function LoginForm(): JSX.Element {
       body: JSON.stringify(data),
     })
       .then((response) => {
-        if (!(response.status === 201)) {
+        if (!response.ok) {
           throw new Error(response.statusText);
         } else {
           setCookie('username', data.username, { path: '/' });
