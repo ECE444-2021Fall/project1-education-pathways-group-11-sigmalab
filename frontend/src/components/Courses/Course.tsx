@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useAppSelector } from '../../hooks';
 import { TSchedule } from '../../store/userSlice';
 import { find } from 'lodash';
-import { useMutation } from 'react-query';
+import { useMutation, useQueries, useQueryClient } from 'react-query';
 
 export interface CourseProps {
   code: string;
@@ -47,6 +47,7 @@ function Course({
   const [inProfile, setInProfile] = useState(false);
   const [alertOpen, setAlertOpen] = useState('');
   const [alertSeverity, setSeverity] = useState('info');
+  const queryClient = useQueryClient();
 
   const wideCol = [
     card('Description', [course_description]),
@@ -61,20 +62,24 @@ function Course({
     }
     narrowCol.push(card('Offered', offered));
   }
-  const mutation = useMutation(() => {
-    const param = {
-      profile_name: currentProfile,
-      username: username,
-      course_code: code,
-    };
-    return axios
-      .post(ROUTES.backend + '/appendCourse', param)
-      .then((response) => {
+  const mutation = useMutation(
+    () => {
+      const param = {
+        profile_name: currentProfile,
+        username: username,
+        course_code: code,
+      };
+      return axios.post(ROUTES.backend + '/appendCourse', param);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('profiles');
         setInProfile(true);
         setAlertOpen('The course was added to your default profile!');
         setSeverity('success');
-      });
-  });
+      },
+    }
+  );
 
   const session = new String(term).split(' ')[1];
   const year = new String(term).split(' ')[0];
