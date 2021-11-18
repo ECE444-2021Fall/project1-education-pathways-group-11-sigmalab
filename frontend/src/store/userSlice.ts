@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { profile } from 'console';
 import { cloneDeep, find, isEqual, orderBy, pullAllWith, pullAt } from 'lodash';
 import {
   emptyYearConstructor,
@@ -77,6 +78,15 @@ export const userSlice = createSlice({
       state.password = action.payload.password;
       const profiles = cloneDeep(action.payload.profiles);
       for (let i = 0; i < profiles.length; i++) {
+        if (profiles[i].schedule.length === 0) {
+          profiles[i].schedule.push({
+            year: -1,
+            sessions: [{ name: 'unassigned', courses: [] }],
+          });
+          profiles[i].schedule.push(emptyYearConstructor(2021));
+          profiles[i].schedule.push(emptyYearConstructor(2022));
+          break;
+        }
         const years = profiles[i].schedule.sort(
           (prevYear, currYear) => prevYear.year - currYear.year
         );
