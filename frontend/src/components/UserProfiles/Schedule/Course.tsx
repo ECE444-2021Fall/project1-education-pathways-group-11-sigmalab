@@ -18,15 +18,14 @@ export interface CourseProps {
 function Course({ course, year, sessionName }: CourseProps): JSX.Element {
   const typedCourse: ICourse = {
     id: course.id,
-    // eslint-disable-next-line
-    name: course.code!,
+    name: course.code ? course.code : course.name,
     views: course.views,
   };
   const isEditing = useAppSelector((state) => state.user.isEditing);
   const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: 'course',
-      item: { typedCourse, year, sessionName },
+      item: { course: typedCourse, year, sessionName },
       canDrag: () => !!isEditing,
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
