@@ -2,14 +2,13 @@ import React from 'react';
 import tw from 'twin.macro';
 import { Card } from '../shared';
 import { Button } from '../shared';
-import { useHistory } from 'react-router';
 
 function SmallCard(
   code: string,
   title: string,
-  description: string
+  description: string,
+  history: any
 ): JSX.Element {
-  const history = useHistory();
   return (
     <Card tw='m-2 h-auto'>
       <h1 tw='text-gray-800 text-2xl w-full'>{code + ': ' + title}</h1>

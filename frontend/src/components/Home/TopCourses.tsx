@@ -4,9 +4,12 @@ import SmallCard from './SmallCard';
 import { Card } from '../shared';
 import axios from 'axios';
 import ROUTES from '../../config/routes';
+import { CourseProps } from '../Courses/Course';
+import { useHistory } from 'react-router';
 
 function TopCourses(): JSX.Element {
   const [cardBody, setCardBody] = useState<JSX.Element[]>([]);
+  const history = useHistory();
 
   useEffect(() => {
     async function getCourseInfo() {
@@ -16,18 +19,22 @@ function TopCourses(): JSX.Element {
           headers: {},
         })
         .then((response) => {
-          const arr = [];
-          for (const course of response.data[0]) {
-            arr.push(
-              SmallCard(course.code, course.name, course.course_description)
-            );
-          }
-          setCardBody(arr);
+          setCardBody(parseCourses(response.data[0]));
         })
         .catch();
     }
     getCourseInfo();
-  }, []);
+  });
+
+  function parseCourses(courses: CourseProps[]): JSX.Element[] {
+    const arr = [];
+    for (const course of courses) {
+      arr.push(
+        SmallCard(course.code, course.name, course.course_description, history)
+      );
+    }
+    return arr;
+  }
 
   return (
     <Fragment>
