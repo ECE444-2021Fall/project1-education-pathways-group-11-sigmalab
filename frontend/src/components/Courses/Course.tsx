@@ -42,16 +42,10 @@ function Course({
     state.user.username,
   ]);
   const schedule = find(profiles, { name: currentProfile })?.schedule;
-  const isLoggedIn = useState(currentProfile ? true : false);
-  console.log(currentProfile);
 
   const [inProfile, setInProfile] = useState(false);
   const [alertOpen, setAlertOpen] = useState('');
   const [alertSeverity, setSeverity] = useState('info');
-
-  if (schedule) {
-    setInProfile(isInProfile(schedule));
-  }
 
   const wideCol = [
     card('Description', [course_description]),
@@ -74,46 +68,17 @@ function Course({
     const param = {
       profile_name: currentProfile,
       username: username,
-      course: {
-        code: code,
-        session: offered ? session : null,
-        year: offered ? year : null,
-      },
+      course_code: code,
     };
-    console.log(param);
     axios
-      .post(ROUTES.backend + '/addCourse', param)
+      .post(ROUTES.backend + '/appendCourse', param)
       .then((response) => {
         setInProfile(true);
         setAlertOpen('The course was added to your default profile!');
         setSeverity('success');
       })
       .catch((error) => {
-        console.log(error);
         setAlertOpen('Something happened: could not add to your profile');
-        setSeverity('error');
-      });
-  }
-
-  async function removeFromProfile() {
-    const param = {
-      profile_id: profileID,
-      course: {
-        code: code,
-        session: offered ? offered[1] : null,
-        year: offered ? offered[0] : null,
-      },
-    };
-    axios
-      .post(ROUTES.backend + '/deleteCourse', param)
-      .then((response) => {
-        setInProfile(true);
-        setAlertOpen('The course was removed!');
-        setSeverity('success');
-      })
-      .catch((error) => {
-        console.log(error);
-        setAlertOpen('Something happened: could not remove from profile');
         setSeverity('error');
       });
   }
@@ -144,12 +109,10 @@ function Course({
             <Grid item xs={1.5}>
               <Button
                 tw='padding[1rem] h-auto w-auto'
-                onClick={() =>
-                  inProfile ? removeFromProfile() : addToProfile()
-                }
-                disabled={!isLoggedIn}
+                onClick={() => addToProfile()}
+                disabled={currentProfile == ''}
               >
-                {inProfile ? 'Remove from profile' : 'Add to profile'}
+                {inProfile ? 'In profile' : 'Add to profile'}
               </Button>
             </Grid>
             <Grid item xs={10.5}>

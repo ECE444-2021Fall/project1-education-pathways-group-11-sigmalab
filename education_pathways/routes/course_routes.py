@@ -286,15 +286,15 @@ def topCourses():
 @app.route('/appendCourse', methods=['POST'])
 def appendCourse():
   data = request.json
-  course_id = data['course_id']
+  course_code = data['course_code']
   username = data['username']
   profile_name = data['profile_name']
 
-  course = Course.query.filter_by(id=course_id).one()
+  course = Course.query.filter_by(code=course_code).one()
   user = User.query.filter_by(username=username).one()
   profile = (p for p in user.profiles if p.name == profile_name)
   profile = next(profile)
-  profile.courses.append(course)
+  profile.add_course(course, 'unassigned', -1)
   db.session.add(profile)
   db.session.commit()
   return jsonify("success", 200)
