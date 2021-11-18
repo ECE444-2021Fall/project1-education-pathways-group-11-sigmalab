@@ -6,6 +6,7 @@ import InfoCard from './InfoCard';
 import RequirementsCard from './RequirementsCard';
 import ROUTES from '../../config/routes';
 import axios from 'axios';
+import { useAppSelector } from '../../hooks';
 
 export interface CourseProps {
   code: string;
@@ -35,8 +36,12 @@ function Course({
 }: CourseProps): JSX.Element {
   const [inProfile, setInProfile] = useState(false);
   const [alertOpen, setAlertOpen] = useState('');
+  const [profiles, currentProfile] = useAppSelector((state) => [
+    state.user.profiles,
+    state.user.currentProfile,
+  ]);
 
-  async function addToProfile() {
+  function addToProfile() {
     axios
       .get(ROUTES.backend + '/edpoint', {
         params: { code: code },
