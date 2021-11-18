@@ -6,9 +6,11 @@ import { useForm } from 'react-hook-form';
 import { BsFillLockFill, BsFillPersonFill } from 'react-icons/bs';
 import Input from './Input';
 import Button from './Button';
-import ROUTES from '../../config/routes';
+import ROUTES, { API } from '../../config/routes';
 import { Link, Redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { useAppDispatch } from '../../hooks';
+import { logUser } from '../../store/userSlice';
 
 export type FormValues = {
   username: string;
@@ -24,8 +26,8 @@ const schema: yup.SchemaOf<FormValues> = yup
   .defined();
 
 function LoginForm(): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookies, setCookie] = useCookies(['username', 'password']);
+  const dispatch = useAppDispatch();
+  const [, setCookie] = useCookies(['username', 'password']);
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [incorrectLoginDetails, setincorrectLoginDetails] = useState(false);
 
@@ -35,7 +37,7 @@ function LoginForm(): JSX.Element {
   });
 
   const onSubmit = handleSubmit((data) => {
-    fetch('http://localhost:5000/validateLogin', {
+    fetch(API.validateLogin, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -44,12 +46,12 @@ function LoginForm(): JSX.Element {
       body: JSON.stringify(data),
     })
       .then((response) => {
-        //console.log(response);
-        if (!(response.status === 201)) {
+        if (!response.ok) {
           throw new Error(response.statusText);
         } else {
           setCookie('username', data.username, { path: '/' });
           setCookie('password', data.password, { path: '/' });
+          dispatch(logUser(data));
           setRedirectToHome(true);
         }
       })
@@ -59,7 +61,7 @@ function LoginForm(): JSX.Element {
   });
 
   return redirectToHome ? (
-    <Redirect to={ROUTES.home} />
+    <Redirect to={{ pathname: ROUTES.home, state: {} }} />
   ) : (
     <form onSubmit={onSubmit} tw='flex flex-col items-center gap-2'>
       <Input

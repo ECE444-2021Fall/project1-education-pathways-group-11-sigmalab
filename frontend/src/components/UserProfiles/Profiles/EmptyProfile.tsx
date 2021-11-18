@@ -1,8 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from 'react-query';
 import tw from 'twin.macro';
 import * as yup from 'yup';
+import { API } from '../../../config/routes';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { createProfile } from '../../../store/userSlice';
 import { Card } from '../../shared';
@@ -20,17 +23,38 @@ const schema = yup
 
 function EmptyProfile(): JSX.Element {
   const [showForm, setShowForm] = useState(false);
-  const dispatch = useAppDispatch();
-  const isEditing = useAppSelector((state) => state.user.isEditing);
   const {
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
   } = useForm<IFormInputs>({ resolver: yupResolver(schema) });
+  const username = useAppSelector((state) => state.user.username);
+  const queryClient = useQueryClient();
+  const createProfileCb = useCallback(() => {
+    const profileName = watch('profileName');
+    dispatch(createProfile(profileName));
+  }, []);
+  const createProfileMutation = useMutation(
+    (name: string) => {
+      return axios.post(API.createProfile, {
+        username,
+        name: name,
+      });
+    },
+    {
+      onSuccess: () => {
+        createProfileCb();
+        queryClient.invalidateQueries('profiles');
+      },
+    }
+  );
+  const dispatch = useAppDispatch();
+  const isEditing = useAppSelector((state) => state.user.isEditing);
   const submitHandler = handleSubmit((data) => {
     try {
-      dispatch(createProfile(data.profileName));
+      createProfileMutation.mutate(data.profileName);
     } catch (error) {
       setError('profileName', { message: 'Profile already exists' });
       return;

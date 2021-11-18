@@ -43,6 +43,7 @@ function Session({ session, year }: SessionProps): JSX.Element {
     [isEditing, currentProfile, year, session]
   );
   const unLabeled = year <= 0;
+  if (session.courses.length === 0 && !isEditing) return <React.Fragment />;
 
   return (
     <div ref={dropRef} tw=' grid grid-cols-3 gap-y-4 relative my-1'>
@@ -54,7 +55,7 @@ function Session({ session, year }: SessionProps): JSX.Element {
         />
       )}
       {unLabeled ? null : <SessionName>{session.name}</SessionName>}
-      <SessionCourses css={unLabeled ? tw`grid-cols-5 col-span-full` : ''}>
+      <SessionCourses css={[unLabeled ? tw`grid-cols-5 col-span-full` : '']}>
         {session.courses.map((course, courseKey) => (
           <Course
             key={courseKey}

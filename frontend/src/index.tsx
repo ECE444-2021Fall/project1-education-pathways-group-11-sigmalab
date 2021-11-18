@@ -12,6 +12,7 @@ import { createGlobalStyle } from 'styled-components';
 import { CookiesProvider } from 'react-cookie';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const CustomGlobalStyles = createGlobalStyle`
   body {
@@ -19,13 +20,19 @@ const CustomGlobalStyles = createGlobalStyle`
   }
 `;
 
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false } },
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <GlobalStyles />
     <CustomGlobalStyles />
-    <CookiesProvider>
-      <App />
-    </CookiesProvider>
+    <QueryClientProvider client={queryClient}>
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
+    </QueryClientProvider>
   </Provider>,
   document.getElementById('root')
 );
