@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useAppSelector } from '../../hooks';
 import { TSchedule } from '../../store/userSlice';
 import { find } from 'lodash';
+import { useMutation } from 'react-query';
 
 export interface CourseProps {
   code: string;
@@ -60,28 +61,25 @@ function Course({
     }
     narrowCol.push(card('Offered', offered));
   }
-
-  const session = new String(term).split(' ')[1];
-  const year = new String(term).split(' ')[0];
-
-  async function addToProfile() {
+  const mutation = useMutation(() => {
     const param = {
       profile_name: currentProfile,
       username: username,
       course_code: code,
     };
-    axios
+    return axios
       .post(ROUTES.backend + '/appendCourse', param)
       .then((response) => {
         setInProfile(true);
         setAlertOpen('The course was added to your default profile!');
         setSeverity('success');
-      })
-      .catch((error) => {
-        setAlertOpen('Something happened: could not add to your profile');
-        setSeverity('error');
       });
-  }
+  });
+
+  const session = new String(term).split(' ')[1];
+  const year = new String(term).split(' ')[0];
+
+  // async function addToProfile() {}
 
   function isInProfile(schedule: TSchedule) {
     for (const year of schedule) {
@@ -109,7 +107,7 @@ function Course({
             <Grid item xs={1.5}>
               <Button
                 tw='padding[1rem] h-auto w-auto'
-                onClick={() => addToProfile()}
+                onClick={() => mutation.mutate()}
                 disabled={currentProfile == ''}
               >
                 {inProfile ? 'In profile' : 'Add to profile'}
