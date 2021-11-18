@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { profile } from 'console';
 import { cloneDeep, find, isEqual, orderBy, pullAllWith, pullAt } from 'lodash';
 import {
   emptyYearConstructor,
@@ -77,60 +76,72 @@ export const userSlice = createSlice({
       state.username = action.payload.username;
       state.password = action.payload.password;
       const profiles = cloneDeep(action.payload.profiles);
-      for (let i = 0; i < profiles.length; i++) {
-        if (profiles[i].schedule.length === 0) {
-          profiles[i].schedule.push({
-            year: -1,
-            sessions: [{ name: 'unassigned', courses: [] }],
-          });
-          profiles[i].schedule.push(emptyYearConstructor(2021));
-          profiles[i].schedule.push(emptyYearConstructor(2022));
-          break;
-        }
-        const years = profiles[i].schedule.sort(
-          (prevYear, currYear) => prevYear.year - currYear.year
+      profiles.forEach((profile) => {
+        profile.schedule.push(
+          emptyYearConstructor(
+            profile.schedule.length === 1
+              ? 2021
+              : profile.schedule[profile.schedule.length - 1].year
+          )
         );
-        const fullYears: IYear[] = [];
-        for (let j = 0; j < years.length; j++) {
-          if (years[j].year < 1) continue;
-          const sessions = ['fall', 'winter', 'summer'].map(
-            (sessionName): ISession => {
-              const sesh = find(
-                years[j].sessions,
-                (s) => s.name === sessionName
-              );
-              if (typeof sesh != 'undefined') {
-                return sesh;
-              } else {
-                return {
-                  name: sessionName as TSessionName,
-                  courses: [],
-                };
-              }
-            }
-          );
-          fullYears.push({ year: years[j].year, sessions: sessions });
-        }
-        const unassignedExists = find(fullYears, (y) => y.year === -1);
-        if (typeof unassignedExists == 'undefined')
-          fullYears.unshift({
-            year: -1,
-            sessions: [{ name: 'unassigned', courses: [] }],
-          });
-        profiles[i].schedule = cloneDeep(fullYears);
-        const newYear = {
-          year: fullYears[fullYears.length - 1].year,
-          sessions: ['fall', 'winter', 'summer'].map(
-            (sessionName): ISession => ({
-              name: sessionName as TSessionName,
-              courses: [],
-            })
-          ),
-        };
-        profiles[i].schedule.push(newYear);
-        if (profiles[i].isDefault) state.currentProfile = profiles[i].name;
-      }
-      state.profiles = cloneDeep(profiles);
+        if (profile.isDefault) state.currentProfile = profile.name;
+      });
+      state.profiles = profiles;
+      // const profiles = cloneDeep(action.payload.profiles);
+      // for (let i = 0; i < profiles.length; i++) {
+      //   if (profiles[i].schedule.length === 0) {
+      //     profiles[i].schedule.push({
+      //       year: -1,
+      //       sessions: [{ name: 'unassigned', courses: [] }],
+      //     });
+      //     profiles[i].schedule.push(emptyYearConstructor(2021));
+      //     profiles[i].schedule.push(emptyYearConstructor(2022));
+      //     break;
+      //   }
+      //   const years = profiles[i].schedule.sort(
+      //     (prevYear, currYear) => prevYear.year - currYear.year
+      //   );
+      //   const fullYears: IYear[] = [];
+      //   for (let j = 0; j < years.length; j++) {
+      //     if (years[j].year < 1) continue;
+      //     const sessions = ['fall', 'winter', 'summer'].map(
+      //       (sessionName): ISession => {
+      //         const sesh = find(
+      //           years[j].sessions,
+      //           (s) => s.name === sessionName
+      //         );
+      //         if (typeof sesh != 'undefined') {
+      //           return sesh;
+      //         } else {
+      //           return {
+      //             name: sessionName as TSessionName,
+      //             courses: [],
+      //           };
+      //         }
+      //       }
+      //     );
+      //     fullYears.push({ year: years[j].year, sessions: sessions });
+      //   }
+      //   const unassignedExists = find(fullYears, (y) => y.year === -1);
+      //   if (typeof unassignedExists == 'undefined')
+      //     fullYears.unshift({
+      //       year: -1,
+      //       sessions: [{ name: 'unassigned', courses: [] }],
+      //     });
+      //   profiles[i].schedule = cloneDeep(fullYears);
+      //   const newYear = {
+      //     year: fullYears[fullYears.length - 1].year,
+      //     sessions: ['fall', 'winter', 'summer'].map(
+      //       (sessionName): ISession => ({
+      //         name: sessionName as TSessionName,
+      //         courses: [],
+      //       })
+      //     ),
+      //   };
+      //   profiles[i].schedule.push(newYear);
+      //   if (profiles[i].isDefault) state.currentProfile = profiles[i].name;
+      // }
+      // state.profiles = cloneDeep(profiles);
     },
     updateProfiles: (state, action: PayloadAction<IProfile[]>) => {
       state.profiles = cloneDeep(action.payload);
@@ -164,29 +175,29 @@ export const userSlice = createSlice({
         name: action.payload.toLowerCase(),
       });
       if (exists) throw 'Profile already exists';
-      const sessions = ['fall', 'winter', 'summer'].map(
-        (sessionName): ISession => ({
-          name: sessionName as TSessionName,
-          courses: [],
-        })
-      );
-      const newProfile: IProfile = {
-        name: action.payload.toLowerCase(),
-        numCourses: 0,
-        numSemesters: 0,
-        courses: [],
-        isDefault: false,
-        schedule: [
-          { year: 2021, sessions: cloneDeep(sessions) },
-          { year: 2022, sessions: cloneDeep(sessions) },
-          {
-            year: -1,
-            sessions: [{ name: 'unassigned', courses: [] }],
-          },
-        ],
-      };
-      state.profiles.push(newProfile);
-      state.currentProfile = newProfile.name;
+      // const sessions = ['fall', 'winter', 'summer'].map(
+      //   (sessionName): ISession => ({
+      //     name: sessionName as TSessionName,
+      //     courses: [],
+      //   })
+      // );
+      // const newProfile: IProfile = {
+      //   name: action.payload.toLowerCase(),
+      //   numCourses: 0,
+      //   numSemesters: 0,
+      //   courses: [],
+      //   isDefault: false,
+      //   schedule: [
+      //     { year: 2021, sessions: cloneDeep(sessions) },
+      //     { year: 2022, sessions: cloneDeep(sessions) },
+      //     {
+      //       year: -1,
+      //       sessions: [{ name: 'unassigned', courses: [] }],
+      //     },
+      //   ],
+      // };
+      // state.profiles.push(newProfile);
+      // state.currentProfile = newProfile.name;
     },
     moveCourse: (
       state,

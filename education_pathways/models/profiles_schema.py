@@ -33,8 +33,8 @@ class ProfileSchema(ma.SQLAlchemySchema):
   creator_id = ma.auto_field(dump_only=True)
   public = ma.auto_field()
   creator_username = ma.Str()
-  num_courses = ma.Int(dump_only=True)
-  num_semesters = ma.Int(dump_only=True)
+  num_courses = ma.Int(dump_only=True, data_key='numCourses')
+  num_semesters = ma.Int(dump_only=True, data_key='numSemesters')
   schedule = ma.List(ma.Nested(YearSchema), dump_only=True)
   # courses = ma.Nested(CourseSchema, many=True)
 

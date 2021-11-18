@@ -44,6 +44,7 @@ function Session({ session, year }: SessionProps): JSX.Element {
   );
   const unLabeled = year <= 0;
   if (session.courses.length === 0 && !isEditing) return <React.Fragment />;
+  console.log(session.courses);
 
   return (
     <div ref={dropRef} tw=' grid grid-cols-3 gap-y-4 relative my-1'>

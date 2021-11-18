@@ -24,7 +24,7 @@ function TopCourses(): JSX.Element {
         .catch();
     }
     getCourseInfo();
-  });
+  }, []);
 
   function parseCourses(courses: CourseProps[]): JSX.Element[] {
     const arr = [];

@@ -4,10 +4,11 @@ import { Button, Card } from '../../shared';
 import StyledLink from '../../shared/StyledLink';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { IEditProps } from '../../../lib/scheduleEdit';
+import { ICourse } from '../../../store/userSlice';
 
 interface ProfileProps {
   name: string;
-  courses?: { id: number; name: string }[];
+  courses?: ICourse[];
   stats: { numOfCourses: number; numOfSemesters: number };
   isDefault?: boolean;
   isCurrent?: boolean;
@@ -56,7 +57,9 @@ function Profile({
         {'Courses: '}
         {courses?.map((course, id) => (
           <React.Fragment key={id}>
-            <StyledLink to='/'>{course.name}</StyledLink>
+            <StyledLink to={`/courses/${course.name}`}>
+              {course.name?.slice(0, -2)}
+            </StyledLink>
             {id + 1 === courses.length ? null : ', '}
           </React.Fragment>
         ))}

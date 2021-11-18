@@ -42,7 +42,7 @@ class Profile(db.Model):
       year = (i for i, y in enumerate(schedule) if y.get('year') and y['year'] == asc.year)
       year = next(year, None)
       if year is None:
-        schedule.append({'year': asc.year, 'sessions': []})
+        schedule.append({'year': asc.year, 'sessions': [{'name':s, 'courses': []} for s in ['fall', 'winter', 'summer']]})
         year = len(schedule)-1
       session = (i for i, s in enumerate(schedule[year]['sessions'])\
         if s.get('name') and s['name'] == asc.session)
@@ -52,7 +52,11 @@ class Profile(db.Model):
           ({'name': asc.session, 'courses': []})
         session = len(schedule[year]['sessions'])-1
       schedule[year]['sessions'][session]['courses']\
-        .append({'id': asc.course.id, 'name': asc.course.code, 'views': asc.course.views})
+        .append({'id': asc.course.id, 'code': asc.course.code, 'views': asc.course.views})
+    unassignedExists = (y for y in schedule if y['year'] == -1)
+    unassignedExists = next(unassignedExists, None)
+    if unassignedExists is None:
+      schedule.insert(0, {'year': -1, 'sessions': [{'name': 'unassigned', 'courses':[]}]})
     return schedule
 
   def add_courses(self, course_list: list[tuple[Course, str, int]])->None:

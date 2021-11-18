@@ -24,7 +24,9 @@ function DataLoader(): JSX.Element {
     {
       enabled: username?.length !== 0 && password?.length !== 0,
       refetchOnMount: false,
-      onSuccess: (data) => dispatch(populateStore(data)),
+      onSuccess: (data) => {
+        dispatch(populateStore(data));
+      },
     }
   );
 
