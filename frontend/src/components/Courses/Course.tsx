@@ -7,8 +7,11 @@ import RequirementsCard from './RequirementsCard';
 import ROUTES from '../../config/routes';
 import axios from 'axios';
 import { useAppSelector } from '../../hooks';
+<<<<<<< HEAD
 import { TSchedule } from '../../store/userSlice';
 import { find } from 'lodash';
+=======
+>>>>>>> 80b6723babd4838da6e2a0b08c22e0d760caa9b8
 
 export interface CourseProps {
   code: string;
