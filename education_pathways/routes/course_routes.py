@@ -261,7 +261,7 @@ def deleteCourse():
 
 @app.route('/topCourses', methods=['GET'])
 def topCourses():
-  data = request.json
+  data = request.args
 
   n = int(data["n"])
 
