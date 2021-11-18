@@ -4,6 +4,7 @@ from wtforms import Form, StringField, SelectField
 from ..models.courses import Course
 from ..models.profiles import Profile, Course_Profile_A
 from ..models.course_schema import courseSchema
+from ..models.users import User
 import pickle
 import numpy as np
 import pandas as pd
@@ -281,3 +282,19 @@ def topCourses():
     return {"message": str(err)}, 400
 
   return jsonify(response, 200)
+
+@app.route('/appendCourse', methods=['POST'])
+def appendCourse():
+  data = request.json
+  course_id = data['course_id']
+  username = data['username']
+  profile_name = data['profile_name']
+
+  course = Course.query.filter_by(id=course_id).one()
+  user = User.query.filter_by(username=username).one()
+  profile = (p for p in user.profiles if p.name == profile_name)
+  profile = next(profile)
+  profile.courses.append(course)
+  db.session.add(profile)
+  db.session.commit()
+  return jsonify("success", 200)
