@@ -5,7 +5,7 @@ services:
     platform: linux/amd64
     build:
       context: ./education_pathways
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - "5000:5000"
     volumes:
@@ -20,7 +20,7 @@ services:
     container_name: frontend
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
     volumes:

@@ -1,13 +1,12 @@
-import React, { Fragment, useState } from 'react';
-import tw, { TwStyle } from 'twin.macro';
+import React from 'react';
+import tw from 'twin.macro';
 import { Button, Card } from '../shared/';
-import axios from 'axios';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import SearchQuery, { CourseResults } from '../../lib/searchQuery';
 
-interface QuicksearchProps {
+interface QuickSearchProps {
   setSearchState: React.Dispatch<React.SetStateAction<boolean>>;
   setResults: React.Dispatch<React.SetStateAction<CourseResults[] | null>>;
 }
@@ -23,19 +22,16 @@ const schema: yup.SchemaOf<QuickFormValues> = yup
   })
   .defined();
 
-function Quicksearch({
+function QuickSearch({
   setSearchState,
   setResults,
-}: QuicksearchProps): JSX.Element {
-  const [searchTerm, setSearchTerm] = useState('Search for courses...');
+}: QuickSearchProps): JSX.Element {
   const { handleSubmit, register } = useForm<QuickFormValues>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    // console.log(data);
     const results = await SearchQuery(data['searchQuery'], '');
-    // console.log(results);
     if (results != null && results != undefined) {
       setResults(results.results);
     } else {
@@ -45,7 +41,7 @@ function Quicksearch({
   });
 
   return (
-    <Fragment>
+    <>
       <Card tw='flex flex-row justify-center h-36 mb-1'>
         <form tw='w-full' action='' onSubmit={onSubmit}>
           <div tw='flex min-w-full'>
@@ -65,8 +61,8 @@ function Quicksearch({
           </div>
         </form>
       </Card>
-    </Fragment>
+    </>
   );
 }
 
-export default Quicksearch;
+export default QuickSearch;

@@ -8,30 +8,28 @@ from marshmallow import Schema, fields
 from ..models.resultSchema import resultSchema
 from flask_cors import CORS
 
-# https://programmerall.com/article/8033330201/
-# https://tutorial101.blogspot# .com/2021/04/python-flask-blog-with-admin-using.html
 search=Search(db=db)
 search.init_app(app)
 CORS(app, resources={r"/*": {"origins":"*"}})
 
-##Uncomment to delete 
+##Uncomment to delete search indexing
 # search.delete_index()
-#search.delete_index(Course)
-# ##Uncomment on first run
-#search.create_index()
-# search.create_index(Course)
 
-# Uncomment to update
-#search.update_index()
-# search.update_index(Course)
+##Uncomment to create search indexing (required on first run)
+# search.create_index()
+
+# Uncomment to update search indexing
+# search.update_index()
 
 @app.route('/search', methods=['POST'])
-def searchTest():
+def getSearchResults():
+  """POST request to get the search results based on a given query and filters."""
   data = request.json
   sQuery = data['query']
   sFilters = data['filters']
+  searchLimit = 20
 
-  results = search.msearch(Course, query=sQuery, fields=['code', 'name', 'division', 'course_description', 'department', 'campus', 'term'], limit=10)
+  results = search.msearch(Course, query=sQuery, fields=['code', 'name', 'division', 'course_description', 'department', 'campus', 'term'], limit=searchLimit)
 
   if len(results) == 0:
     return jsonify(success=False, query=sQuery), 200
@@ -39,7 +37,7 @@ def searchTest():
   results = unique_entries(results)
 
   if len(sFilters) > 0:
-    results = filter_results(results, sFilters)
+    results = filter_results(results, sFilters, n_return=searchLimit)
 
   result_schemas = []
   for i in results:
@@ -49,6 +47,7 @@ def searchTest():
   return jsonify(success=True, query=sQuery, results = result_schemas), 200
 
 def unique_entries(results):
+  """Prune non-unqiue search results."""
   seen = set()
   clean_results = []
   for i in results:
@@ -58,6 +57,7 @@ def unique_entries(results):
   return clean_results
 
 def filter_results(courses, filters, n_return=10):
+  """Apply specified filters to search results."""
   filtered_results = []
   
   # number of courses to return

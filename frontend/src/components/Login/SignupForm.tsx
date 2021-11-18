@@ -48,19 +48,15 @@ function SignupForm(): JSX.Element {
       body: JSON.stringify({ username, password }),
     })
       .then((response) => {
-        //console.log(response);
         if (!(response.status === 200)) {
           throw new Error(response.statusText);
         } else {
           setCookie('username', data.username, { path: '/' });
           setCookie('password', data.password, { path: '/' });
           setRedirectToHome(true);
-          //return 'Valid, creating user';
         }
       })
-      .catch((err) => {
-        //console.log(err);
-        //Give user feedback that account already exists:
+      .catch(() => {
         setAccountAlreadyExists(true);
       });
   });
