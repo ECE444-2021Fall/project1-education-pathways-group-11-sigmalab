@@ -2,6 +2,7 @@ from . import app, db
 from flask import render_template, request, redirect, jsonify
 from wtforms import Form, StringField, SelectField
 from ..models.courses import Course
+from ..models.users import User
 from ..models.profiles import Profile, Course_Profile_A
 from ..models.course_schema import courseSchema
 import pickle
@@ -227,7 +228,8 @@ def addCourse():
   """POST request to add a specified course to the a profile."""
   data = request.json
 
-  profile = Profile.query.filter_by(id=data["profile_id"]).one()
+  user = User.query.filter_by(username=data["username"]).one()
+  profile = Profile.query.filter_by(creator_id=user.id, name=data["profile_name"]).one()
   
   course_data = data["course"]
   course = Course.query.filter_by(code=course_data["code"]).one()
@@ -247,7 +249,8 @@ def deleteCourse():
   """POST request to delete a specified course from the profile."""
   data = request.json
 
-  profile = Profile.query.filter_by(id=data["profile_id"]).one()
+  user = User.query.filter_by(username=data["username"]).one()
+  profile = Profile.query.filter_by(creator_id=user.id, name=data["profile_name"]).one()
   
   course_data = data["course"]
   course = Course.query.filter_by(code=course_data["code"]).one()
