@@ -1,5 +1,6 @@
 import psycopg2
 import pandas as pd
+import os
 
 def serialize_array(arr):
     ret = " ".join(arr)
@@ -11,12 +12,10 @@ def de_serialize_array(array_str):
     return array_str.split(" ")
 
 # connect to  PostgreSQL database, get connection
-conn = psycopg2.connect(
-    host="database", 
-    dbname="postgres", 
-    user="postgres", 
-    password="postgres"
-    )
+uri = os.getenv("DATABASE_URL")  # or other relevant config var
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+conn = psycopg2.connect(uri, sslmode='require')
 cursor = conn.cursor()
 
 # Re-Initialize database upon application stop and start 
