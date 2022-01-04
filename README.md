@@ -86,7 +86,6 @@ SigmaEducate is a course selection tool for University of Toronto students which
 
 [![See SigmaEducate in Action!](https://img.youtube.com/vi/bsY_O1iCxuE/0.jpg)](https://youtu.be/bsY_O1iCxuE)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bsY_O1iCxuE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
