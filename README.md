@@ -82,9 +82,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+SigmaEducate is a course selection tool for University of Toronto students which supports creating and editing multiple profiles, fast and smooth course navigation, and boasts a modern and easy to use user interface
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email`, `email_client`, `project_title`, `project_description`
+[![See SigmaEducate in Action!](https://img.youtube.com/vi/bsY_O1iCxuE/0.jpg)](https://youtu.be/bsY_O1iCxuE)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bsY_O1iCxuE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
